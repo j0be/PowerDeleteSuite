@@ -266,6 +266,7 @@ var pdApp = {
       },
       next: function (items,edited,ignored) {
         pdApp.processInfo.done_individual++;
+        pdApp.process.updateDisplay();
         pdApp.processInfo.after = items[0].data.name;
         if (edited === false) {
           items.shift();
@@ -286,7 +287,6 @@ var pdApp = {
         }
       },
       item : function (items,edited) {
-        pdApp.process.updateDisplay();
         var settings = pdApp.config.settings,
           item = items[0];
 
