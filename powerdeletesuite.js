@@ -1,5 +1,4 @@
-var pdApp;
-pdApp = {
+var pdApp = {
   init: function () {
     document.title = $('#header-bottom-right .user a').first().text()+' | Power Delete Suite';
     console.log('init');
@@ -12,7 +11,6 @@ pdApp = {
           user : $('#header-bottom-right .user a').first().text()
         };
         pdApp.prepDom();
-        pdApp.bindUI();
         pdApp.parseSettings();
       } else {
         if (confirm('This script is designed to be run from your own user profile. Would you like to navigate there?')) {
@@ -49,8 +47,9 @@ pdApp = {
       url: 'https://www.reddit.com/r/PowerDeleteSuite/wiki/centralform.json',
       context: $('#pd__central')
     }).then(function(data) {
-      $(this).html($("<textarea/>").html(data.data.content_md).text());      
+      $(this).html($("<textarea/>").html(data.data.content_md).text());
       pdApp.prepSubs();
+      pdApp.bindUI();
     }, function() {
       alert('Error retreiving markup from /r/PowerDeleteSuite');
     });
