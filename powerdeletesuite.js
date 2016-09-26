@@ -271,7 +271,6 @@ var pdApp = {
           pdApp.process.handle.item(items,edited);
         } else {
           pdApp.process.updateDisplay();
-          pdApp.processInfo.after = false;
           if (pdApp.processInfo.checkSubmitted !== false) {
             pdApp.process.submissions.checkSubmitted();
           } else if (pdApp.processInfo.checkSearch !== false) {
