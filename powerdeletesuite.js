@@ -261,11 +261,11 @@ var pdApp = {
         pdApp.process.handle.item(data, false);
       },
       next: function (items,edited,ignored) {
-        if (edited === false) {
-          items = items.shift();
-        }
         if (ignored) {
           pdApp.processInfo.after = items[0].data.name;
+        }
+        if (edited === false) {
+          items = items.shift();
         }
 
         if (items.length > 0) {
