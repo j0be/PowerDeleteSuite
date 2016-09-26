@@ -265,9 +265,8 @@ var pdApp = {
           pdApp.processInfo.after = items[0].data.name;
         }
         if (edited === false) {
-          items = items.shift();
+          items.shift();
         }
-
         if (items.length > 0) {
           pdApp.process.handle.item(items,edited);
         } else {
