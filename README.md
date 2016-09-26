@@ -13,7 +13,8 @@ Why use the Power Delete Suite instead of the other mass reddit deletion scripts
  * excluding mod distinguished comments and posts
 6. When editing comments, you choose what you want it to be edited to. I'm not going to do some self promo bullshit on your account. What you edit it to is your own business. 
  * As a note, if you are both editing AND deleting, it makes sure to edit the comment / self post before deleting it.
- 
+7. With the most recent rewrite, it now updates automatically! If there are bugs I fix, you'll get them the second I'm done with them!
+
  ## Screenshots
  
  ![Power Delete Suite Control Center](http://i.imgur.com/B0siI0a.png)
