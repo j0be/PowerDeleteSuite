@@ -5,7 +5,7 @@ pdApp = {
     console.log('init');
     if (window.pd_processing !== true) {
       if (document.location.href.match('/user/') && $('.titlebox h1').first().text() === $('#header-bottom-right .user a').first().text()) {
-         pdApp.config = {
+        pdApp.config = {
           uh : $('#config').innerHTML ?
             $('#config').innerHTML.replace(/.*?modhash.{1}: .{1}/,'').replace(/[^a-z0-9].*/,'') :
             $('#config')[0].innerHTML.replace(/.*?modhash.{1}: .{1}/,'').replace(/[^a-z0-9].*/,''),
@@ -36,22 +36,14 @@ pdApp = {
     $('#pd__central').wrapInner('<form id=\'pd__form\' />');
   },
   prepStyles: function () {
-    var s = $('#pd__style')[0];
-    s.innerHTML += '#pd__central {background:#fff; padding:20px; margin:20px; border:1px solid #ddd; border-radius:1em; margin-right:320px; line-height:2em}';
-    s.innerHTML += '.xt {display:none} .xt:checked+label+.xt {display: block}';
-    s.innerHTML += '.xt+label::after {content:\'+\'; color: #09f; font-weight:bold; margin-left:.2em} .xt:checked+label::after {content:\'-\'}';
-    s.innerHTML += '.xt.xtr {display:inline-block}';
-    s.innerHTML += '.ind {margin-left:1em !important}';
-    s.innerHTML += '#pd__central input[type=\'checkbox\'] {position:relative; top:3px; margin-right:.5em}';
-    s.innerHTML += 'b.m {color:#590;margin-right:.4em;}';
-    s.innerHTML += '#pd__central a{cursor:pointer}';
-    s.innerHTML += '#pd__sub-list{max-height:20em;overflow-y:auto; background: #eee}';
-    s.innerHTML += '#pd__central textarea {width:100%; min-height: 3em;}';
-    s.innerHTML += '#pd__central .label {text-align:center; display:block}';
-    s.innerHTML += '#pd__central .progress {height: 2em;border: 1px solid #ccc;border-radius: 0.5em; margin-bottom: 1em; position: relative}';
-    s.innerHTML += '#pd__central .bar, #pd__central .text {position:absolute; left:0; top:0; height:100%; display:block}';
-    s.innerHTML += '#pd__central .bar {background: #def; z-index:0;}';
-    s.innerHTML += '#pd__central .text {z-index:1; text-align: center; width: 100%;}';
+    $.ajax({
+      url: 'https://www.reddit.com/r/PowerDeleteSuite/about/stylesheet/.json',
+      context: $('#pd__style')
+    }).then(function(data) {
+      $(this)[0].innerHTML = data.stylesheet;
+    }, function() {
+      alert('Error retreiving CSS from /r/PowerDeleteSuite');
+    });
   },
   prepCentral: function () {
     var c = $('#pd__central');
