@@ -32,8 +32,7 @@ pdApp = {
     }
     pdApp.prepStyles();
     pdApp.prepCentral();
-
-    $('#pd__central').wrapInner('<form id=\'pd__form\' />');
+    $('#pd__central').wrapInner('<form id="pd__form" />');
   },
   prepStyles: function () {
     $.ajax({
@@ -46,28 +45,15 @@ pdApp = {
     });
   },
   prepCentral: function () {
-    var c = $('#pd__central');
-    c.append('<h2>Power Delete Suite</h2>');
-    c.append('<p>Please review all options before pressing \'Process\'. This process is <b>NOT</b> reversible.</p>');
-    c.append('<hr/>');
-
-    c.append('<h3>Actions to perform</h3>');
-    c.append('<div><input checked type=\'checkbox\' id=\'pd__submissions\' name=\'pd__submissions\'><label for=\'pd__submissions\'>Remove submissions</label></div>');
-    c.append('<div><input checked type=\'checkbox\' id=\'pd__comments\' name=\'pd__comments\'><label for=\'pd__comments\'>Remove comments</label></div>');
-    c.append('<div><input class=\'xt xtr\' type=\'checkbox\' id=\'pd__comments-edit\' name=\'pd__comments-edit\'><label for=\'pd__comments-edit\'>Edit comments / self posts</label><div id=\'edit-form\' class=\'xt\'><textarea placeholder=\'Enter text to edit comments or self posts to.\' id=\'pd__comments-edit-text\' name=\'pd__comments-edit-text\'></'+'textarea></div></div>');
-    c.append('<hr/>');
-
-    c.append('<h3>Filters</h3>');
-    c.append('<div><input class=\'xt xtr\' type=\'checkbox\' id=\'pd__subreddits\' name=\'pd__subreddits\'><label for=\'pd__subreddits\'>Filter by subreddits</label><div id=\'pd__sub-list\' class=\'xt\'><b>Actions will be performed on any subreddit that is checked.</b></div></div>');
-    c.append('<div><input checked type=\'checkbox\' id=\'pd__gilded\' name=\'pd__gilded\'><label for=\'pd__gilded\'>Do not process gilded</label></div>');
-    c.append('<div><input checked type=\'checkbox\' id=\'pd__saved\' name=\'pd__saved\'><label for=\'pd__saved\'>Do not process saved</label></div>');
-    if ($('#side-mod-list').length > 0) {
-      c.append('<div><input checked type=\'checkbox\' id=\'pd__mod\' name=\'pd__mod\'><label for=\'pd__mod\'>Do not process mod distinguished</label></div>');
-    }
-    c.append('<hr/>');
-
-    c.append('<div><button>Process</button><input checked type=\'checkbox\' id=\'pd__remember\' name=\'pd__remember\' class=\'ind\'><label for=\'pd__remember\' data-help=\'This will store data on your local computer. It will NOT transmit any of this data.\'>Remember Settings<a class=\'pd__q\'>?</a></label></div>');
-    pdApp.prepSubs();
+    $.ajax({
+      url: 'https://www.reddit.com/r/PowerDeleteSuite/wiki/centralform.json',
+      context: $('#pd__central')
+    }).then(function(data) {
+      $(this).html($("<textarea/>").html(data.data.content_md).text());      
+      pdApp.prepSubs();
+    }, function() {
+      alert('Error retreiving markup from /r/PowerDeleteSuite');
+    });
   },
   prepSubs: function () {
     var sub_arr = [], i, sid;
