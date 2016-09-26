@@ -24,7 +24,7 @@
  
  [Github doesn't like allowing javascript bookmarklets in the readme files, so go to this jsfiddle and drag the big red button to your bookmarks!](https://jsfiddle.net/93mycx7q/4/embedded/result/)
  
- ## Bugs / Issues?
+## Bugs / Issues?
  
 Feel free to subscribe to [/r/PowerDeleteSuite/](https://www.reddit.com/r/PowerDeleteSuite/) where I will make a post every time that I make an update to the script!
  
