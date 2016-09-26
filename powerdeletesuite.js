@@ -83,7 +83,7 @@ var pdApp = {
       $('#pd__form').submit(function(e) {
         e.preventDefault();
         pdApp.saveSettings();
-        pdApp.setup.process.init();
+        pdApp.process.init();
       });
     },
   },
