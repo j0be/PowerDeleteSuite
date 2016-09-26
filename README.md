@@ -26,4 +26,7 @@ Why use the Power Delete Suite instead of the other mass reddit deletion scripts
  
  https://jsfiddle.net/93mycx7q/4/embedded/result/
  
+ ## Bugs / Issues?
+ 
+Feel free to subscribe to [/r/PowerDeleteSuite/](https://www.reddit.com/r/PowerDeleteSuite/) where I will make a post every time that I make an update to the script!
  
