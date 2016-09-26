@@ -40,6 +40,7 @@ pdApp = {
       url: 'https://www.reddit.com/r/PowerDeleteSuite/about/stylesheet/.json',
       context: $('#pd__style')
     }).then(function(data) {
+      debugger;
       $(this)[0].innerHTML = data.stylesheet;
     }, function() {
       alert('Error retreiving CSS from /r/PowerDeleteSuite');
