@@ -38,6 +38,7 @@ var pdApp = {
         context: $('#pd__style')
       }).then(function(data) {
         $(this)[0].innerHTML = data.data.stylesheet;
+        $('#pd__central').show();
       }, function() {
         alert('Error retreiving CSS from /r/PowerDeleteSuite');
       });
@@ -48,6 +49,9 @@ var pdApp = {
         context: $('#pd__central')
       }).then(function(data) {
         $(this).html($("<textarea/>").html(data.data.content_md).text());
+        if ($('#pd__stlye').html() === '') {
+          $(this).hide();
+        }
         pdApp.setup.prepSubs();
         pdApp.setup.bindUI();
       }, function() {
