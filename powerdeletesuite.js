@@ -132,16 +132,21 @@ var pdApp = {
         done_pages: 0,
         done_individual: 0,
         num_individual: 0,
+        submission_pages: 0,
+        comment_pages: 0,
         after: false
       };
 
       if (settings_obj['submissions'] || settings_obj['comments-edit']) {
         pdApp.processInfo.num_pages += 2;
         pdApp.processInfo.submission_pages += 2;
+        pdApp.processInfo.checkSubmitted = true;
+        pdApp.processInfo.checkSearch = true;
       }
       if (settings_obj['comments'] || settings_obj['comments-edit']) {
         pdApp.processInfo.num_pages ++;
         pdApp.processInfo.comment_pages ++;
+        pdApp.processInfo.checkComments = true;
       }
 
       if (pdApp.processInfo.num_pages > 0) {
@@ -177,11 +182,14 @@ var pdApp = {
     },
     submissions: {
       init: function () {
-        pdApp.process.submissions.checkSubmitted();
+        if (pdApp.processInfo.checkSubmitted !== false) {
+          pdApp.process.submissions.checkSubmitted();
+        } else {
+          pdApp.process.submissions.checkSearch();
+        }
       },
       checkSubmitted: function () {
         pdApp.process.updateDisplay();
-        pdApp.processInfo.ajax_calls ++;
         $.ajax({
           url: 'https://www.reddit.com/user/'+pdApp.config.user+'/submitted/.json'+(pdApp.processInfo.after ? '?after='+pdApp.processInfo.after : '')
         }).then(function(resp) {
@@ -191,7 +199,7 @@ var pdApp = {
             pdApp.process.handle.items(resp.data.children);
           } else {
             pdApp.processInfo.after = false;
-            pdApp.processInfo.submitPage = false;
+            pdApp.processInfo.checkSubmitted = false;
             pdApp.process.submissions.checkSearch();
           }
         }, function(resp) {
@@ -199,34 +207,148 @@ var pdApp = {
         });
       },
       checkSearch: function () {
-
+        pdApp.process.updateDisplay();
+        $.ajax({
+          url: 'https://www.reddit.com/search.json?q=author%3A'+pdApp.config.user+(pdApp.processInfo.after ? '&after='+pdApp.processInfo.after : '')
+        }).then(function(resp) {
+          pdApp.processInfo.done_pages ++;
+          if (resp.data.children.length > 0) {
+            pdApp.processInfo.num_pages ++;
+            pdApp.process.handle.items(resp.data.children);
+          } else {
+            pdApp.processInfo.after = false;
+            pdApp.processInfo.checkSearch = false;
+            pdApp.process.comments.init();
+          }
+        }, function(resp) {
+          console.error(resp);
+        });
       }
     },
     comments: {
       init: function () {
-
+        pdApp.process.comments.checkComments();
       },
       checkComments: function () {
-
+        pdApp.process.updateDisplay();
+        $.ajax({
+          url: 'https://www.reddit.com/user/'+pdApp.config.user+'/comments/.json'+(pdApp.processInfo.after ? '?after='+pdApp.processInfo.after : '')
+        }).then(function(resp) {
+          pdApp.processInfo.done_pages ++;
+          if (resp.data.children.length > 0) {
+            pdApp.processInfo.num_pages ++;
+            pdApp.process.handle.items(resp.data.children);
+          } else {
+            pdApp.processInfo.after = false;
+            pdApp.processInfo.checkComments = false;
+            pdApp.done();
+          }
+        }, function(resp) {
+          console.error(resp);
+        });
       }
     },
     handle: {
-      items: function () {
-
+      items: function (data) {
+        pdApp.process.updateDisplay();
+        pdApp.processInfo.done_individual = 0;
+        pdApp.processInfo.num_individual = data.length;
+        pdApp.processInfo.pageSize = data.length;
+        pdApp.process.handle.item(data, false);
       },
-      next: function () {
+      next: function (items,edited,ignored) {
+        if (edited === false) {
+          items = items.shift();
+        }
+        if (ignored) {
+          pdApp.processInfo.after = items[0].data.name;
+        }
 
+        if (items.length > 0) {
+          pdApp.process.handle.item(items,edited);
+        } else {
+          pdApp.process.updateDisplay();
+          pdApp.processInfo.after = false;
+          if (pdApp.processInfo.checkSubmitted !== false) {
+            pdApp.process.submissions.checkSubmitted();
+          } else if (pdApp.processInfo.checkSearch !== false) {
+            pdApp.process.submissions.checkSearch();
+          } else if (pdApp.processInfo.checkComments !== false) {
+            pdApp.process.comments.checkComments();
+          } else {
+            pdApp.done();
+          }
+        }
       },
-      updateIgnored: function () {
+      item : function (items,edited) {
+        pdApp.process.updateDisplay();
+        var settings = pdApp.config.settings,
+          item = items[0];
 
-      },
-      item : function () {
-
+        if (!settings.subreddits || (settings.subfilters.indexOf(item.data.subreddit) >= 0)) {
+          if (!settings.gilded || item.data.gilded === 0) {
+            if (!settings.saved || item.data.saved === false) {
+              if (!settings.mod || !item.data.distinguished) {
+                if ((edited === false && settings['comments-edit']) && (item.kind === 't1' || item.data.is_self)) {
+                  $.ajax({
+                    url: 'https://www.reddit.com/api/editusertext',
+                    method: 'post',
+                    data: {
+                      thing_id: item.data.name,
+                      text: settings['comments-edit-text'],
+                      id: '#form-'+item.data.name,
+                      r: item.data.subreddit,
+                      uh: pdApp.config.uh,
+                      renderstyle: 'html'
+                    }
+                  }).then(function() {
+                    if (settings['comments'] || settings['submissions']) {
+                      pdApp.process.handle.next(items,true,false);
+                    } else {
+                      pdApp.process.handle.next(items,false,false);
+                    }
+                  }, function (resp) {
+                    console.error(resp);
+                  });
+                } else if (settings['comments'] || settings['submissions']) {
+                  $.ajax({
+                    url: 'https://www.reddit.com/api/del',
+                    method: 'post',
+                    data: {
+                      id: item.data.name,
+                      executed: 'deleted',
+                      uh: pdApp.config.uh,
+                      renderstyle: 'html'
+                    }
+                  }).then(function() {
+                    pdApp.process.handle.next(items,false,false);
+                  }, function (resp) {
+                    console.error(resp);
+                  });
+                } else {
+                  pdApp.process.handle.next(items,false,true);
+                }
+              } else {
+                pdApp.process.handle.next(items,false,true);
+              }
+            } else {
+              pdApp.process.handle.next(items,false,true);
+            }
+          } else {
+            pdApp.process.handle.next(items,false,true);
+          }
+        } else {
+          pdApp.process.handle.next(items,false,true);
+        }
       }
     }
   },
   done: function () {
-
+    window.pd_processing = false;
+    $('#pd__central .processing').html('');
+    $('#pd__central .processing').append('<p>Completed after making a ton calls to the reddit servers.</p>');
+    $('#pd__central .processing').append('<p>If you need to re run the script, just click the bookmarklet again!</p>');
+    document.title = $('#header-bottom-right .user a').first().text()+' | Power Delete Suite';
   }
 };
 pdApp.init();
