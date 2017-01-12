@@ -301,7 +301,7 @@ var pdApp = {
               if (!settings.mod || !item.data.distinguished) {
                 if ((edited === false && settings['comments-edit']) && (item.kind === 't1' || item.data.is_self)) {
                   pdApp.processInfo.ajax_calls ++;
-                  /*$.ajax({
+                  $.ajax({
                     url: 'https://www.reddit.com/api/editusertext',
                     method: 'post',
                     data: {
@@ -314,23 +314,21 @@ var pdApp = {
                     }
                   }).then(function() {
                     if (settings['comments'] || settings['submissions']) {
-                      pdApp.process.handle.next(items,true,false);
+                      pdApp.process.handle.next(items,true);
                     } else {
-                      pdApp.process.handle.next(items,false,false);
+                      pdApp.process.handle.next(items,false);
                     }
                   }, function (resp) {
                     console.error(resp);
-                  });*/
-
-                  if (settings['comments'] || settings['submissions']) {
-                    pdApp.process.handle.next(items,true,false);
-                  } else {
-                    pdApp.process.handle.next(items,false,false);
-                  }
-
+                    if (confirm('Error editing item. Retry?')) {
+                      pdApp.process.handle.item(items,edited);
+                    } else {
+                      pdApp.process.handle.next(items,false); 
+                    }
+                  });
                 } else if (settings['comments'] || settings['submissions']) {
                   pdApp.processInfo.ajax_calls ++;
-                  /*$.ajax({
+                  $.ajax({
                     url: 'https://www.reddit.com/api/del',
                     method: 'post',
                     data: {
@@ -340,26 +338,30 @@ var pdApp = {
                       renderstyle: 'html'
                     }
                   }).then(function() {
-                    pdApp.process.handle.next(items,false,false);
+                    pdApp.process.handle.next(items,false);
                   }, function (resp) {
                     console.error(resp);
-                  });*/
-
-                  pdApp.process.handle.next(items,false,false);
+                    if (confirm('Error deleting item. Retry?')) {
+                      pdApp.process.handle.item(items,edited);
+                    } else {
+                      pdApp.process.handle.next(items,false);
+                    }
+                  });
+                  pdApp.process.handle.next(items,false);
                 } else {
-                  pdApp.process.handle.next(items,false,true);
+                  pdApp.process.handle.next(items,false);
                 }
               } else {
-                pdApp.process.handle.next(items,false,true);
+                pdApp.process.handle.next(items,false);
               }
             } else {
-              pdApp.process.handle.next(items,false,true);
+              pdApp.process.handle.next(items,false);
             }
           } else {
-            pdApp.process.handle.next(items,false,true);
+            pdApp.process.handle.next(items,false);
           }
         } else {
-          pdApp.process.handle.next(items,false,true);
+          pdApp.process.handle.next(items,false);
         }
       }
     }
