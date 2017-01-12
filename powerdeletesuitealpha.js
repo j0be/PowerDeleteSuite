@@ -229,6 +229,11 @@ var pdApp = {
           }
         }, function(resp) {
           console.error(resp);
+          pdApp.processInfo.done_pages ++;
+          alert('Reddit search is down at the moment, so the script may not catch every submission. You may want to rerun the script after at a later time when Reddit isn\'t under so much load.');
+          pdApp.processInfo.after = false;
+          pdApp.processInfo.checkSearch = false;
+          pdApp.process.comments.init();
         });
       }
     },
