@@ -174,6 +174,7 @@ var pdApp = {
       $('#progress_page .bar').css('width',(Math.round(1000*pdApp.processInfo.done_pages/pdApp.processInfo.num_pages)/10)+'%');
       $('#progress_page .text').text(pdApp.processInfo.done_pages + ' / ' + pdApp.processInfo.num_pages);
       if (pdApp.processInfo.num_individual > 0) {
+        pdApp.processInfo.num_individual = Math.max(pdApp.processInfo.done_individual, pdApp.processInfo.num_individual);
         $('#progress_item .bar').css('width',(Math.round(1000*pdApp.processInfo.done_individual/pdApp.processInfo.num_individual)/10)+'%');
         $('#progress_item .text').text(pdApp.processInfo.done_individual + ' / ' + pdApp.processInfo.num_individual);
       }
