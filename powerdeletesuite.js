@@ -1,5 +1,5 @@
 var pdApp = {
-  version: '1.2.1',
+  version: '1.2.2',
   init : function() {
     /* version alerts */
     pdApp.prevRunVersion = localStorage.getItem('pd_ver') ? localStorage.getItem('pd_ver') : '0';
@@ -96,8 +96,9 @@ var pdApp = {
         after: '',
 
         numPages:
-          ($('#pd__submissions').is(':checked') ? 2 : 0) +
-          ($('#pd__comments').is(':checked') ? 3 : 0),
+          ($('#pd__submissions').is(':checked') ? 8 : 0) +
+          ($('#pd__comments').is(':checked') ? 4 : 0) +
+          ($('#pd__comments-edit').is(':checked') ? 12 : 0),
         numItems: 0,
         donePages: 0,
         doneItems: 0,
@@ -117,7 +118,7 @@ var pdApp = {
           ['comments','search','submissions'], /* Search is actually more efficient than submissions if we're not handling submissions (`self:1`) */
         itemArr: []
       };
-      pdApp.process.numPages = Math.min(pdApp.process.numPages,3);
+      pdApp.process.numPages = Math.min(pdApp.process.numPages,12);
 
       pdApp.endpoints = {
         'comments': 'https://www.reddit.com/user/'+pdApp.config.user+'/comments/.json',
@@ -139,6 +140,10 @@ var pdApp = {
           pdApp.filters.subList.push(el.text());
         });
       }
+      pdApp.setup.resetSorts();
+    },
+    resetSorts: function () {
+      pdApp.sorts = ['new','hot','top','controversial'];
     },
     bindUI: function() {
       $('.pd__q').click(function(e) {e.preventDefault(); alert($(this).closest('[data-help]').attr('data-help'));});
@@ -205,14 +210,15 @@ var pdApp = {
       pdApp.process.pageCalls ++;
 
       if (pdApp.process.sectionsRemaining.length > 0) {
-        $('#pd__central h2').first().text('Power Delete Suite v'+pdApp.version+' - '+pdApp.process.sectionsRemaining[0]);
+        $('#pd__central h2').first().html('Power Delete Suite v'+pdApp.version+' <br/><small>'+pdApp.process.sectionsRemaining[0]+'/'+pdApp.sorts[0]+'</small>');
         $.ajax({
           url: pdApp.endpoints[pdApp.process.sectionsRemaining[0]],
           data: {
             q: pdApp.process.sectionsRemaining[0] == 'search' ?
               'author:'+pdApp.config.user + (! pdApp.process.isRemovingPosts ? ' self:1' : '') :
               null,
-            after: pdApp.process.after.length > 0 ? pdApp.process.after : null
+            after: pdApp.process.after.length > 0 ? pdApp.process.after : null,
+            sort: pdApp.sorts[0]
           }
         }).then(function(resp) {
           pdApp.process.donePages ++;
@@ -224,7 +230,12 @@ var pdApp = {
             pdApp.actions.processItems();
           } else {
             pdApp.process.after = '';
-            pdApp.process.sectionsRemaining.splice(0,1);
+            if (pdApp.sorts.length == 1) {
+              pdApp.setup.resetSorts();
+              pdApp.process.sectionsRemaining.splice(0,1);
+            } else {
+              pdApp.sorts.splice(0,1);
+            }
             pdApp.actions.getPage();
           }
         }, function(resp) {
