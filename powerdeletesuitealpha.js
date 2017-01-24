@@ -1,8 +1,18 @@
 var pdApp = {
-  init: function () {
-    document.title = $('#header-bottom-right .user a').first().text()+' | Power Delete Suite';
-    console.log('init');
+  version: '1.2.0',
+  init : function() {
+    /* version alerts */
+    pdApp.prevRunVersion = localStorage.getItem('pd_ver') ? localStorage.getItem('pd_ver') : '0';
+    localStorage.setItem('pd_ver',pdApp.version);
+    if (pdApp.version !== pdApp.prevRunVersion) {
+      if (confirm('You\'ve gotten the latest update! You are now running PowerDeleteSuite v'+pdApp.version+'. Would you like to open the changelog in a new tab?')) {
+        window.open('https://www.reddit.com/r/PowerDeleteSuite/');
+      }
+    }
+
     if (window.pd_processing !== true) {
+      document.title = $('#header-bottom-right .user a').first().text()+' | Power Delete Suite';
+      console.log('init');
       if (document.location.href.match('/user/') && $('.titlebox h1').first().text() === $('#header-bottom-right .user a').first().text()) {
         pdApp.config = {
           uh : $('#config').innerHTML ?
@@ -11,18 +21,21 @@ var pdApp = {
           user : $('#header-bottom-right .user a').first().text()
         };
         pdApp.setup.prepDom();
-        pdApp.getSettings();
       } else {
         if (confirm('This script is designed to be run from your own user profile. Would you like to navigate there?')) {
-          document.location = 'http://reddit.com/u/'+ $('#header-bottom-right .user a').first().text();
+          document.location = 'http://reddit.com/u/me';
         }
       }
+      setTimeout(pdApp.helpers.restoreSettings,500);
+      return pdApp.version;
+    } else {
+      return 'PowerDeleteSuite is already running';
     }
   },
   setup: {
     prepDom: function () {
       $('.sitetable,.neverEndingReddit').remove();
-      $('#pd__central,#pd__style').html(''); /*Debugging*/
+      $('#pd__central,#pd__style').remove(''); /*Debugging*/
       if ($('#pd__central').length === 0) {
         $('body>.content[role=\'main\']').append('<div id=\'pd__central\' />');
       }
@@ -52,6 +65,7 @@ var pdApp = {
         if ($('#pd__stlye').html() === '') {
           $(this).hide();
         }
+        $(this).find('h2').first().text('Power Delete Suite v'+pdApp.version);
         pdApp.setup.prepSubs();
         pdApp.setup.bindUI();
       }, function() {
@@ -66,6 +80,7 @@ var pdApp = {
       sub_arr = sub_arr.sort(function (a, b) {
         return a.toLowerCase().localeCompare(b.toLowerCase());
       });
+      $('#pd__sub-list').append('<div><a class="ind mass_sel sel_all">Select All</a><a class="ind mass_sel sel_none">Select None</a></div>');
       for (i=0;i<sub_arr.length;i++) {
         sid = 'sub--'+sub_arr[i];
         $('#pd__sub-list').append('<div><input class=\'ind\' type=\'checkbox\' name=\''+sid+'\' id=\''+sid+'\'\'/><label class=\''+sid+'\' for=\''+sid+'\'>'+sub_arr[i]+'</label></div>');
@@ -73,306 +88,276 @@ var pdApp = {
       $('#side-mod-list li').each(function() {
         $('.sub--'+$(this).text().replace('/r/','')).prepend('<b class=\'m\'>[M]</b>');
       });
+    },
+    prepStream: function () {
+      window.pd_processing = true;
 
-      if (! localStorage.getItem('pd_storage')) {
-        $('#pd__sub-list input').prop('checked',true);
+      pdApp.process = {
+        after: '',
+
+        numPages:
+          ($('#pd__submissions').is(':checked') ? 2 : 0) +
+          ($('#pd__comments').is(':checked') ? 3 : 0),
+        numItems: 0,
+        donePages: 0,
+        doneItems: 0,
+
+        pageCalls: 0,
+        edited: 0,
+        deleted: 0,
+        ignored: 0,
+        errors: 0,
+
+        isRemovingPosts: $('#pd__submissions').is(':checked'),
+        isRemovingComments: $('#pd__comments').is(':checked'),
+        isEditing: $('#pd__comments-edit').is(':checked'),
+        editText: $('#pd__comments-edit-text').val(),
+        sectionsRemaining: $('#pd__submissions').is(':checked') ?
+          ['comments','submissions','search'] :
+          ['comments','search','submissions'], /* Search is actually more efficient than submissions if we're not handling submissions (`self:1`) */
+        itemArr: []
+      };
+      pdApp.process.numPages = Math.min(pdApp.process.numPages,3);
+
+      pdApp.endpoints = {
+        'comments': 'https://www.reddit.com/user/'+pdApp.config.user+'/comments/.json',
+        'submissions': 'https://www.reddit.com/user/'+pdApp.config.user+'/submitted/.json',
+        'search': 'https://www.reddit.com/search.json',
+      };
+
+      pdApp.filters = {
+        subs: $('#pd__subreddits').is(':checked'),
+        gilded: $('#pd__gilded').is(':checked'),
+        saved: $('#pd__saved').is(':checked'),
+        mod: $('#pd__mod').is(':checked')
+      };
+      if (pdApp.filters.subs) {
+        pdApp.filters.subList = [];
+        $('#pd__sub-list input:checked').each(function() {
+          pdApp.filters.subList.push($(this).next().text());
+        });
       }
     },
     bindUI: function() {
       $('.pd__q').click(function(e) {e.preventDefault(); alert($(this).closest('[data-help]').attr('data-help'));});
       $('#pd__form').submit(function(e) {
         e.preventDefault();
-        pdApp.saveSettings();
-        pdApp.process.init();
+        pdApp.setup.prepStream();
+        pdApp.actions.getPage();
+      });
+      $('#pd__form input').change(function() {
+        pdApp.helpers.saveSettings();
+      });
+      $('.mass_sel').click(function() {
+        if ($(this).hasClass('sel_all')) {
+          $('#pd__sub-list input').prop('checked',true);
+        } else {
+          $('#pd__sub-list input').prop('checked',false);
+        }
+        pdApp.helpers.saveSettings();
       });
     },
   },
-  getSettings: function () {
-    if (localStorage.getItem('pd_storage')) {
-      var i, temp_arr = JSON.parse(localStorage.getItem('pd_storage'));
-      $('#pd__form input').prop('checked',false).val('');
-      for (i=0;i<temp_arr.length;i++) {
-        if (temp_arr[i]['value'] == 'on' || temp_arr[i]['value'] === '') {
-          $('*[name=\''+temp_arr[i]['name']+'\']').prop('checked',true);
-        } else {
-          $('*[name=\''+temp_arr[i]['name']+'\']').val(temp_arr[i]['value']);
+  helpers: {
+    filterCheck: function (item) {
+      /* return true to perform actions on it */
+      function checkSubs()  {return !(pdApp.filters.subs && pdApp.filters.subList.indexOf(item.data.subreddit) >= 0);}
+      function checkGold()  {return !(pdApp.filters.gilded && item.data.gilded == 1);}
+      function checkSaved() {return !(pdApp.filters.saved && item.data.saved == true);}
+      function checkMod()   {return !(pdApp.filters.mod && item.data.distinguished == true);}
+      function newItem()    {return pdApp.ignore.indexOf(item.data.name) == -1;}
+      console.log(item.data.name,newItem() && checkSubs() && checkGold() && checkSaved() && checkMod(), newItem(), checkSubs(), checkGold(), checkSaved(), checkMod());
+      return newItem() && checkSubs() && checkGold() && checkSaved() && checkMod();
+    },
+    getSettings: function() {
+      return localStorage.getItem('pd_storage') ? JSON.parse(localStorage.getItem('pd_storage')) : false;
+    },
+    restoreSettings: function () {
+      var i, temp_arr = pdApp.helpers.getSettings();
+      if (temp_arr !== false) {
+        $('#pd__form input').prop('checked',false).val('');
+        for (i=0;i<temp_arr.length;i++) {
+          if (temp_arr[i]['value'] == 'on' || temp_arr[i]['value'] === '') {
+            $('*[name=\''+temp_arr[i]['name']+'\']').prop('checked',true);
+          } else {
+            $('*[name=\''+temp_arr[i]['name']+'\']').val(temp_arr[i]['value']);
+          }
+        }
+        if ($('#pd__subreddits:checked').length === 0) {
+          $('#pd__sub-list input:checked').prop('checked',true);
         }
       }
-      if ($('#pd__sub-list input:checked').length === 0) {
-        $('#pd__sub-list input:checked').prop('checked',true);
-      }
-    }
-  },
-  saveSettings: function () {
-    if ($('#pd__remember').is(':checked')) {
-      if (! $('#pd__subreddits').is(':checked')) {
-        $('#pd__sub-list input').prop('checked',false);
-      }
-      localStorage.setItem('pd_storage',JSON.stringify($('#pd__form').serializeArray()));
-    } else {
-      localStorage.removeItem('pd_storage');
-    }
-  },
-
-  process: {
-    init: function () {
-      window.pd_processing = true;
-      var temp_settings = $('#pd__form').serializeArray(),
-          settings_obj = {},
-          i;
-      settings_obj.subfilters = [];
-      for (i=0; i<temp_settings.length; i++) {
-        if (temp_settings[i]['name'].match('sub--')) {
-          settings_obj.subfilters.push(temp_settings[i]['name'].replace('sub--',''));
-        } else if (temp_settings[i]['name'] == 'pd__comments-edit-text') {
-          settings_obj[temp_settings[i]['name'].replace('pd__','')] = temp_settings[i]['value'];
-        } else {
-          settings_obj[temp_settings[i]['name'].replace('pd__','')] = true;
+    },
+    saveSettings: function() {
+      if ($('#pd__remember').is(':checked')) {
+        if (! $('#pd__subreddits').is(':checked')) {
+          $('#pd__sub-list input').prop('checked',false);
         }
-      }
-      pdApp.config.settings = settings_obj;
-      pdApp.processInfo = {
-        num_pages : 0,
-        done_pages: 0,
-        done_individual: 0,
-        num_individual: 0,
-        submission_pages: 0,
-        comment_pages: 0,
-        ajax_calls: 0,
-        after: false
-      };
-
-      if (settings_obj['submissions'] || settings_obj['comments-edit']) {
-        pdApp.processInfo.num_pages += 2;
-        pdApp.processInfo.submission_pages += 2;
-        pdApp.processInfo.checkSubmitted = true;
-        pdApp.processInfo.checkSearch = true;
-      }
-      if (settings_obj['comments'] || settings_obj['comments-edit']) {
-        pdApp.processInfo.num_pages ++;
-        pdApp.processInfo.comment_pages ++;
-        pdApp.processInfo.checkComments = true;
-      }
-
-      if (pdApp.processInfo.num_pages > 0) {
-        $('#pd__central form').hide();
-        $('#pd__central .processing').show();
-      }
-
-      if (pdApp.processInfo.submission_pages > 0) {
-        pdApp.process.submissions.init();
-      } else if (pdApp.processInfo.comment_pages > 0) {
-        pdApp.process.comments.init();
+        localStorage.setItem('pd_storage',JSON.stringify($('#pd__form').serializeArray()));
       } else {
-        alert('Well, there\'s nothing to do, so I guess we\'re done? Try enabling one of the actions next time!');
+        localStorage.removeItem('pd_storage');
       }
     },
+  },
+  actions: {
+    getPage: function () {
+      pdApp.ui.updateDisplay();
+      pdApp.process.pageCalls ++;
+
+      if (pdApp.process.sectionsRemaining.length > 0) {
+        $('#pd__central h2').first().text('Power Delete Suite v'+pdApp.version+' - '+pdApp.process.sectionsRemaining[0]);
+        $.ajax({
+          url: pdApp.endpoints[pdApp.process.sectionsRemaining[0]],
+          data: {
+            q: pdApp.process.sectionsRemaining[0] == 'search' ?
+              'author%3A'+pdApp.config.user + (! pdApp.process.isRemovingPosts ? '%20self%3A1' : '') :
+              null,
+            after: pdApp.process.after.length > 0 ? pdApp.process.after : null
+          }
+        }).then(function(resp) {
+          pdApp.process.donePages ++;
+          if (resp.data.children.length > 0) {
+            pdApp.process.numPages ++;
+            pdApp.process.doneItems = 0;
+            pdApp.process.numItems = resp.data.children.length;
+            pdApp.process.items = resp.data.children;
+            pdApp.actions.processItems();
+          } else {
+            pdApp.process.after = '';
+            pdApp.process.sectionsRemaining.splice(0,1);
+            pdApp.actions.getPage();
+          }
+        }, function(resp) {
+          pdApp.process.errors++;
+          console.error(resp);
+          if (! confirm('Error getting '+pdApp.process.sectionsRemaining[0]+' page. Would you like to retry?')) {
+            pdApp.process.sectionsRemaining.splice(0,1);
+          }
+          pdApp.actions.getPage();
+        });
+      } else {
+        pdApp.ui.done();
+      }
+    },
+    processItems: function () {
+      pdApp.ui.updateDisplay();
+      if (pdApp.process.items.length > 0) {
+        pdApp.actions.processItem(pdApp.process.items[0]);
+      } else {
+        pdApp.actions.getPage();
+      }
+    },
+    processItem: function (item) {
+      if (pdApp.helpers.filterCheck(item)) {
+        if ((item.data.is_self || item.kind == 't1') && pdApp.process.isEditing && ! item.pdEdited) {
+          pdApp.actions.edit(item);
+        } else if ((item.kind == 't3' && pdApp.process.isRemovingPosts) || (item.kind == 't1' && pdApp.process.isRemovingComments)) {
+          pdApp.actions.delete(item);
+        } else {
+          pdApp.process.doneItems ++;
+          pdApp.process.after = item.data.name;
+          pdApp.ignore.push(item.data.name);
+          pdApp.process.items.splice(0,1);
+          pdApp.actions.processItems();
+        }
+      } else {
+        pdApp.process.doneItems ++;
+        if (pdApp.ignore.indexOf(item.data.name) == -1) {
+          pdApp.process.ignored ++;
+        }
+        pdApp.process.after = item.data.name;
+        pdApp.ignore.push(item.data.name);
+        pdApp.process.items.splice(0,1);
+        pdApp.actions.processItems();
+      }
+    },
+    delete: function (item) {
+      $.ajax({
+        url: 'https://www.reddit.com/api/del',
+        method: 'post',
+        data: {
+          thing_id: item.data.name,
+          text: pdApp.process.editText,
+          id: '#form-'+item.data.name,
+          r: item.data.subreddit,
+          uh: pdApp.config.uh,
+          renderstyle: 'html'
+        }
+      }).then(function() {
+        pdApp.process.deleted ++;
+        pdApp.process.doneItems ++;
+        pdApp.ignore.push(item.data.name);
+        pdApp.process.items.splice(0,1);
+        pdApp.actions.processItems();
+      }, function () {
+        pdApp.process.errors++;
+        if (confirm('Error deleting '+(item.kind == 't3' ? 'post':'comment')+', would you like to retry?')) {
+          pdApp.actions.processItem(item);
+        } else {
+          pdApp.ignore.push(item.data.name);
+          pdApp.process.items.splice(0,1);
+          pdApp.actions.processItems();
+        }
+      });
+    },
+    edit: function (item) {
+      $.ajax({
+        url: 'https://www.reddit.com/api/editusertext',
+        method: 'post',
+        data: {
+          thing_id: item.data.name,
+          text: pdApp.process.editText,
+          id: '#form-'+item.data.name,
+          r: item.data.subreddit,
+          uh: pdApp.config.uh,
+          renderstyle: 'html'
+        }
+      }).then(function() {
+        pdApp.process.edited ++;
+        item.pdEdited = true;
+        pdApp.actions.processItem(item);
+      }, function () {
+        pdApp.process.errors++;
+        if (! confirm('Error editing '+(item.kind == 't3' ? 'post':'comment')+', would you like to retry?')) {
+          item.pdEdited = true;
+        }
+        pdApp.actions.processItem(item);
+      });
+    },
+  },
+  ui: {
     updateDisplay: function () {
-      if (pdApp.processInfo.num_pages<=pdApp.processInfo.done_pages) {
-        pdApp.processInfo.num_pages = pdApp.processInfo.done_pages + 1;
+      $('#pd__form').hide().next().show();
+      $('#progress_page .bar').css('width',(Math.round(1000*pdApp.process.donePages/pdApp.process.numPages)/10)+'%');
+      $('#progress_page .text').text(pdApp.process.donePages + ' / ' + pdApp.process.numPages);
+      if (pdApp.process.numItems > 0) {
+        $('#progress_item .bar').css('width',(Math.round(1000*pdApp.process.doneItems/pdApp.process.numItems)/10)+'%');
+        $('#progress_item .text').text(pdApp.process.doneItems + ' / ' + pdApp.process.numItems);
       }
-      $('#progress_page .bar').css('width',(Math.round(1000*pdApp.processInfo.done_pages/pdApp.processInfo.num_pages)/10)+'%');
-      $('#progress_page .text').text(pdApp.processInfo.done_pages + ' / ' + pdApp.processInfo.num_pages);
-      if (pdApp.processInfo.num_individual > 0) {
-        pdApp.processInfo.num_individual = Math.max(pdApp.processInfo.done_individual, pdApp.processInfo.num_individual);
-        $('#progress_item .bar').css('width',(Math.round(1000*pdApp.processInfo.done_individual/pdApp.processInfo.num_individual)/10)+'%');
-        $('#progress_item .text').text(pdApp.processInfo.done_individual + ' / ' + pdApp.processInfo.num_individual);
-      }
-
-      var main_percent = pdApp.processInfo.done_pages/pdApp.processInfo.num_pages,
-          main_diff = (pdApp.processInfo.done_pages+1)/pdApp.processInfo.num_pages - main_percent,
-          sub_percent = pdApp.processInfo.num_individual > 0 ? main_diff*(pdApp.processInfo.done_individual/(pdApp.processInfo.num_individual+1)) : 0;
-
-      main_percent += sub_percent;
-      document.title = pdApp.config.user + ' | ' + pdApp.processInfo.ajax_calls;
+      $('#progress_desc').html(
+        (pdApp.process.edited > 0 ? '<div>'+pdApp.process.edited + ' edited</div>' : '')+
+        (pdApp.process.deleted > 0 ? '<div>'+pdApp.process.deleted + ' deleted</div>' : '')+
+        (pdApp.process.ignored > 0 ? '<div>'+pdApp.process.ignored + ' ignored</div>' : '')+
+        (pdApp.process.errors > 0 ? '<div>'+pdApp.process.errors + ' errors</div>' : '')
+      );
+      pdApp.process.ajaxCalls = pdApp.process.edited + pdApp.process.deleted + pdApp.process.pageCalls;
+      document.title = pdApp.config.user + ' | ' + pdApp.process.ajaxCalls;
     },
-    submissions: {
-      init: function () {
-        if (pdApp.processInfo.checkSubmitted !== false) {
-          pdApp.process.submissions.checkSubmitted();
-        } else {
-          pdApp.process.submissions.checkSearch();
-        }
-      },
-      checkSubmitted: function () {
-        pdApp.process.updateDisplay();
-        pdApp.processInfo.ajax_calls ++;
-        $.ajax({
-          url: 'https://www.reddit.com/user/'+pdApp.config.user+'/submitted/.json'+(pdApp.processInfo.after ? '?after='+pdApp.processInfo.after : '')
-        }).then(function(resp) {
-          pdApp.processInfo.done_pages ++;
-          if (resp.data.children.length > 0) {
-            pdApp.processInfo.num_pages ++;
-            pdApp.process.handle.items(resp.data.children);
-          } else {
-            pdApp.processInfo.after = false;
-            pdApp.processInfo.checkSubmitted = false;
-            pdApp.process.submissions.checkSearch();
-          }
-        }, function(resp) {
-          console.error(resp);
-        });
-      },
-      checkSearch: function () {
-        pdApp.process.updateDisplay();
-        pdApp.processInfo.ajax_calls ++;
-        $.ajax({
-          url: 'https://www.reddit.com/search.json?q=author%3A'+pdApp.config.user+(pdApp.processInfo.after ? '&after='+pdApp.processInfo.after : '')
-        }).then(function(resp) {
-          pdApp.processInfo.done_pages ++;
-          if (resp.data.children.length > 0) {
-            pdApp.processInfo.num_pages ++;
-            pdApp.process.handle.items(resp.data.children);
-          } else {
-            pdApp.processInfo.after = false;
-            pdApp.processInfo.checkSearch = false;
-            pdApp.process.comments.init();
-          }
-        }, function(resp) {
-          console.error(resp);
-          pdApp.processInfo.done_pages ++;
-          alert('Reddit search is down at the moment, so the script may not catch every submission. You may want to rerun the script after at a later time when Reddit isn\'t under so much load.');
-          pdApp.processInfo.after = false;
-          pdApp.processInfo.checkSearch = false;
-          pdApp.process.comments.init();
-        });
-      }
-    },
-    comments: {
-      init: function () {
-        pdApp.process.comments.checkComments();
-      },
-      checkComments: function () {
-        pdApp.process.updateDisplay();
-        pdApp.processInfo.ajax_calls ++;
-        $.ajax({
-          url: 'https://www.reddit.com/user/'+pdApp.config.user+'/comments/.json'+(pdApp.processInfo.after ? '?after='+pdApp.processInfo.after : '')
-        }).then(function(resp) {
-          pdApp.processInfo.done_pages ++;
-          if (resp.data.children.length > 0) {
-            pdApp.processInfo.num_pages ++;
-            pdApp.process.handle.items(resp.data.children);
-          } else {
-            pdApp.processInfo.after = false;
-            pdApp.processInfo.checkComments = false;
-            pdApp.done();
-          }
-        }, function(resp) {
-          console.error(resp);
-        });
-      }
-    },
-    handle: {
-      items: function (data) {
-        pdApp.process.updateDisplay();
-        pdApp.processInfo.done_individual = 0;
-        pdApp.processInfo.num_individual = data.length;
-        pdApp.processInfo.pageSize = data.length;
-        pdApp.process.handle.item(data, false);
-      },
-      next: function (items,edited) {
-        pdApp.processInfo.done_individual++;
-        pdApp.process.updateDisplay();
-        pdApp.processInfo.after = items[0].data.name;
-        if (edited === false) {
-          items.shift();
-        }
-        if (items.length > 0) {
-          pdApp.process.handle.item(items,edited);
-        } else {
-          pdApp.process.updateDisplay();
-          if (pdApp.processInfo.checkSubmitted !== false) {
-            pdApp.process.submissions.checkSubmitted();
-          } else if (pdApp.processInfo.checkSearch !== false) {
-            pdApp.process.submissions.checkSearch();
-          } else if (pdApp.processInfo.checkComments !== false) {
-            pdApp.process.comments.checkComments();
-          } else {
-            pdApp.done();
-          }
-        }
-      },
-      item : function (items,edited) {
-        var settings = pdApp.config.settings,
-          item = items[0];
-
-        if (!settings.subreddits || (settings.subfilters.indexOf(item.data.subreddit) >= 0)) {
-          if (!settings.gilded || item.data.gilded === 0) {
-            if (!settings.saved || item.data.saved === false) {
-              if (!settings.mod || !item.data.distinguished) {
-                if ((edited === false && settings['comments-edit']) && (item.kind === 't1' || item.data.is_self)) {
-                  pdApp.processInfo.ajax_calls ++;
-                  $.ajax({
-                    url: 'https://www.reddit.com/api/editusertext',
-                    method: 'post',
-                    data: {
-                      thing_id: item.data.name,
-                      text: settings['comments-edit-text'],
-                      id: '#form-'+item.data.name,
-                      r: item.data.subreddit,
-                      uh: pdApp.config.uh,
-                      renderstyle: 'html'
-                    }
-                  }).then(function() {
-                    if (settings['comments'] || settings['submissions']) {
-                      pdApp.process.handle.next(items,true);
-                    } else {
-                      pdApp.process.handle.next(items,false);
-                    }
-                  }, function (resp) {
-                    console.error(resp);
-                    if (confirm('Error editing item. Retry?')) {
-                      pdApp.process.handle.item(items,edited);
-                    } else {
-                      pdApp.process.handle.next(items,false); 
-                    }
-                  });
-                } else if (settings['comments'] || settings['submissions']) {
-                  pdApp.processInfo.ajax_calls ++;
-                  $.ajax({
-                    url: 'https://www.reddit.com/api/del',
-                    method: 'post',
-                    data: {
-                      id: item.data.name,
-                      executed: 'deleted',
-                      uh: pdApp.config.uh,
-                      renderstyle: 'html'
-                    }
-                  }).then(function() {
-                    pdApp.process.handle.next(items,false);
-                  }, function (resp) {
-                    console.error(resp);
-                    if (confirm('Error deleting item. Retry?')) {
-                      pdApp.process.handle.item(items,edited);
-                    } else {
-                      pdApp.process.handle.next(items,false);
-                    }
-                  });
-                  pdApp.process.handle.next(items,false);
-                } else {
-                  pdApp.process.handle.next(items,false);
-                }
-              } else {
-                pdApp.process.handle.next(items,false);
-              }
-            } else {
-              pdApp.process.handle.next(items,false);
-            }
-          } else {
-            pdApp.process.handle.next(items,false);
-          }
-        } else {
-          pdApp.process.handle.next(items,false);
-        }
-      }
+    done: function () {
+      window.pd_processing = false;
+      $('#pd__central h2').first().text('Power Delete Suite v'+pdApp.version);
+      $('#pd__central .processing').html(
+        '<p>Completed after making '+pdApp.process.ajaxCalls+' calls to the reddit servers.</p>'+
+        (pdApp.process.edited > 0 ? '<div class="ind">'+pdApp.process.edited + ' edited</div>' : '')+
+        (pdApp.process.deleted > 0 ? '<div class="ind">'+pdApp.process.deleted + ' deleted</div>' : '')+
+        (pdApp.process.ignored > 0 ? '<div class="ind">'+pdApp.process.ignored + ' ignored</div>' : '')+
+        (pdApp.process.errors > 0 ? '<div class="ind">'+pdApp.process.errors + ' errors</div>' : '')+
+        '<p>If you need to re run the script, just click the bookmarklet again!</p>'
+      );
+      document.title = $('#header-bottom-right .user a').first().text()+' | Power Delete Suite';
     }
   },
-  done: function () {
-    window.pd_processing = false;
-    $('#pd__central .processing').html('');
-    $('#pd__central .processing').append('<p>Completed after making '+pdApp.processInfo.ajax_calls+' calls to the reddit servers.</p>');
-    $('#pd__central .processing').append('<p>If you need to re run the script, just click the bookmarklet again!</p>');
-    document.title = $('#header-bottom-right .user a').first().text()+' | Power Delete Suite';
-  }
+  filters: {},
+  ignore: [] /* list of items we've already done */
 };
 pdApp.init();
