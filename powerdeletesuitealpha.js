@@ -208,7 +208,7 @@ var pdApp = {
           url: pdApp.endpoints[pdApp.process.sectionsRemaining[0]],
           data: {
             q: pdApp.process.sectionsRemaining[0] == 'search' ?
-              'author%3A'+pdApp.config.user + (! pdApp.process.isRemovingPosts ? '%20self%3A1' : '') :
+              'author:'+pdApp.config.user + (! pdApp.process.isRemovingPosts ? ' self:1' : '') :
               null,
             after: pdApp.process.after.length > 0 ? pdApp.process.after : null
           }
@@ -246,6 +246,7 @@ var pdApp = {
       }
     },
     processItem: function (item) {
+      pdApp.ui.updateDisplay();
       if (pdApp.helpers.filterCheck(item)) {
         if ((item.data.is_self || item.kind == 't1') && pdApp.process.isEditing && ! item.pdEdited) {
           pdApp.actions.edit(item);
