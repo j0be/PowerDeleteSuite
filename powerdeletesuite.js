@@ -1,5 +1,5 @@
 var pdApp = {
-  version: '1.2.0',
+  version: '1.2.1',
   init : function() {
     /* version alerts */
     pdApp.prevRunVersion = localStorage.getItem('pd_ver') ? localStorage.getItem('pd_ver') : '0';
@@ -134,7 +134,9 @@ var pdApp = {
       if (pdApp.filters.subs) {
         pdApp.filters.subList = [];
         $('#pd__sub-list input:checked').each(function() {
-          pdApp.filters.subList.push($(this).next().text());
+          var el = $(this).next().clone();
+          el.find('b').remove();
+          pdApp.filters.subList.push(el.text());
         });
       }
     },
@@ -161,7 +163,7 @@ var pdApp = {
   helpers: {
     filterCheck: function (item) {
       /* return true to perform actions on it */
-      function checkSubs()  {return !(pdApp.filters.subs && pdApp.filters.subList.indexOf(item.data.subreddit) >= 0);}
+      function checkSubs()  {return !pdApp.filters.subs || (pdApp.filters.subs && pdApp.filters.subList.indexOf(item.data.subreddit) >= 0);}
       function checkGold()  {return !(pdApp.filters.gilded && item.data.gilded == 1);}
       function checkSaved() {return !(pdApp.filters.saved && item.data.saved == true);}
       function checkMod()   {return !(pdApp.filters.mod && item.data.distinguished == true);}
