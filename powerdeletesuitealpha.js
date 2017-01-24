@@ -165,9 +165,7 @@ var pdApp = {
       function checkGold()  {return !(pdApp.filters.gilded && item.data.gilded == 1);}
       function checkSaved() {return !(pdApp.filters.saved && item.data.saved == true);}
       function checkMod()   {return !(pdApp.filters.mod && item.data.distinguished == true);}
-      function newItem()    {return pdApp.ignore.indexOf(item.data.name) == -1;}
-      console.log(item.data.name,newItem() && checkSubs() && checkGold() && checkSaved() && checkMod(), newItem(), checkSubs(), checkGold(), checkSaved(), checkMod());
-      return newItem() && checkSubs() && checkGold() && checkSaved() && checkMod();
+      return checkSubs() && checkGold() && checkSaved() && checkMod();
     },
     getSettings: function() {
       return localStorage.getItem('pd_storage') ? JSON.parse(localStorage.getItem('pd_storage')) : false;
@@ -256,17 +254,13 @@ var pdApp = {
         } else {
           pdApp.process.doneItems ++;
           pdApp.process.after = item.data.name;
-          pdApp.ignore.push(item.data.name);
           pdApp.process.items.splice(0,1);
           pdApp.actions.processItems();
         }
       } else {
         pdApp.process.doneItems ++;
-        if (pdApp.ignore.indexOf(item.data.name) == -1) {
-          pdApp.process.ignored ++;
-        }
+        pdApp.process.ignored ++;
         pdApp.process.after = item.data.name;
-        pdApp.ignore.push(item.data.name);
         pdApp.process.items.splice(0,1);
         pdApp.actions.processItems();
       }
@@ -276,17 +270,14 @@ var pdApp = {
         url: 'https://www.reddit.com/api/del',
         method: 'post',
         data: {
-          thing_id: item.data.name,
-          text: pdApp.process.editText,
-          id: '#form-'+item.data.name,
-          r: item.data.subreddit,
+          id: item.data.name,
+          executed: 'deleted',
           uh: pdApp.config.uh,
           renderstyle: 'html'
         }
       }).then(function() {
         pdApp.process.deleted ++;
         pdApp.process.doneItems ++;
-        pdApp.ignore.push(item.data.name);
         pdApp.process.items.splice(0,1);
         pdApp.actions.processItems();
       }, function () {
@@ -294,7 +285,6 @@ var pdApp = {
         if (confirm('Error deleting '+(item.kind == 't3' ? 'post':'comment')+', would you like to retry?')) {
           pdApp.actions.processItem(item);
         } else {
-          pdApp.ignore.push(item.data.name);
           pdApp.process.items.splice(0,1);
           pdApp.actions.processItems();
         }
@@ -358,6 +348,5 @@ var pdApp = {
     }
   },
   filters: {},
-  ignore: [] /* list of items we've already done */
 };
 pdApp.init();
