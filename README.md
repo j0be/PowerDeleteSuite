@@ -5,7 +5,7 @@
  1. It was built by /u/j0be, a well known reddit user with a long reddit history and moderates several large subreddits
  2. There is complete privacy built in. There are no callbacks to any personal servers, no tracking, or logging. You are completely anonymous.
  3. There is NO NEED to use never ending reddit to load as many comments / submissions. This script uses the actual Reddit API endpoints to edit and delete instead of automating clicks on delete and edit buttons. 
- 4. It's pretty damn thorough. It will first load your submissions page(s), then do searches with the reddit search api, then load up your comments page(s). This makes sure to grab everything it can possibly find.
+ 4. It's pretty damn thorough. It will first load up your comments page(s), then load your submissions page(s), then do searches with the reddit search api. With EACH of those, it sorts by new, then hot, then top, then controversial. This makes sure to grab everything it can possibly find.
  5. It has FILTERS! You can make choices about what you want deleted. Filters include:
   * choosing which subreddits to perform actions in
   * excluding gilded comments and posts
