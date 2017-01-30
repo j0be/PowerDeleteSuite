@@ -217,9 +217,10 @@ var pdApp = {
         $(this).attr('class','gt-toggle hidden ' + ($(this).hasClass('greater') ? 'less' : 'greater'));
       });
 
-      $('.num-only').change(function() {
+      $('.num-only').blur(function() {
         $(this).val($(this).val().replace(/[^\d-]/g,''));
-      }).keypress(function() {$(this).change(); });
+        $(this).change();
+      });
     },
   },
   helpers: {
