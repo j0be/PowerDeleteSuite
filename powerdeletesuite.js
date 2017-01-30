@@ -1,5 +1,5 @@
 var pdApp = {
-  version: '1.2.3.1',
+  version: '1.2.3',
   bookmarkver: '1.1',
   init : function() {
     pdApp.checkVersions();
@@ -229,7 +229,7 @@ var pdApp = {
       function checkGold()  {return !(pdApp.filters.gilded && item.data.gilded == 1);}
       function checkSaved() {return !(pdApp.filters.saved && item.data.saved == true);}
       function checkMod()   {return !(pdApp.filters.mod && item.data.distinguished == true);}
-      function checkScore() {return !(pdApp.filters.score && (
+      function checkScore() {return (pdApp.filters.score && (
         (pdApp.filters.score_gt === true && parseFloat(item.data.score) > pdApp.filters.score_num) ||
         (pdApp.filters.score_gt === false && parseFloat(item.data.score) < pdApp.filters.score_num)
       ));}
