@@ -1,5 +1,5 @@
 var pdApp = {
-  version: '1.2.3',
+  version: '1.2.3.1',
   bookmarkver: '1.1',
   init : function() {
     pdApp.checkVersions();
@@ -147,7 +147,7 @@ var pdApp = {
 
       pdApp.endpoints = {
         'comments': '/user/'+pdApp.config.user+'/comments/.json',
-        'submissions': '/'+pdApp.config.user+'/submitted/.json',
+        'submissions': '/user/'+pdApp.config.user+'/submitted/.json',
         'search': '/search.json',
       };
 
