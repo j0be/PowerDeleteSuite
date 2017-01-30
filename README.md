@@ -8,6 +8,7 @@
  4. It's pretty damn thorough. It will first load up your comments page(s), then load your submissions page(s), then do searches with the reddit search api. With EACH of those, it sorts by new, then hot, then top, then controversial. This makes sure to grab everything it can possibly find.
  5. It has FILTERS! You can make choices about what you want deleted. Filters include:
   * choosing which subreddits to perform actions in
+  * filtering based on the item's score
   * excluding gilded comments and posts
   * excluding saved comments and posts
   * excluding mod distinguished comments and posts
