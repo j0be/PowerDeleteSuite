@@ -1,76 +1,84 @@
-var pdApp = {
-  version: '1.2.3',
+var pd = {
+  version: '1.3.0',
   bookmarkver: '1.1',
   init : function() {
-    pdApp.checkVersions();
-
+    pd.checks.versions();
     if (window.pd_processing !== true) {
-      document.title = $('#header-bottom-right .user a').first().text()+' | Power Delete Suite';
-      if (document.location.hostname.split('.').slice(-2).join('.') == 'reddit.com' &&
-          document.location.href.match('/user/') &&
-          $('.titlebox h1').first().text() === $('#header-bottom-right .user a').first().text()) {
-        pdApp.config = {
-          uh : $('#config').innerHTML ?
-            $('#config').innerHTML.replace(/.*?modhash.{1}: .{1}/,'').replace(/[^a-z0-9].*/,'') :
-            $('#config')[0].innerHTML.replace(/.*?modhash.{1}: .{1}/,'').replace(/[^a-z0-9].*/,''),
-          user : $('#header-bottom-right .user a').first().text()
-        };
-        pdApp.setup.prepDom();
+      if (pd.checks.location()) {
+        $('#pd__central').find('.complete,.processing').hide();
+        $('#pd__form').show();
+        pd.setup.basicSettings();
+        pd.setup.applyDom();
       } else {
         if (confirm('This script is designed to be run from your own user profile. Would you like to navigate there?')) {
           document.location = 'http://reddit.com/u/me';
         }
       }
-      setTimeout(pdApp.helpers.restoreSettings,500);
-      return pdApp.version;
-    } else {
-      return 'PowerDeleteSuite is already running';
     }
   },
-  checkVersions: function () {
-    if (pdApp.debugging) {
-      return true;
-    }
-    /* version alerts */
-    if (typeof window.bookmarkver === 'undefined' || window.bookmarkver !== pdApp.bookmarkver) {
-      if (confirm('There\'s been an update to the bookmarklet. Would you like to go to the Github repo in order to get the latest version?')) {
-        document.location.href = 'https://github.com/j0be/PowerDeleteSuite';
-        return false;
+  checks: {
+    versions: function () {
+      function checkBookmarkletVersion() {
+        if (typeof window.bookmarkver === 'undefined' || window.bookmarkver !== pd.bookmarkver) {
+          if (confirm('There\'s been an update to the bookmarklet. Would you like to go to the Github repo in order to get the latest version?')) {
+            document.location.href = 'https://github.com/j0be/PowerDeleteSuite';
+            return false;
+          }
+        }
+        return true;
       }
-    }
-    pdApp.prevRunVersion = localStorage.getItem('pd_ver') ? localStorage.getItem('pd_ver') : '0';
-    localStorage.setItem('pd_ver',pdApp.version);
-    if (pdApp.version !== pdApp.prevRunVersion) {
-      if (confirm('You\'ve gotten the latest update! You are now running PowerDeleteSuite v'+pdApp.version+'. Would you like to open the changelog in a new tab?')) {
-        $.ajax({
-          url: '/r/PowerDeleteSuite/new.json'
-        }).then(function(data) {
-          window.open('http://reddit.com'+data.data.children[0].data.permalink);
-        }, function() {
-          window.open('http://reddit.com/r/PowerDeleteSuite');
-        });
+      function checkAppVersion() {
+        pd.prevRunVersion = localStorage.getItem('pd_ver') ? localStorage.getItem('pd_ver') : '0';
+        localStorage.setItem('pd_ver',pd.version);
+        if (pd.version !== pd.prevRunVersion) {
+          if (confirm('You\'ve gotten the latest update! You are now running PowerDeleteSuite v'+pd.version+'. Would you like to open the changelog in a new tab?')) {
+            $.ajax({url: '/r/PowerDeleteSuite/new.json'}).then(function(data) {
+              window.open('http://reddit.com'+data.data.children[0].data.permalink);
+            }, function() {
+              window.open('http://reddit.com/r/PowerDeleteSuite');
+            });
+          }
+        }
+        return true;
       }
+      return pd.debugging || (checkBookmarkletVersion() && checkAppVersion());
+    },
+    location: function () {
+      return document.location.hostname.split('.').slice(-2).join('.') == 'reddit.com' &&
+          document.location.href.match('/user/') &&
+          $('.titlebox h1').first().text() === $('#header-bottom-right .user a').first().text();
     }
   },
   setup: {
-    prepDom: function () {
-      window.onerror = function() {
-        window.pd_processing = false;
-        alert('We ran into an error. Why not tell /u/j0be what you were doing to break it?');
-        pdApp.init();
+    basicSettings: function () {
+      pd.config = {
+        uh : $('#config').innerHTML ?
+          $('#config').innerHTML.replace(/.*?modhash.{1}: .{1}/,'').replace(/[^a-z0-9].*/,'') :
+          $('#config')[0].innerHTML.replace(/.*?modhash.{1}: .{1}/,'').replace(/[^a-z0-9].*/,''),
+        user : $('#header-bottom-right .user a').first().text()
       };
+      pd.endpoints = {
+        'comments': '/user/'+pd.config.user+'/comments/.json',
+        'submissions': '/user/'+pd.config.user+'/submitted/.json',
+        'search': '/search.json',
+      };
+    },
+    applyDom: function () {
+      if (pd.debugging) {$('#pd__central,#pd__style').remove('');}
+      document.title = pd.config.user +' | Power Delete Suite';
+      window.onerror = pd.error;
+
       $('.sitetable,.neverEndingReddit').remove();
-      if (pdApp.debugging) {$('#pd__central,#pd__style').remove('');}
       if ($('#pd__central').length === 0) {
         $('body>.content[role=\'main\']').append('<div id=\'pd__central\' />');
       }
       if ($('#pd__style').length === 0) {
         $('head').first().append('<style id=\'pd__style\' />');
       }
-      pdApp.setup.prepStyles();
-      pdApp.setup.prepCentral();
+      pd.setup.applyStyles();
+      pd.setup.applyCentral();
     },
-    prepStyles: function () {
+    applyStyles: function () {
       $.ajax({
         url: '/r/PowerDeleteSuite/about/stylesheet/.json',
         context: $('#pd__style')
@@ -81,7 +89,7 @@ var pdApp = {
         alert('Error retreiving CSS from /r/PowerDeleteSuite');
       });
     },
-    prepCentral: function () {
+    applyCentral: function () {
       $.ajax({
         url: '/r/PowerDeleteSuite/wiki/centralform.json',
         context: $('#pd__central')
@@ -90,14 +98,15 @@ var pdApp = {
         if ($('#pd__stlye').html() === '') {
           $(this).hide();
         }
-        $(this).find('h2').first().text('Power Delete Suite v'+pdApp.version);
-        pdApp.setup.prepSubs();
-        pdApp.setup.bindUI();
+        $(this).find('h2').first().text('Power Delete Suite v'+pd.version);
+        pd.setup.applySubList();
+        pd.setup.bindUI();
+        pd.helpers.restoreSettings();
       }, function() {
         alert('Error retreiving markup from /r/PowerDeleteSuite');
       });
     },
-    prepSubs: function () {
+    applySubList: function () {
       var sub_arr = [], i, sid;
       $('#per-sr-karma tbody th').each(function () {
         sub_arr.push($(this).text());
@@ -108,115 +117,98 @@ var pdApp = {
       $('#pd__sub-list').append('<div><a class="ind mass_sel sel_all">Select All</a><a class="ind mass_sel sel_none">Select None</a></div>');
       for (i=0;i<sub_arr.length;i++) {
         sid = 'sub--'+sub_arr[i];
-        $('#pd__sub-list').append('<div><input class=\'ind\' type=\'checkbox\' name=\''+sid+'\' id=\''+sid+'\'\'/><label class=\''+sid+'\' for=\''+sid+'\'>'+sub_arr[i]+'</label></div>');
+        $('#pd__sub-list').append('<div><input class=\'ind\' data-sub=\''+sub_arr[i]+'\' type=\'checkbox\' name=\''+sid+'\' id=\''+sid+'\'\'/><label class=\''+sid+'\' for=\''+sid+'\'>'+sub_arr[i]+'</label></div>');
       }
       $('#side-mod-list li').each(function() {
         $('.sub--'+$(this).text().replace('/r/','')).prepend('<b class=\'m\'>[M]</b>');
       });
     },
-    prepStream: function () {
+    createProcessStream: function () {
       window.pd_processing = true;
-
-      pdApp.process = {
+      pd.task = {
         after: '',
+        info: {
+          numPages:
+            Math.min((
+                ($('#pd__submissions').is(':checked') ? 8 : 0) +
+                ($('#pd__comments').is(':checked') ? 4 : 0) +
+                ($('#pd__comments-edit').is(':checked') ? 12 : 0)
+              ),12),
+          numItems: 0,
+          donePages: 0,
+          doneItems: 0,
 
-        numPages:
-          ($('#pd__submissions').is(':checked') ? 8 : 0) +
-          ($('#pd__comments').is(':checked') ? 4 : 0) +
-          ($('#pd__comments-edit').is(':checked') ? 12 : 0),
-        numItems: 0,
-        donePages: 0,
-        doneItems: 0,
-
-        pageCalls: 0,
-        edited: 0,
-        deleted: 0,
-        ignored: 0,
-        errors: 0,
-
-        isRemovingPosts: $('#pd__submissions').is(':checked'),
-        isRemovingComments: $('#pd__comments').is(':checked'),
-        isEditing: $('#pd__comments-edit').is(':checked'),
-        editText: $('#pd__comments-edit-text').val(),
-        sectionsRemaining: $('#pd__submissions').is(':checked') ?
-          ['comments','submissions','search'] :
-          ['comments','search','submissions'], /* Search is actually more efficient than submissions if we're not handling submissions (`self:1`) */
-        itemArr: []
+          pageCalls: 0,
+          edited: 0,
+          deleted: 0,
+          errors: 0,
+          ignored: 0,
+          ignoreReasons: {
+            subs: 0,
+            gold: 0,
+            saved: 0,
+            mod: 0,
+            score: 0,
+          }
+        },
+        config: {
+          isRemovingPosts: $('#pd__submissions').is(':checked'),
+          isRemovingComments: $('#pd__comments').is(':checked'),
+          isEditing: $('#pd__comments-edit').is(':checked'),
+          editText: $('#pd__comments-edit-text').val(),
+        },
+        paths: {
+          sections: $('#pd__submissions').is(':checked') ?
+            ['comments','submissions','search'] :
+            ['comments','search','submissions'], /* Search is actually more efficient than submissions if we're not handling submissions (`self:1`) */
+          sorts : ['new','hot','top','controversial']
+        }
       };
-      pdApp.process.numPages = Math.min(pdApp.process.numPages,12);
-
-      pdApp.endpoints = {
-        'comments': '/user/'+pdApp.config.user+'/comments/.json',
-        'submissions': '/user/'+pdApp.config.user+'/submitted/.json',
-        'search': '/search.json',
-      };
-
-      pdApp.filters = {
-        subs: $('#pd__subreddits').is(':checked'),
+      pd.filters = {
+        subs: {
+          enabled: $('#pd__subreddits').is(':checked'),
+          list: $('#pd__sub-list input' + ($('#pd__subreddits').is(':checked') ? ':checked' : '')).map(function() {return $(this).attr('data-sub');})
+        },
+        score: {
+          enabled: $('#pd__score').is(':checked'),
+          gt: $('#pd__score-dirtoggle').is(':checked'),
+          num: parseFloat($('#pd__score-num').val())
+        },
         gilded: $('#pd__gilded').is(':checked'),
         saved: $('#pd__saved').is(':checked'),
         mod: $('#pd__mod').is(':checked'),
-        score: $('#pd__score').is(':checked'),
-        score_gt: $('#pd__score-dirtoggle').is(':checked'),
-        score_num: parseFloat($('#pd__score-num').val()),
-        date: $('#pd__date').is(':checked'),
-        date_gt: $('#pd__date-dirtoggle').is(':checked'),
-        date_num: parseFloat($('#pd__date-num').val()),
       };
-      if (pdApp.filters.subs) {
-        pdApp.filters.subList = [];
-        $('#pd__sub-list input:checked').each(function() {
-          var el = $(this).next().clone();
-          el.find('b').remove();
-          pdApp.filters.subList.push(el.text());
-        });
-      }
-      pdApp.setup.resetSorts();
-
-      /* Validation */
-      if (pdApp.process.isEditing && pdApp.process.editText === '') {
-        return 'Please enter something to edit your comments / self posts to.';
-      }
-      if (pdApp.filters.score && $('#pd_score-num').val() === '') {
-        return 'Please enter a score to filter with.';
-      }
-      if (!(pdApp.process.isRemovingPosts || pdApp.process.isEditing || pdApp.process.isEditing)) {
-        return 'There are no actions chosen, so we\'ve got nothing to do. Please select an action.';
-      }
-      return true;
     },
     resetSorts: function () {
-      pdApp.sorts = ['new','hot','top','controversial'];
+      pd.task.paths.sections = ['new','hot','top','controversial'];
     },
     bindUI: function() {
-      $('.pd__q').click(function(e) {e.preventDefault(); alert($(this).closest('[data-help]').attr('data-help'));});
       $('#pd__form').submit(function(e) {
         e.preventDefault();
-        var reason = pdApp.setup.prepStream();
-        if (reason === true) {
-          pdApp.actions.getPage();
+        pd.setup.createProcessStream();
+        var validation = pd.helpers.validate();
+        window.pd_processing = validation.valid;
+        if (validation.valid) {
+          $('#pd__central .complete, #pd__form').hide();
+          $('#pd__central .processing').show();
+          pd.actions.page.next();
         } else {
-          window.pd_processing = false;
-          alert(reason);
+          alert(validation.reason);
         }
       });
+      $('.pd__q').click(function(e) {e.preventDefault(); alert($(this).closest('[data-help]').attr('data-help'));});
       $('#pd__form input').change(function() {
-        pdApp.helpers.saveSettings();
+        pd.helpers.saveSettings();
       });
       $('.mass_sel').click(function() {
-        if ($(this).hasClass('sel_all')) {
-          $('#pd__sub-list input').prop('checked',true);
-        } else {
-          $('#pd__sub-list input').prop('checked',false);
-        }
-        pdApp.helpers.saveSettings();
+        $(this).closest('.xtr-section').find('input').prop('checked',$(this).hasClass('sel_all'));
+        pd.helpers.saveSettings();
       });
-
       $('.gt-toggle').change(function() {
-        $(this).next('label').text($(this).hasClass('greater') ? 'Less than' : 'Greater than');
-        $(this).attr('class','gt-toggle hidden ' + ($(this).hasClass('greater') ? 'less' : 'greater'));
+        var greaterThan = $(this).hasClass('greater');
+        $(this).next('label').text(greaterThan ? 'Less than' : 'Greater than');
+        $(this).attr('class','gt-toggle hidden ' + (greaterThan ? 'less' : 'greater'));
       });
-
       $('.num-only').blur(function() {
         $(this).val($(this).val().replace(/[^\d-]/g,''));
         $(this).change();
@@ -224,41 +216,52 @@ var pdApp = {
     },
   },
   helpers: {
-    filterCheck: function (item) {
-      /* return true to perform actions on it */
-      function checkSubs()  {return !pdApp.filters.subs || (pdApp.filters.subs && pdApp.filters.subList.indexOf(item.data.subreddit) >= 0);}
-      function checkGold()  {return !(pdApp.filters.gilded && item.data.gilded == 1);}
-      function checkSaved() {return !(pdApp.filters.saved && item.data.saved == true);}
-      function checkMod()   {return !(pdApp.filters.mod && item.data.distinguished == true);}
-      function checkScore() {return (pdApp.filters.score && (
-        (pdApp.filters.score_gt === true && parseFloat(item.data.score) > pdApp.filters.score_num) ||
-        (pdApp.filters.score_gt === false && parseFloat(item.data.score) < pdApp.filters.score_num)
-      ));}
-
-      return checkScore() && checkSubs() && checkGold() && checkSaved() && checkMod();
+    validate: function () {
+      if (pd.task.config.isEditing && pd.task.config.editText === '') {
+        return {valid:false,reason:'Please enter something to edit your comments / self posts to.'};
+      } else if (pd.filters.score && $('#pd_score-num').val() === '') {
+        return {valid:false,reason:'Please enter a score to filter with.'};
+      } else if (!(pd.task.config.isRemovingPosts || pd.task.config.isEditing || pd.task.config.isEditing)) {
+        return {valid:false,reason:'There are no actions chosen, so we\'ve got nothing to do. Please select an action.'};
+      }
+      return {valid:true,reason:'valid'};
+    },
+    shouldBeActedOn: function (item) {
+      var check = {
+        subs: !pd.filters.subs.enabled ||
+          (pd.filters.subs.enabled && $.inArray(item.data.subreddit,pd.filters.subs.list) >= 0),
+        gold: !(pd.filters.gilded && item.data.gilded == 1),
+        saved: !(pd.filters.saved && item.data.saved == true),
+        mod: !(pd.filters.mod && item.data.distinguished != null),
+        score: !pd.filters.score.enabled ||
+          (pd.filters.score.enabled && (
+            (pd.filters.score.gt === true && parseFloat(item.data.score) > pd.filters.score.num) ||
+            (pd.filters.score.gt === false && parseFloat(item.data.score) < pd.filters.score.num)
+          ))
+      };
+      for(var key in check) {if (! check[key]) {
+          pd.task.info.ignoreReasons[key] ++;
+      }}
+      return check.subs && check.gold && check.saved && check.mod && check.score;
     },
     getSettings: function() {
       return localStorage.getItem('pd_storage') ? JSON.parse(localStorage.getItem('pd_storage')) : false;
     },
     restoreSettings: function () {
-      var i, temp_arr = pdApp.helpers.getSettings();
-      if (temp_arr !== false && $('#pd__remember').is(':checked')) {
-        $('#pd__form input').prop('checked',false).val('');
-        for (i=0;i<temp_arr.length;i++) {
-          if (temp_arr[i]['value'] == 'on' || temp_arr[i]['value'] === '') {
-            $('*[name=\''+temp_arr[i]['name']+'\']').prop('checked',true);
+      var settings = pd.helpers.getSettings(),
+        rememberSettings = $('#pd__remember').is(':checked');
+      if (settings !== false && rememberSettings) {
+        $('#pd__form input').prop('checked',false).val(''); //Reset all
+        for (var i=0;i<settings.length;i++) {
+          var setting = settings[i],
+            selector = '*[name=\''+setting.name+'\']';
+          if (setting.value == 'on' || setting.value === '') {
+            $(selector).prop('checked',true);
           } else {
-            $('*[name=\''+temp_arr[i]['name']+'\']').val(temp_arr[i]['value']);
+            $(selector).val(setting.value);
           }
         }
-        if ($('#pd__subreddits:checked').length === 0) {
-          $('#pd__sub-list input:checked').prop('checked',true);
-        }
-        $('.gt-toggle').each(function() {
-          if (! $(this).is(':checked')) {
-            $(this).change();
-          }
-        });
+        $('.gt-toggle').not(':checked').change();
       }
     },
     saveSettings: function() {
@@ -273,163 +276,234 @@ var pdApp = {
     },
   },
   actions: {
-    getPage: function () {
-      pdApp.ui.updateDisplay();
-      pdApp.process.pageCalls ++;
-
-      if (pdApp.process.sectionsRemaining.length > 0) {
-        $('#pd__central h2').first().html('Power Delete Suite v'+pdApp.version+' <br/><small>'+pdApp.process.sectionsRemaining[0]+'/'+pdApp.sorts[0]+'</small>');
+    page: {
+      next: function() {
+        if (pd.task.paths.sections.length > 0 && !(pd.debugging && pd.task.info.donePages > 19)) {
+          pd.ui.updateDisplay();
+          pd.actions.page.handle();
+        } else {
+          pd.ui.done();
+        }
+      },
+      shift: function () {
+        pd.task.paths.sorts.splice(0,1);
+        if (pd.task.paths.sorts.length === 0) {
+          pd.setup.resetSorts();
+          pd.task.paths.sections.splice(0,1);
+        }
+      },
+      handle: function() {
+        pd.task.pageCalls ++;
         $.ajax({
-          url: pdApp.endpoints[pdApp.process.sectionsRemaining[0]],
+          url: pd.endpoints[pd.task.paths.sections[0]],
           data: {
-            q: pdApp.process.sectionsRemaining[0] == 'search' ?
-              'author:'+pdApp.config.user + (! pdApp.process.isRemovingPosts ? ' self:1' : '') :
+            q: pd.task.paths.sections[0] == 'search' ?
+              'author:'+pd.config.user + (! pd.task.isRemovingPosts ? ' self:1' : '') :
               null,
-            after: pdApp.process.after.length > 0 ? pdApp.process.after : null,
-            sort: pdApp.sorts[0]
+            after: pd.task.after,
+            sort: pd.task.paths.sorts[0]
           }
         }).then(function(resp) {
-          pdApp.process.donePages ++;
-          if (resp.data.children.length > 0) {
-            pdApp.process.numPages ++;
-            pdApp.process.doneItems = 0;
-            pdApp.process.numItems = resp.data.children.length;
-            pdApp.process.items = resp.data.children;
-            pdApp.actions.processItems();
-          } else {
-            pdApp.process.after = '';
-            if (pdApp.sorts.length == 1) {
-              pdApp.setup.resetSorts();
-              pdApp.process.sectionsRemaining.splice(0,1);
+          if (resp.data) {
+            var children = resp.data.children;
+            pd.task.info.donePages ++;
+            if (children.length > 0) {
+              pd.task.info.numPages ++;
+              pd.task.info.doneItems = 0;
+              pd.task.info.numItems = children.length;
+              pd.task.items = children;
+              pd.actions.children.handleGroup();
             } else {
-              pdApp.sorts.splice(0,1);
+              pd.task.after = '';
+              pd.actions.page.shift();
+              pd.actions.page.next();
             }
-            pdApp.actions.getPage();
+          } else {
+            pd.task.info.errors++;
+            if (confirm('Reddit seems to be under heavy load. Would you like to continue processing?')) {
+              pd.actions.page.shift();
+              pd.actions.page.handle();
+            } else {
+              pd.ui.done();
+            }
           }
-        }, function(resp) {
-          pdApp.process.errors++;
-          console.error(resp);
-          if (! confirm('Error getting '+pdApp.process.sectionsRemaining[0]+' page. Would you like to retry?')) {
-            pdApp.process.sectionsRemaining.splice(0,1);
+        }, function() {
+          pd.task.info.errors++;
+          if (confirm('Error getting '+pd.task.paths.sections[0]+' page. Would you like to retry?')) {
+            pd.actions.page.handle();
+          } else {
+            pd.actions.page.shift();
+            pd.actions.page.next();
           }
-          pdApp.actions.getPage();
         });
-      } else {
-        pdApp.ui.done();
-      }
+      },
     },
-    processItems: function () {
-      pdApp.ui.updateDisplay();
-      if (pdApp.process.items.length > 0) {
-        pdApp.actions.processItem(pdApp.process.items[0]);
-      } else {
-        pdApp.actions.getPage();
-      }
-    },
-    processItem: function (item) {
-      pdApp.ui.updateDisplay();
-      if (pdApp.helpers.filterCheck(item)) {
-        if ((item.data.is_self || item.kind == 't1') && pdApp.process.isEditing && ! item.pdEdited) {
-          pdApp.actions.edit(item);
-        } else if ((item.kind == 't3' && pdApp.process.isRemovingPosts) || (item.kind == 't1' && pdApp.process.isRemovingComments)) {
-          pdApp.actions.delete(item);
+    children: {
+      handleGroup: function () {
+        pd.ui.updateDisplay();
+        if (pd.task.items.length > 0) {
+          pd.actions.children.handleSingle();
         } else {
-          pdApp.process.doneItems ++;
-          pdApp.process.after = item.data.name;
-          pdApp.process.items.splice(0,1);
-          pdApp.actions.processItems();
+          pd.actions.page.next();
         }
-      } else {
-        pdApp.process.doneItems ++;
-        pdApp.process.ignored ++;
-        pdApp.process.after = item.data.name;
-        pdApp.process.items.splice(0,1);
-        pdApp.actions.processItems();
+      },
+      handleSingle: function () {
+        var item = pd.task.items[0];
+        pd.ui.updateDisplay();
+        if (pd.helpers.shouldBeActedOn(item)) {
+          if (!item.pdEdited && ((item.data.is_self || item.kind == 't1') && pd.task.config.isEditing)) {
+            pd.actions.edit(item);
+          } else if (!item.pdDeleted && ((item.kind == 't3' && pd.task.config.isRemovingPosts) || (item.kind == 't1' && pd.task.config.isRemovingComments))) {
+            pd.actions.delete(item);
+          } else {
+            pd.actions.children.finishItem();
+            pd.actions.children.handleGroup();
+          }
+        } else {
+          pd.task.items[0].pdIgnored = true;
+          pd.actions.children.finishItem();
+          pd.actions.children.handleGroup();
+        }
+      },
+      finishItem: function () {
+        pd.task.after = pd.task.items[0].pdDeleted ? pd.task.after : pd.task.items[0].data.name;
+        pd.task.info.doneItems ++;
+        pd.task.info.deleted += pd.task.items[0].pdDeleted ? 1 : 0;
+        pd.task.info.edited += pd.task.items[0].pdEdited ? 1 : 0;
+        pd.task.info.ignored += pd.task.items[0].pdIgnored ? 1 : 0;
+        pd.task.items.splice(0,1);
       }
     },
     delete: function (item) {
-      $.ajax({
-        url: '/api/del',
-        method: 'post',
-        data: {
-          id: item.data.name,
-          executed: 'deleted',
-          uh: pdApp.config.uh,
-          renderstyle: 'html'
-        }
-      }).then(function() {
-        pdApp.process.deleted ++;
-        pdApp.process.doneItems ++;
-        pdApp.process.items.splice(0,1);
-        pdApp.actions.processItems();
-      }, function () {
-        pdApp.process.errors++;
-        if (confirm('Error deleting '+(item.kind == 't3' ? 'post':'comment')+', would you like to retry?')) {
-          pdApp.actions.processItem(item);
-        } else {
-          pdApp.process.items.splice(0,1);
-          pdApp.actions.processItems();
-        }
-      });
+      if (pd.performActions) {
+        $.ajax({
+          url: '/api/del',
+          method: 'post',
+          data: {
+            id: item.data.name,
+            executed: 'deleted',
+            uh: pd.config.uh,
+            renderstyle: 'html'
+          }
+        }).then(function() {
+          pd.task.items[0].pdDeleted = true;
+          pd.actions.children.handleSingle();
+        }, function () {
+          pd.task.info.errors++;
+          if (confirm('Error deleting '+(item.kind == 't3' ? 'post':'comment')+', would you like to retry?')) {
+            pd.actions.children.handleSingle();
+          } else {
+            pd.actions.children.finishItem();
+            pd.actions.children.handleGroup();
+          }
+        });
+      } else {
+        pd.task.items[0].pdDeleted = true;
+        pd.actions.children.handleSingle();
+      }
     },
     edit: function (item) {
-      $.ajax({
-        url: '/api/editusertext',
-        method: 'post',
-        data: {
-          thing_id: item.data.name,
-          text: pdApp.process.editText,
-          id: '#form-'+item.data.name,
-          r: item.data.subreddit,
-          uh: pdApp.config.uh,
-          renderstyle: 'html'
-        }
-      }).then(function() {
-        pdApp.process.edited ++;
-        item.pdEdited = true;
-        pdApp.actions.processItem(item);
-      }, function () {
-        pdApp.process.errors++;
-        if (! confirm('Error editing '+(item.kind == 't3' ? 'post':'comment')+', would you like to retry?')) {
-          item.pdEdited = true;
-        }
-        pdApp.actions.processItem(item);
-      });
+      if (pd.performActions) {
+        $.ajax({
+          url: '/api/editusertext',
+          method: 'post',
+          data: {
+            thing_id: item.data.name,
+            text: pd.task.editText,
+            id: '#form-'+item.data.name,
+            r: item.data.subreddit,
+            uh: pd.config.uh,
+            renderstyle: 'html'
+          }
+        }).then(function() {
+          pd.task.items[0].pdEdited = true;
+          pd.actions.children.handleSingle();
+        }, function () {
+          pd.task.info.errors++;
+          if (! confirm('Error editing '+(item.kind == 't3' ? 'post':'comment')+', would you like to retry?')) {
+            item.pdEdited = true;
+          }
+          pd.actions.children.handleSingle();
+        });
+      } else {
+        pd.task.items[0].pdEdited = true;
+        pd.actions.children.handleSingle();
+      }
     },
   },
   ui: {
     updateDisplay: function () {
-      $('#pd__form').hide().next().show();
-      $('#progress_page .bar').css('width',(Math.round(1000*pdApp.process.donePages/pdApp.process.numPages)/10)+'%');
-      $('#progress_page .text').text(pdApp.process.donePages + ' / ' + pdApp.process.numPages);
-      if (pdApp.process.numItems > 0) {
-        $('#progress_item .bar').css('width',(Math.round(1000*pdApp.process.doneItems/pdApp.process.numItems)/10)+'%');
-        $('#progress_item .text').text(pdApp.process.doneItems + ' / ' + pdApp.process.numItems);
+      $('#pd__central h2').first().html('Power Delete Suite v'+pd.version+' <br/><small>'+pd.task.paths.sections[0]+'/'+pd.task.paths.sorts[0]+'</small>');
+      $('#progress_page .bar').css('width',(Math.round(1000*pd.task.info.donePages/pd.task.info.numPages)/10)+'%');
+      $('#progress_page .text').text(pd.task.info.donePages + ' / ' + pd.task.info.numPages);
+      if (pd.task.info.numItems > 0) {
+        $('#progress_item .bar').css('width',(Math.round(1000*pd.task.info.doneItems/pd.task.info.numItems)/10)+'%');
+        $('#progress_item .text').text(pd.task.info.doneItems + ' / ' + pd.task.info.numItems);
       }
       $('#progress_desc').html(
-        (pdApp.process.edited > 0 ? '<div>'+pdApp.process.edited + ' edited</div>' : '')+
-        (pdApp.process.deleted > 0 ? '<div>'+pdApp.process.deleted + ' deleted</div>' : '')+
-        (pdApp.process.ignored > 0 ? '<div>'+pdApp.process.ignored + ' ignored</div>' : '')+
-        (pdApp.process.errors > 0 ? '<div>'+pdApp.process.errors + ' errors</div>' : '')
+        (pd.task.info.edited > 0 ? '<div>'+pd.task.info.edited + ' edited</div>' : '')+
+        (pd.task.info.deleted > 0 ? '<div>'+pd.task.info.deleted + ' deleted</div>' : '')+
+        (pd.task.info.errors > 0 ? '<div>'+pd.task.info.errors + ' errors</div>' : '')+
+        (pd.task.info.ignored > 0 ? '<div>'+pd.task.info.ignored + ' ignored</div>' : '')
       );
-      pdApp.process.ajaxCalls = pdApp.process.edited + pdApp.process.deleted + pdApp.process.pageCalls;
-      document.title = pdApp.config.user + ' | ' + pdApp.process.ajaxCalls;
+      for (var key in pd.task.info.ignoreReasons) {
+        if (!!pd.task.info.ignoreReasons[key]) {
+          $('#progress_desc')[0].innerHTML += '<div class="ind">'+key+':' + pd.task.info.ignoreReasons[key];
+        }
+      }
+      pd.task.info.ajaxCalls = pd.task.info.errors + pd.task.info.edited + pd.task.info.deleted + pd.task.info.pageCalls;
+      document.title = pd.config.user + ' | ' + pd.task.info.ajaxCalls;
     },
     done: function () {
       window.pd_processing = false;
-      $('#pd__central h2').first().text('Power Delete Suite v'+pdApp.version);
-      $('#pd__central .processing').html(
-        '<p>Completed after making '+pdApp.process.ajaxCalls+' calls to the reddit servers.</p>'+
-        (pdApp.process.edited > 0 ? '<div class="ind">'+pdApp.process.edited + ' edited</div>' : '')+
-        (pdApp.process.deleted > 0 ? '<div class="ind">'+pdApp.process.deleted + ' deleted</div>' : '')+
-        (pdApp.process.ignored > 0 ? '<div class="ind">'+pdApp.process.ignored + ' ignored</div>' : '')+
-        (pdApp.process.errors > 0 ? '<div class="ind">'+pdApp.process.errors + ' errors</div>' : '')+
-        '<p>If you need to re run the script, just click the bookmarklet again!</p>'
-      );
       document.title = $('#header-bottom-right .user a').first().text()+' | Power Delete Suite';
+      $('#pd__central h2').first().text('Power Delete Suite v'+pd.version);
+
+      var el = $('#pd__central .complete')[0];
+      if (pd.task.info.edited + pd.task.info.deleted > 0) {
+        el.innerHTML =
+          '<p>Completed after making '+pd.task.ajaxCalls+' calls to the reddit servers.</p>'+
+          (pd.task.info.edited > 0 ? '<div class="ind">'+pd.task.info.edited + ' edited</div>' : '')+
+          (pd.task.info.deleted > 0 ? '<div class="ind">'+pd.task.info.deleted + ' deleted</div>' : '')+
+          (pd.task.info.errors > 0 ? '<div class="ind">'+pd.task.info.errors + ' errors</div>' : '') +
+          (pd.task.info.ignored > 0 ? '<div class="ind">'+pd.task.info.ignored + ' ignored</div>' : '');
+      } else {
+        el.innerHTML =
+          '<p>All Done! It seems like all '+pd.task.info.ignored+' items we came across were ignored.</p>';
+      }
+
+      if (pd.task.info.ignored > 0) {
+        var str = '<div class="ind">';
+        for (var key in pd.task.info.ignoreReasons) {
+          if (!!pd.task.info.ignoreReasons[key]) {
+            str += '<div class="ind">'+key+':' + pd.task.info.ignoreReasons[key] + '</div>';
+          }
+        }
+        str += '</div>';
+        el.innerHTML += str;
+      }
+
+      var numSubs = $('#pd__sub-list input:checked').length;
+      $('#pd__sub-list input').prop('checked',false);
+      var debugInfo = JSON.stringify($('#pd__form').serializeArray()) + ' number of subreddits: '+numSubs;
+      el.innerHTML +=
+        '<p>If you need to re run the script, just click the bookmarklet again!</p>' +
+        '<hr style="margin-top:2em;"/><h3 class="submit-bug">'+
+          '<div>Having trouble?</div>'+
+          '<div><a href="https://www.reddit.com/message/compose?to=j0be&subject=PowerDeleteSuite%20Config&message='+encodeURIComponent(debugInfo)+'" target="_blank">Send /u/j0be a message with your current settings.</a></div>'+
+          '<div><small>(for privacy, subreddit list is not included)</small></div>'+
+        '</h3>';
+
+      $('#pd__central .processing, #pd__form').hide();
+      $('#pd__central .complete').show();
     }
   },
-  filters: {},
+  error: function() {
+    window.pd_processing = false;
+    alert('We ran into an error. Why not tell /u/j0be what you were doing to break it?');
+    pd.init();
+  },
+  performActions: true,
   debugging: false
 };
-pdApp.init();
+pd.init();
