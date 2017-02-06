@@ -1,5 +1,5 @@
 var pd = {
-  version: '1.3.0',
+  version: '1.3.1',
   bookmarkver: '1.1',
   init : function() {
     pd.checks.versions();
@@ -180,7 +180,7 @@ var pd = {
       };
     },
     resetSorts: function () {
-      pd.task.paths.sections = ['new','hot','top','controversial'];
+      pd.task.paths.sorts = ['new','hot','top','controversial'];
     },
     bindUI: function() {
       $('#pd__form').submit(function(e) {
@@ -278,7 +278,7 @@ var pd = {
   actions: {
     page: {
       next: function() {
-        if (pd.task.paths.sections.length > 0 && !(pd.debugging && pd.task.info.donePages > 19)) {
+        if (pd.task.paths.sections.length > 0) {
           pd.ui.updateDisplay();
           pd.actions.page.handle();
         } else {
@@ -399,6 +399,7 @@ var pd = {
         });
       } else {
         pd.task.items[0].pdDeleted = true;
+        pd.task.after = pd.task.items[0].data.name;
         pd.actions.children.handleSingle();
       }
     },
