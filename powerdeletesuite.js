@@ -428,7 +428,7 @@ var pd = {
         if (pd.exportIds.indexOf(item.data.id) == -1) {
           str = '';
           str += pd.helpers.csvCell(pd.helpers.csvEscape(item.data.title ? item.data.title : ''));
-          str += pd.helpers.csvCell(pd.helpers.csvEscape(item.data.body ? item.data.body : ''));
+          str += pd.helpers.csvCell(pd.helpers.csvEscape(item.data.body ? item.data.body : (item.data.selftext ? item.data.selftext : '')));
           str += pd.helpers.csvCell(item.data.permalink ? 
               'http://reddit.com'+item.data.permalink :
               'http://reddit.com/r/'+item.data.subreddit+'/comments/'+(item.data.link_id.replace(/^t\d_/,''))+'/x/'+item.data.id+'?context=3'
