@@ -9,12 +9,14 @@
  5. It has FILTERS! You can make choices about what you want deleted. Filters include:
   * choosing which subreddits to perform actions in
   * filtering based on the item's score
+  * filtering based on the item's date time
   * excluding gilded comments and posts
   * excluding saved comments and posts
   * excluding mod distinguished comments and posts
  6. When editing comments, you choose what you want it to be edited to. I'm not going to do some self promo bullshit on your account. What you edit it to is your own business. 
   * As a note, if you are both editing AND deleting, it makes sure to edit the comment / self post before deleting it.
- 7. With the most recent rewrite, it now updates automatically! If there are bugs I fix, you'll get them the second I'm done with them!
+ 7. You can do an export of all the content you filter, whether or not you're deleting or editing!
+ 8. It pulls the latest version from github, so whenever I add new features or fix bugs, you have it instantly!
 
 ## Screenshots
  
