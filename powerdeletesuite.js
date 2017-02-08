@@ -1,5 +1,5 @@
 var pd = {
-  version: '1.4.1',
+  version: '1.4.2',
   bookmarkver: '1.1',
   init : function() {
     pd.checks.versions();
@@ -421,6 +421,8 @@ var pd = {
           str += pd.helpers.csvCell('Title');
           str += pd.helpers.csvCell('Body');
           str += pd.helpers.csvCell('Permalink');
+          str += pd.helpers.csvCell('Score');
+          str += pd.helpers.csvCell('Timestamp UTC');
           str+= pd.helpers.csvCell('Actions');
           pd.exportItems.push(str);
         }
@@ -433,6 +435,8 @@ var pd = {
               'http://reddit.com'+item.data.permalink :
               'http://reddit.com/r/'+item.data.subreddit+'/comments/'+(item.data.link_id.replace(/^t\d_/,''))+'/x/'+item.data.id+'?context=3'
             );
+          str+= pd.helpers.csvCell(item.data.score);
+          str+= pd.helpers.csvCell(item.data.created_utc);
           str+= pd.helpers.csvCell((item.pdEdited ? 'edited ' : '') + (item.pdDeleted ? 'deleted ' : ''));
           pd.exportItems.push(str);
           pd.exportIds.push(item.data.id);
