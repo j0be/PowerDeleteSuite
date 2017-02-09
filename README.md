@@ -14,7 +14,8 @@
   * excluding saved comments and posts
   * excluding mod distinguished comments and posts
  6. When editing comments, you choose what you want it to be edited to. I'm not going to do some self promo bullshit on your account. What you edit it to is your own business. 
-  * As a note, if you are both editing AND deleting, it makes sure to edit the comment / self post before deleting it.
+  * If you are both editing AND deleting, it makes sure to edit the comment / self post before deleting it.
+  * Many subreddits have Automoderator configs that could be triggered when you edit, so avoid putting anything unsavory or overly paranoid in your edits
  7. You can do an export of all the content you filter, whether or not you're deleting or editing!
  8. It pulls the latest version from github, so whenever I add new features or fix bugs, you have it instantly!
 
