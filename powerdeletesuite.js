@@ -1,5 +1,5 @@
 var pd = {
-  version: '1.4.2',
+  version: '1.4.3',
   bookmarkver: '1.1',
   init : function() {
     pd.checks.versions();
@@ -66,7 +66,7 @@ var pd = {
     applyDom: function () {
       if (pd.debugging) {$('#pd__central,#pd__style').remove('');}
       document.title = pd.config.user +' | Power Delete Suite';
-      window.onerror = pd.error;
+      $(window).on("error", pd.error);
 
       $('.sitetable,.neverEndingReddit').remove();
       if ($('#pd__central').length === 0) {
@@ -123,7 +123,7 @@ var pd = {
         $('#pd__sub-list').append('<div><input class=\'ind\' data-sub=\''+sub_arr[i]+'\' type=\'checkbox\' name=\''+sid+'\' id=\''+sid+'\'\'/><label class=\''+sid+'\' for=\''+sid+'\'>'+sub_arr[i]+'</label></div>');
       }
       $('#side-mod-list li').each(function() {
-        $('.sub--'+$(this).text().replace('/r/','')).prepend('<b class=\'m\'>[M]</b>');
+        $('.sub--'+$(this).text().replace(/\/?r\//,'')).prepend('<b class=\'m\'>[M]</b>');
       });
     },
     createProcessStream: function () {
@@ -570,9 +570,12 @@ var pd = {
     }
   },
   error: function() {
-    window.pd_processing = false;
-    alert('We ran into an error. Why not tell /u/j0be what you were doing to break it?');
-    pd.init();
+    var reset = confirm("We ran into an error. Why not tell /u/j0be what you were doing to break it?\r\n\r\nWould you like to restart the script?");
+	window.pd_processing = false;
+	if (reset) {
+		pd.init();
+	}
+	return true;
   },
   performActions: true,
   debugging: false
