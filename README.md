@@ -17,7 +17,7 @@
   * Many subreddits have Automoderator configs that could be triggered when you edit, so avoid putting anything unsavory or overly paranoid in your edits
  6. You can do an export of all the content you filter, whether or not you're deleting or editing!
  7. It pulls the latest version from github, so whenever I add new features or fix bugs, you have it instantly!
- 8. It was built by /u/j0be, a well known reddit user with a long reddit history and moderates several large subreddits. This means you don't just have to implicitly trust "some random person you can't track down." *\*ahem, shreddit\**
+ 8. It was built by /u/j0be, a well known reddit user with a long reddit history and moderates several large subreddits. This means you don't just have to implicitly trust "some random person you can't track down." *\*ahem, reddit overwrite\**
 
 ## Screenshots
  
