@@ -21,8 +21,7 @@
 
 ## Screenshots
  
- ![Power Delete Suite Control Center](http://i.imgur.com/B0siI0a.png)
- ![Power Delete Suite Progress bar](http://i.imgur.com/QxPzLqH.png)
+ ![Power Delete Suite Control Center](http://i.imgur.com/Fh5HsAD.png)
  
 ## Installation 
  
