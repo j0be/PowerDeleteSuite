@@ -46,6 +46,7 @@ var pd = {
     location: function () {
       return document.location.hostname.split('.').slice(-2).join('.') == 'reddit.com' &&
           document.location.href.match('/user/') &&
+          document.location.href.match('/overview') &&
           $('.titlebox h1').first().text() === $('#header-bottom-right .user a').first().text();
     }
   },
