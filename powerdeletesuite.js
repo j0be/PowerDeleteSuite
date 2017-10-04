@@ -1,5 +1,5 @@
 var pd = {
-  version: '1.4.4',
+  version: '1.4.5',
   bookmarkver: '1.1',
   init : function() {
     pd.checks.versions();
@@ -124,7 +124,7 @@ var pd = {
         $('#pd__sub-list').append('<div><input class=\'ind\' data-sub=\''+sub_arr[i]+'\' type=\'checkbox\' name=\''+sid+'\' id=\''+sid+'\'\'/><label class=\''+sid+'\' for=\''+sid+'\'>'+sub_arr[i]+'</label></div>');
       }
       $('#side-mod-list li').each(function() {
-        $('.sub--'+$(this).text().replace(/\/?r\//,'')).prepend('<b class=\'m\'>[M]</b>');
+        $('.sub--'+$(this).text().replace(/\/?[ru]\//,'')).prepend('<b class=\'m\'>[M]</b>');
       });
     },
     createProcessStream: function () {
