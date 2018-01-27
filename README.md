@@ -25,7 +25,7 @@
  
 ## Installation 
  
- [![Install PowerDeleteSuite](https://i.imgur.com/c0s8Mm2.png)](https://jsfiddle.net/93mycx7q/12/embedded/result/)
+ [![Install PowerDeleteSuite](https://i.imgur.com/c0s8Mm2.png)](https://jsfiddle.net/93mycx7q/14/embedded/result/)
  
 ## Bugs / Issues?
  
