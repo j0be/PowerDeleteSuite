@@ -1,5 +1,5 @@
 var pd = {
-  version: '1.4.5',
+  version: '1.4.6',
   bookmarkver: '1.2',
   init : function() {
     pd.checks.versions();
@@ -170,7 +170,8 @@ var pd = {
           sections: ! $('#pd__submissions').is(':checked') && ! $('#pd__export').is(':checked') ?
             ['comments','search','submissions'] : /* Search is actually more efficient than submissions if we're not handling submissions (`self:1`) */
             ['comments','submissions','search'],
-          sorts : ['new','hot','top','controversial']
+          sorts : ['new','hot','top','controversial'],
+          timeframes : ['all','hour','day','week','month','year']
         }
       };
       pd.filters = {
@@ -195,6 +196,9 @@ var pd = {
     },
     resetSorts: function () {
       pd.task.paths.sorts = ['new','hot','top','controversial'];
+    },
+    resetTimes: function () {
+      pd.task.paths.timeframes = ['all','hour','day','week','month','year'];
     },
     bindUI: function() {
       $('#pd__form').submit(function(e) {
@@ -317,11 +321,27 @@ var pd = {
         }
       },
       shift: function () {
+        if (pd.task.paths.sorts[0] === 'top' ||
+          pd.task.paths.sorts[0] === 'controversial') {
+
+          pd.task.paths.timeframes.splice(0,1);
+          if (pd.task.paths.timeframes.length === 0) {
+            pd.setup.resetTimes();
+            pd.task.paths.sorts.splice(0,1);
+            if (pd.task.paths.sorts.length === 0) {
+              pd.setup.resetSorts();
+              pd.task.paths.sections.splice(0,1);
+            }
+          }
+          return false;
+        }
+          
         pd.task.paths.sorts.splice(0,1);
         if (pd.task.paths.sorts.length === 0) {
           pd.setup.resetSorts();
           pd.task.paths.sections.splice(0,1);
         }
+        return true;
       },
       handle: function() {
         pd.task.pageCalls ++;
@@ -333,7 +353,7 @@ var pd = {
               null,
             after: pd.task.after,
             sort: pd.task.paths.sorts[0],
-            t: 'all',
+            t: pd.task.paths.timeframes[0],
           }
         }).then(function(resp) {
           if (resp.data) {
@@ -505,7 +525,8 @@ var pd = {
   },
   ui: {
     updateDisplay: function () {
-      $('#pd__central h2').first().html('Power Delete Suite v'+pd.version+' <br/><small>'+pd.task.paths.sections[0]+'/'+pd.task.paths.sorts[0]+'</small>');
+      $('#pd__central h2').first().html('Power Delete Suite v'+pd.version+' <br/>'+
+        '<small>'+pd.task.paths.sections[0]+'/'+pd.task.paths.sorts[0]+'/'+pd.task.paths.timeframes[0]+'</small>');
       pd.task.info.numPages = pd.task.info.donePages + ((pd.task.paths.sections.length - 1)*4) + (pd.task.paths.sorts.length);
       $('#progress_page .bar').css('width',(Math.round(1000*pd.task.info.donePages/pd.task.info.numPages)/10)+'%');
       $('#progress_page .text').attr('data-top', pd.task.info.donePages).attr('data-bottom',pd.task.info.numPages);
