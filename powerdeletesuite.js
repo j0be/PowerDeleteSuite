@@ -1,5 +1,5 @@
 var pd = {
-  version: '1.4.6',
+  version: '1.4.7',
   bookmarkver: '1.2',
   init : function() {
     pd.checks.versions();
@@ -501,7 +501,7 @@ var pd = {
           method: 'post',
           data: {
             thing_id: item.data.name,
-            text: pd.task.editText,
+            text: pd.task.config.editText,
             id: '#form-'+item.data.name,
             r: item.data.subreddit,
             uh: pd.config.uh,
