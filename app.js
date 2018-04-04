@@ -28,7 +28,8 @@ window.xhr = function (url, cb, err) {
 
 var pd = {
     version: '2.0.0',
-    bookmarkver: '1.3'
+    bookmarkver: '1.3',
+    debugging: true
 },
 stream = {};
 
