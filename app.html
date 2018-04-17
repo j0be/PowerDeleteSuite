@@ -1,0 +1,40 @@
+<div class="pd__central">
+  <h1>Power Delete Suite
+  </h1>
+  <span class="version"></span>
+  <div class="pd__state-1 section">
+    <form id="pd__form">
+      <div class="innersection requires__auth">
+        <h2>Actions</h2>
+        <input id="remove-submissions" class="hidden" type="checkbox" aria-label="Remove Submissions" data-setting="remove-submissions">
+        <label for="remove-submissions" class="pd__action icon-remove-submissions">
+          <span>Remove Submissions</span>
+        </label>
+        <input id="remove-comments" class="hidden" type="checkbox" aria-label="Remove Comments" data-setting="remove-comments">
+        <label for="remove-comments" class="pd__action icon-remove-comments">
+          <span>Remove Comments</span>
+        </label>
+        <input id="edit-comments" class="hidden" type="checkbox" aria-label="Edit Comments" data-setting="edit-comments">
+        <label for="edit-comments" class="pd__action icon-edit-comments">
+          <span>Edit Comments</span>
+          <span class="tooltip">
+            <input aria-label=">" data-setting="edit-comments-text" placeholder="Enter text to edit comments or self posts to." />
+          </span>
+        </label>
+      </div>
+
+      <div class="innersection">
+        <h2>Filters</h2>
+        <div class="filter__item">
+          <input id="filter-subreddit" class="hidden" type="checkbox" aria-label="Filter Subreddit" data-setting="filter-subreddit">
+          <label for="filter-subreddit" class="pd__filter">Filter by subreddit</label>
+          <div class="pd__sub-list">
+            <p>Only perform actions in the subreddits that are checked:</p>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="pd__state-2 section"></div>
+  <div class="pd__state-3 section"></div>
+</div>
