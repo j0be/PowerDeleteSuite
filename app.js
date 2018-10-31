@@ -7,21 +7,30 @@ window._pd = {
     domain: document.location.hostname.split('.').slice(-2).join('.'),
     baseUrl: 'https://raw.githubusercontent.com/j0be/PowerDeleteSuite/' + (alpha ? 'alpha/' : 'master/'),
 };
-window.xhr = function (url, cb, err) {
-    var this_xhr = new XMLHttpRequest();
-    url += (url.match(/\?/) ? '&' : '?') + (new Date()).getDate();
-    this_xhr.open('GET', url);
-    this_xhr.send(null);
-    this_xhr.onreadystatechange = function () {
-        if (this_xhr.readyState === 4) {
-            if (this_xhr.status === 200) {
-                cb(this_xhr);
-            } else {
-                err(this_xhr);
-            };
+
+window.xhr = function (url, methodType) {
+    var promiseObj = new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open(methodType || 'GET', url, true);
+        xhr.send();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    var resp = xhr.responseText,
+                        response;
+                    try {
+                        response = JSON.parse(resp);
+                    } catch(e) {
+                        response = { responseText: resp };
+                    }
+                    resolve(response);
+                } else {
+                    reject(xhr.status);
+                }
+            }
         };
-    };
-    return this_xhr;
+    });
+    return promiseObj;
 };
 
 /*****************/
@@ -36,21 +45,22 @@ stream = {};
 var app = {
     init: function () {
         if (validation.versions()) {
-            app.setup.css(); /* Waterfall loads the dom as well */
+            app.setup();
         }
     },
-    setup: {
-        dom: function () {
-            xhr(baseUrl+'app.html', function (response) {
-                pq('body>.content[role=\'main\']')[0].innerHTML = response.responseText;              
-            }, alert.bind('Failed to get PowerDeleteSuite markup'));
-        },
-        css: function () {
-            xhr(baseUrl + 'app.css', function (response) {
-                pq('head')[0].innerHTML += response.responseText;
-                app.setup.dom();
-            }, alert.bind('Failed to get PowerDeleteSuite css'));
+    setup: function () {
+        function dom() {
+            return xhr(_pd.baseUrl+'app.html').then(function (response) {
+                pq('body>.content[role=\'main\']')[0].innerHTML = response.responseText;
+            }).catch(alert.bind(undefined, 'Failed to get PowerDeleteSuite markup'));
         }
+        function css() {
+            return xhr(_pd.baseUrl + 'app.css').then(function (response) {
+                pq('head')[0].innerHTML += response.responseText;
+            }).catch(alert.bind(undefined, 'Failed to get PowerDeleteSuite css'))
+            .then(dom);
+        }
+        return css();
     }
 };
 

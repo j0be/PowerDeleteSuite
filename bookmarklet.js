@@ -19,8 +19,8 @@ javascript: (function () {
                     cb(this_xhr);
                 } else {
                     err(this_xhr);
-                };
-            };
+                }
+            }
         };
         return this_xhr;
     };
@@ -37,6 +37,6 @@ javascript: (function () {
     } else {
         if (confirm('This script is designed to be run from your user profile on reddit. Would you like to go there now?')) {
             document.location = 'http://reddit.com/u/me/overview';
-        };
-    };
+        }
+    }
 })();
