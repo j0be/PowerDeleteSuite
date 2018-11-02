@@ -84,16 +84,18 @@ body {
     background: transparent;
     border: none;
     color: #fff;
+    max-width: 100vw;
     padding: 0.5em;
-    width: 20em;
+    text-align: center;
+    width: 22em;
 }
 
 .pd__actions-tooltip input::-webkit-input-placeholder {
-    color: #ccc;
+    color: #fcc;
 }
 
 .pd__actions-tooltip input:-moz-placeholder {
-    color: #ccc;
+    color: #fcc;
 }
 
 .pd__actions-tooltip::after {
@@ -121,7 +123,7 @@ body {
 
 .pd__actions input:checked+label.permanent {
     background: #fe2847;
-    border-color: transparent transparent #c1001c transparent;
+    border-color: transparent transparent #fe2847 transparent;
 }
 
 .pd__actions input:checked + label .pd__actions-tooltip {
