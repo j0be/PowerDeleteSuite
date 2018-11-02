@@ -43,6 +43,10 @@ body {
     cursor: pointer;
 }
 
+.pd__actions {
+    text-align: center;
+}
+
 .pd__actions > span {
     display: inline-block;
 }
