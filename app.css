@@ -1,1 +1,14 @@
 @import(serene.css);
+
+.hidden,
+.template {
+    display: none !important;
+}
+
+.requires_auth {
+    display: none;
+}
+
+.same_user .requires_auth {
+    display: inline-block;
+}
