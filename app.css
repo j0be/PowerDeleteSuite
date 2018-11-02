@@ -47,7 +47,8 @@ body {
 .pd__actions .octicon {
     background: #cacdd3;
     border-radius: 4px;
-    border: 1px solid #54595e;
+    border: none;
+    border-color: transparent transparent #cacdd3 transparent;
     color: #54595e;
     display: inline-block;
     height: 100px;
@@ -68,7 +69,8 @@ body {
 }
 
 .pd__actions-tooltip {
-    background: #1b8bfe;
+    background: inherit;
+    border-color: inherit;
     border-radius: 4px;
     bottom: 0;
     display: none;
@@ -95,8 +97,8 @@ body {
 }
 
 .pd__actions-tooltip::after {
-    border: .5em solid #1b8bfe;
-    border-color: transparent transparent #1b8bfe transparent;
+    border: .5em solid transparent;
+    border-color: inherit;
     border-width: 0 .5em 0.5em .5em;
     content: "";
     left: 50%;
@@ -107,18 +109,22 @@ body {
 
 .pd__actions input:checked + label {
     background: #1b8bfe;
-    border-color: #0571fe;
+    border-color: transparent transparent #0571fe transparent;
     box-shadow: rgba(0, 0, 0, .2) 0 5px 10px;
     color: #fff;
 }
 
 .pd__actions input:checked+label.permanent {
     background: #fe2847;
-    border-color: #c1001c;
+    border-color: transparent transparent #c1001c transparent;
 }
 
 .pd__actions input:checked + label .pd__actions-tooltip {
     display: inline-block;
+}
+
+.pd__actions input:checked+label.hasTooltip {
+    margin-bottom: 4em;
 }
 
 /**** fonts *****/
