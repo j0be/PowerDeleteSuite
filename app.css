@@ -31,7 +31,9 @@ body {
     margin: 2em auto 0;
     max-width: 100%;
     padding: 1em;
+    position: relative;
     text-align: left;
+    z-index: 100;
 }
 
 .pd * {
@@ -99,7 +101,7 @@ body {
 
 .pd__actions-tooltip.top::after {
     bottom: 0;
-    transform: translate(-50%, -95%) rotate(180deg);
+    transform: translate(-50%, 95%) rotate(180deg);
     top: initial;
 }
 
