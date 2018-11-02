@@ -35,6 +35,10 @@ body {
     text-align: left;
 }
 
+.pd * {
+    transition: .3s all ease-in-out;
+}
+
 .pd label,
 .pd a {
     cursor: pointer;
@@ -148,6 +152,8 @@ body {
     border-right: 1px solid #ccc;
     float: left;
     margin-right: 1em;
+    margin-top: -1em;
+    padding: 1em 0;
     width: 250px;
 }
 
@@ -160,6 +166,27 @@ body {
     display: none;
 }
 
+.pd__footer {
+    border-top: 1px solid #ccc;
+    clear: both;
+    padding-top: .5em;
+    text-align: right;
+}
+
+.pd__footer button {
+    background: #cacdd3;
+    border-radius: 4px;
+    border: none;
+    color: #fff;
+    font-size: 1.3em;
+    margin-left: 1em;
+    padding: 0.4em 2em;
+    text-transform: uppercase;
+}
+
+.pd__footer button:hover {
+    background: #09f;
+}
 /**** fonts *****/
 
 @font-face {
