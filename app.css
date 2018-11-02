@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 body {
     background: #eee;
 }
@@ -25,6 +27,7 @@ body {
     border-radius: 1em;
     box-shadow: rgba(0, 0, 0, .2) 0 5px 10px;
     display: inline-block;
+    font-family: 'Roboto', sans-serif;
     margin-top: 2em;
     margin: 0 auto;
     max-width: 100%;
@@ -44,10 +47,11 @@ body {
 .pd__actions .icon {
     background: #cacdd3;
     border-radius: 4px;
-    border: 1px solid #98a0a8;
-    color: #98a0a8;
+    border: 1px solid #54595e;
+    color: #54595e;
     display: inline-block;
     height: 100px;
+    margin: .5em;
     line-height: 170px;
     text-align: center;
     width: 150px;
@@ -86,6 +90,11 @@ body {
     border-color: #0571fe;
     box-shadow: rgba(0, 0, 0, .2) 0 5px 10px;
     color: #fff;
+}
+
+.pd__actions input:checked+label.permanent {
+    background: #fe2847;
+    border-color: #c1001c;
 }
 
 .pd__actions input:checked + label .pd__actions-tooltip {

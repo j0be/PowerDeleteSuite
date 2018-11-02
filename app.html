@@ -5,16 +5,18 @@
     <div class="pd__actions">
       <span class="requires_auth">
         <input id="delete-submissions" type="checkbox" class="hidden" data-label="Delete Submissions" />
-        <label for="delete-submissions" class="pd__actions-delete--submissions icon delete">Delete Submissions</label>
+        <label for="delete-submissions" class="pd__actions-delete--submissions icon delete permanent">Delete Submissions</label>
 
         <input id="delete-comments" type="checkbox" class="hidden" data-label="Delete Comments" />
-        <label for="delete-comments" class="pd__actions-delete--comments icon delete">Delete Comments</label>
+        <label for="delete-comments" class="pd__actions-delete--comments icon delete permanent">Delete Comments</label>
 
         <input id="edit-comments" type="checkbox" class="hidden" data-label="Edit Comments" />
-        <label for="edit-comments" class="pd__actions-edit--comments icon edit">Edit Comments</label>
-        <div class="pd__actions-tooltip">
-          <input id="edit-comments--value" placeholder="Enter text to edit comments or self posts to." />
-        </div>
+        <label for="edit-comments" class="pd__actions-edit--comments icon edit permanent">
+          Edit Comments
+          <div class="pd__actions-tooltip">
+            <input id="edit-comments--value" placeholder="Enter text to edit comments or self posts to." />
+          </div>
+        </label>
       </span>
       <span>
         <input id="archive" type="checkbox" class="hidden" data-label="Archive" />
