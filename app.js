@@ -55,7 +55,7 @@ var app = {
             }).catch(alert.bind(undefined, 'Failed to get PowerDeleteSuite markup'));
         }
         function css() {
-            return xhr(_pd.baseUrl + 'app.css').then(function (response) {
+            return xhr(_pd.baseUrl + 'app.css?v1').then(function (response) {
                 pq('head')[0].innerHTML += '<style>' + response.responseText + '</style>';
             }).catch(alert.bind(undefined, 'Failed to get PowerDeleteSuite css'))
             .then(dom);
