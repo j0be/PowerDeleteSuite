@@ -6,7 +6,7 @@ javascript: (function () {
     window._pd = {
         bookmarkver: '1.3',
         domain: document.location.hostname.split('.').slice(-2).join('.'),
-        baseUrl: 'https://raw.githubusercontent.com/j0be/PowerDeleteSuite/' + (alpha ? 'alpha/' : 'master/'),
+        scriptUrl: 'https://raw.githubusercontent.com/j0be/PowerDeleteSuite/' + (alpha ? 'alpha/app.js' : 'master/powerdeletesuite.js'),
     };
     window.xhr = function (url, cb, err) {
         var this_xhr = new XMLHttpRequest();
@@ -26,7 +26,7 @@ javascript: (function () {
     };
 
     if (_pd.domain === 'reddit.com') {
-        xhr(_pd.baseUrl + 'app.js', function (response) {
+        xhr(_pd.scriptUrl, function (response) {
             var pd = document.createElement('script');
             pd.setAttribute('id', 'pd-script');
             pd.innerHTML = response.responseText;
