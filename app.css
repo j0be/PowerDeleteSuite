@@ -72,6 +72,7 @@ body {
     background: inherit;
     border-color: inherit;
     border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, .2) 0 5px 10px;
     bottom: 0;
     display: none;
     left: 50%;
@@ -135,6 +136,28 @@ body {
 
 .pd__actions input:checked+label.hasTooltip {
     margin-bottom: 4em;
+}
+
+.pd__filter {
+    border-top: 1px solid #ccc;
+    margin-top: 1em;
+    padding-top: 1em;
+}
+
+.pd__filter--sidebar {
+    border-right: 1px solid #ccc;
+    float: left;
+    margin-right: 1em;
+    width: 250px;
+}
+
+.pd__filter--sidebar a {
+    display: block;
+    margin: .5em 0;
+}
+
+.pd__filter--options > * {
+    display: none;
 }
 
 /**** fonts *****/
