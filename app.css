@@ -91,6 +91,18 @@ body {
     z-index: 1;
 }
 
+.pd__actions-tooltip.top {
+    bottom: initial;
+    top: 0;
+    transform: translate(-50%, -130%);
+}
+
+.pd__actions-tooltip.top::after {
+    bottom: 0;
+    transform: translate(-50%, -95%) rotate(180deg);
+    top: initial;
+}
+
 .pd__actions-tooltip input {
     background: transparent;
     border: none;
