@@ -1,7 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
-body {
-    background: #eee;
+body::before {
+    content: "";
+    position: fixed;
+    z-index: -1;
+    background: rgba(0, 0, 0, .2);
+    width: 100vw;
+    height: 100vh;
 }
 
 .hidden,
