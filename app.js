@@ -56,7 +56,7 @@ var app = {
         }
         function css() {
             return xhr(_pd.baseUrl + 'app.css').then(function (response) {
-                pq('head')[0].innerHTML += response.responseText;
+                pq('head')[0].innerHTML += '<style>' + response.responseText + '</style>';
             }).catch(alert.bind(undefined, 'Failed to get PowerDeleteSuite css'))
             .then(dom);
         }
