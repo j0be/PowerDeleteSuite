@@ -125,8 +125,9 @@ body {
     content: '\f03a';
     font-family: octicons;
     font-size: 1.5em;
+    margin-left: -1.1em;
     padding-right: 0.3em;
-    position: relative;
+    position: absolute;
 }
 
 .pd__actions input:checked+label.permanent {
