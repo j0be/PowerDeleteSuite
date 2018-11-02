@@ -158,7 +158,9 @@ body {
 }
 
 .pd__filter--sidebar a {
+    clear: right;
     display: block;
+    float: right;
     margin: .5em 0;
 }
 
