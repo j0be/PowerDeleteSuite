@@ -73,6 +73,7 @@ body {
     bottom: 0;
     display: none;
     left: 50%;
+    line-height: 1em;
     position: absolute;
     transform: translate(-50%, 130%);
 }
@@ -81,7 +82,16 @@ body {
     background: transparent;
     border: none;
     color: #fff;
-    padding: .2em .5em;
+    padding: 0.5em;
+    width: 20em;
+}
+
+.pd__actions-tooltip input::-webkit-input-placeholder {
+    color: #ccc;
+}
+
+.pd__actions-tooltip input:-moz-placeholder {
+    color: #ccc;
 }
 
 .pd__actions-tooltip::after {
