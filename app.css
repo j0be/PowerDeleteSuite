@@ -162,6 +162,10 @@ body {
     margin: .5em 0;
 }
 
+.pd__filter--sidebar a input {
+    margin-left: .5em;
+}
+
 .pd__filter--options > * {
     display: none;
 }
