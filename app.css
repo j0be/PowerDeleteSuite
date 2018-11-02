@@ -28,8 +28,7 @@ body {
     box-shadow: rgba(0, 0, 0, .2) 0 5px 10px;
     display: inline-block;
     font-family: 'Roboto', sans-serif;
-    margin-top: 2em;
-    margin: 0 auto;
+    margin: 2em auto 0;
     max-width: 100%;
     padding: 1em;
     text-align: left;
@@ -125,9 +124,9 @@ body {
     content: '\f03a';
     font-family: octicons;
     font-size: 1.5em;
+    line-height: 0;
     margin-left: -1.1em;
     padding-right: 0.3em;
-    position: absolute;
 }
 
 .pd__actions input:checked+label.permanent {

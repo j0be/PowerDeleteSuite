@@ -4,11 +4,21 @@
 
     <div class="pd__actions">
       <span class="requires_auth">
-        <input id="delete-submissions" type="checkbox" class="hidden" data-label="Delete Submissions" />
-        <label for="delete-submissions" class="pd__actions-delete--submissions octicon octicon-trashcan permanent">Delete Submissions</label>
+        <div>
+          <input id="delete-submissions" type="checkbox" class="hidden" data-label="Delete Submissions" />
+          <label for="delete-submissions" class="pd__actions-delete--submissions octicon octicon-link permanent">Delete Submissions</label>
 
-        <input id="delete-comments" type="checkbox" class="hidden" data-label="Delete Comments" />
-        <label for="delete-comments" class="pd__actions-delete--comments octicon octicon-trashcan permanent">Delete Comments</label>
+          <input id="delete-comments" type="checkbox" class="hidden" data-label="Delete Comments" />
+          <label for="delete-comments" class="pd__actions-delete--comments octicon octicon-comment permanent">Delete Comments</label>
+
+          <input id="delete-media" type="checkbox" class="hidden" data-label="Delete Media" />
+          <label for="delete-media" class="pd__actions-delete--comments octicon octicon-file-media permanent">
+            Delete Media
+            <div class="pd__actions-tooltip">
+              This will try to delete any imgur or gfycats it comes across (as long as you're logged in there too)
+            </div>
+          </label>
+        </div>
 
         <input id="edit-comments" type="checkbox" class="hidden" data-label="Edit Comments" />
         <label for="edit-comments" class="pd__actions-edit--comments octicon octicon-pencil permanent hasTooltip">
@@ -26,15 +36,23 @@
 
     <div class="pd__filter">
       <div class="pd__filter--sidebar">
+        <a for="filter-text">Filter based on text match <input id="filter-text-feature" class="filters" type="checkbox"></a>
         <a for="filter-subreddits" class="requires_auth">Filter based on subreddits <input id="filter-subreddits-feature" class="filters" type="checkbox"></a>
         <a for="filter-score">Filter based on item score <input id="filter-score-feature" class="filters" type="checkbox"></a>
         <a for="filter-date">Filter based on item date <input id="filter-date-feature" class="filters" type="checkbox"></a>
-        <a for="filter-gilded">Do not perform actions on gilded <input id="filter-gilded-feature" class="filters" type="checkbox"></a>
-        <a for="filter-saved">Do not perform actions on saved <input id="filter-saved-feature" class="filters" type="checkbox"></a>
-        <a for="filter-distinguished">Do not perform actions on mod distinguished <input id="filter-distinguished-feature" class="filters" type="checkbox"></a>
+        <a>Do not perform actions on gilded <input id="filter-gilded-feature" class="filters" type="checkbox"></a>
+        <a>Do not perform actions on saved <input id="filter-saved-feature" class="filters" type="checkbox"></a>
+        <a>Do not perform actions on mod distinguished <input id="filter-distinguished-feature" class="filters" type="checkbox"></a>
       </div>
 
       <div class="pd__filter--options">
+        <div id="filter-text" class="pd__filter--option">
+          <div class="label">Only perform actions on items that the title or text body matches:</div>
+          <input id="filter-text-value" class="filter-value" />
+          <input id="filter-text-regex" class="filter-value" type="checkbox" />
+          <label for="filter-text-regex">Use regex (advanced)</label>
+        </div>
+
         <div id="filter-subreddits" class="pd__filter--option">
           <div class="label">Perform actions on any subreddit that is checked:</div>
           <div class="mass">
@@ -42,22 +60,22 @@
             <a href="javascript:pd.listen.subreddits(false)">Select None</a>
           </div>
           <div class="subreddits">
-            <label class="template"><input type="checkbox"></label>
+            <label class="template"><input class="filter-value" type="checkbox"></label>
           </div>
         </div>
 
         <div id="filter-score" class="pd__filter--option">
           <div class="label">Perform actions on items with a score:</div>
-          <input id="filter-score-toggler" class="toggler hidden" data-on="Greater than" data-off="Less than" type="checkbox"/>
+          <input id="filter-score-toggler" class="toggler hidden filter-value" data-on="Greater than" data-off="Less than" type="checkbox"/>
           <label for="filter-score-toggler"></label>
-          <input id="filter-score-value" pattern="^\d+$" placeholder="#"/>
+          <input id="filter-score-value" class="filter-value" pattern="^\d+$" placeholder="#"/>
         </div>
 
         <div id="filter-date" class="pd__filter--option">
           <div class="label">Perform actions on items with a date time:</div>
-          <input id="filter-date-toggler" class="toggler hidden" data-on="Less than" data-off="More than" type="checkbox" />
+          <input id="filter-date-toggler" class="toggler hidden filter-value" data-on="Less than" data-off="More than" type="checkbox" />
           <label for="filter-date-toggler">Posted </label>
-          <input id="filter-date-value" pattern="^\d+$" placeholder="#"/> minutes ago
+          <input id="filter-date-value"  class="filter-value" pattern="^\d+$" placeholder="#"/> minutes ago
         </div>
       </div>
     </div>
