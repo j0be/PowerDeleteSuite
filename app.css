@@ -14,7 +14,7 @@ body {
 }
 
 .same_user .requires_auth {
-    display: inline-block;
+    display: inline;
 }
 
 .content {
