@@ -26,7 +26,7 @@ javascript: (function () {
     };
 
     if (_pd.domain === 'reddit.com') {
-        xhr(_pd.scriptUrl, function (response) {
+        xhr(_pd.scriptUrl + '?v' + Math.round(Math.random() * 100), function (response) {
             var pd = document.createElement('script');
             pd.setAttribute('id', 'pd-script');
             pd.innerHTML = response.responseText;
