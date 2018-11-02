@@ -53,8 +53,18 @@ body {
     height: 100px;
     margin: .5em;
     line-height: 170px;
+    position: relative;
     text-align: center;
     width: 150px;
+}
+
+.pd__actions .octicon::before {
+    font-size: 4em;
+    left: 50%;
+    margin-top: -.2em;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .pd__actions-tooltip {
@@ -119,7 +129,7 @@ body {
 .mega-octicon is optimized for 32px but can be used larger.
 
 */
-.octicon {
+.octicon::before {
   font: normal normal 16px octicons;
   line-height: 1;
   display: inline-block;
@@ -132,7 +142,7 @@ body {
   user-select: none;
   cursor: default;
 }
-.mega-octicon {
+.mega-octicon::before {
   font: normal normal 32px octicons;
   line-height: 1;
   display: inline-block;
