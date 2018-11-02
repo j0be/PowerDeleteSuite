@@ -119,6 +119,9 @@ body {
 .pd__actions input:checked+label:before {
     content: '\f03a';
     font-family: octicons;
+    font-size: 1.5em;
+    padding-right: 0.3em;
+    position: relative;
 }
 
 .pd__actions input:checked+label.permanent {
