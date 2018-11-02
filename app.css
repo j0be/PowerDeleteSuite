@@ -82,9 +82,10 @@ body {
 }
 
 .pd__actions input:checked + label {
-    border-color: #0571fe;
-    color: #fff;
     background: #1b8bfe;
+    border-color: #0571fe;
+    box-shadow: rgba(0, 0, 0, .2) 0 5px 10px;
+    color: #fff;
 }
 
 .pd__actions input:checked + label .pd__actions-tooltip {
