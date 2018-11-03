@@ -174,12 +174,12 @@ body::before {
     text-align: left;
 }
 
-.pd__actions input:checked+label .pd__actions-tooltip:nth-child(2n) {
+.pd__actions label .pd__actions-tooltip:nth-child(2n) {
     bottom: -3.5em;
     transition-delay: .3s;
 }
 
-.pd__actions input:checked+label .pd__actions-tooltip:nth-child(3n) {
+.pd__actions label .pd__actions-tooltip:nth-child(3n) {
     bottom: -7em;
     transition-delay: .6s;
 }
