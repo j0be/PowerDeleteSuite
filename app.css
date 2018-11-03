@@ -186,6 +186,10 @@ body::before {
     margin-bottom: 4em;
 }
 
+.pd__actions input:checked+label.octicon-trashcan.hasTooltip {
+    margin-bottom: 10.5em;
+}
+
 .pd__filter {
     border-top: 1px solid #ccc;
     margin-top: 1em;
