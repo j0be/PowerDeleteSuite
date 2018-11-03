@@ -250,15 +250,16 @@ body::before {
 }
 
 .toggler + label {
+    border-bottom: 1px dotted #09f;
+    color: #09f;
     margin-right: .2em;
     padding: .2em .5em;
-    text-decoration-style: dotted;
 }
 
-.toggler + label::before {
+.toggler + label::after {
     content: attr(data-off);
 }
-.toggler:checked + label::before {
+.toggler:checked + label::after {
     content: attr(data-on);
 }
 
