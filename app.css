@@ -119,10 +119,10 @@ body::before {
     color: #fff;
     height: 3em;
     margin: -.5em;
-    max-width: 100vw;
+    max-width: 100%;
+    min-width: 100%;
     padding: 0.5em;
     text-align: center;
-    width: 100%;
 }
 
 .pd__actions-tooltip textarea::-webkit-input-placeholder {
