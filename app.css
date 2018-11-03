@@ -225,8 +225,9 @@ body::before {
     margin-left: .5em;
 }
 
-.pd__filter--options > * {
+.pd__filter--option {
     display: none;
+    padding-top: 1em;
 }
 
 .pd__filter--option.active {
@@ -252,7 +253,7 @@ body::before {
 .toggler + label {
     border-bottom: 1px dotted #09f;
     color: #09f;
-    margin-right: .2em;
+    margin-right: .5em;
     padding: .2em .5em;
 }
 
