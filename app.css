@@ -144,7 +144,7 @@ body::before {
     transform: translate(-50%, -95%);
 }
 
-.pd__actions input:checked + label {
+.pd__actions input:checked+label.octicon {
     background: #1b8bfe;
     border-color: transparent transparent #0571fe transparent;
     box-shadow: rgba(0, 0, 0, .2) 0 5px 10px;
