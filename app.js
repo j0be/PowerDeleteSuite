@@ -72,8 +72,11 @@ var app = {
     },
     filter: {
         sidebar: function (event) {
-            pq('.pd__filter--option').forEach(function (element) {element.classList.remove('show');});
-            pq('#' + event.currentTarget.getAttribute('for'))[0].classList.add('show');
+            pq('.pd__filter--sidebar a[for]').forEach(function (element) { element.classList.remove('active'); });
+            event.currentTarget.classList.add('active');
+
+            pq('.pd__filter--option').forEach(function (element) { element.classList.remove('active'); });
+            pq('#' + event.currentTarget.getAttribute('for'))[0].classList.add('active');
         }
     }
 };

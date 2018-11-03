@@ -196,10 +196,20 @@ body::before {
 }
 
 .pd__filter--sidebar a {
+    border: 1px solid transparent;
     clear: right;
     display: block;
     float: right;
-    margin: .5em 0;
+    padding: .5em 0 .5em 1em;
+}
+
+.pd__filter--sidebar a.active {
+    background: #fff;
+    border-radius: 4px 0 0 4px;
+    border: 1px solid #ccc;
+    border-right: none;
+    margin-right: -1px;
+    padding-right: 1px;
 }
 
 .pd__filter--sidebar a input {
@@ -210,7 +220,7 @@ body::before {
     display: none;
 }
 
-.pd__filter--option.show {
+.pd__filter--option.active {
     display: block;
 }
 
