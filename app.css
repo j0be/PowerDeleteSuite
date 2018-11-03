@@ -58,7 +58,7 @@ body::before {
     display: inline-block;
 }
 
-.pd__actions .octicon {
+.pd__actions label.octicon {
     background: #cacdd3;
     border-radius: 4px;
     border: none;
@@ -73,7 +73,7 @@ body::before {
     width: 150px;
 }
 
-.pd__actions .octicon:after {
+.pd__actions label.octicon:after {
     font-size: 4em;
     left: 50%;
     margin-top: -.2em;
@@ -87,11 +87,12 @@ body::before {
     border-color: inherit;
     border-radius: 4px;
     box-shadow: rgba(0, 0, 0, .2) 0 5px 10px;
-    bottom: 0;
+    bottom: 1em;
     display: none;
     left: 50%;
     line-height: 1em;
     min-width: 150px;
+    opacity: 0;
     padding: .5em;
     position: absolute;
     transform: translate(-50%, 130%);
@@ -110,7 +111,7 @@ body::before {
     top: initial;
 }
 
-.pd__actions-tooltip input {
+.pd__actions-tooltip textarea {
     background: transparent;
     border: none;
     color: #fff;
@@ -121,11 +122,11 @@ body::before {
     width: 22em;
 }
 
-.pd__actions-tooltip input::-webkit-input-placeholder {
+.pd__actions-tooltip textarea::-webkit-input-placeholder {
     color: #fcc;
 }
 
-.pd__actions-tooltip input:-moz-placeholder {
+.pd__actions-tooltip textarea:-moz-placeholder {
     color: #fcc;
 }
 
@@ -162,7 +163,16 @@ body::before {
 }
 
 .pd__actions input:checked + label .pd__actions-tooltip {
+    bottom: 0;
     display: inline-block;
+}
+
+.pd__actions input:checked+label .pd__actions-tooltip:nth-child(2n) {
+    bottom: -1.5em;
+}
+
+.pd__actions input:checked+label .pd__actions-tooltip:nth-child(3n) {
+    bottom: -3em;
 }
 
 .pd__actions input:checked+label.hasTooltip {

@@ -4,27 +4,42 @@
 
     <div class="pd__actions">
       <span class="requires_auth">
-        <div>
-          <input id="delete-submissions" type="checkbox" class="hidden" data-label="Delete Submissions" />
-          <label for="delete-submissions" class="pd__actions-delete--submissions octicon octicon-link permanent">Delete Submissions</label>
+        <input id="delete" type="checkbox" class="hidden" data-label="Delete" />
+        <label for="delete" class="pd__actions-delete octicon octicon-delete permanent">
+          Delete
 
-          <input id="delete-comments" type="checkbox" class="hidden" data-label="Delete Comments" />
-          <label for="delete-comments" class="pd__actions-delete--comments octicon octicon-comment permanent">Delete Comments</label>
-
-          <input id="delete-media" type="checkbox" class="hidden" data-label="Delete Media" />
-          <label for="delete-media" class="pd__actions-delete--comments octicon octicon-file-media permanent">
-            Delete Media
-            <div class="pd__actions-tooltip top">
-              This will try to delete any imgur or gfycat images it comes across (as long as you're logged in there too)
-            </div>
-          </label>
-        </div>
+          <div class="pd__actions-tooltip">
+            <input id="delete-submissions" type="checkbox" data-label="Delete Submissions" />
+            <label for="delete-submissions" class="pd__actions-delete--submissions">
+              <span class="octicon octicon-link"></span>
+              Delete Submissions
+            </label>
+          </div>
+          
+          <div class="pd__actions-tooltip">
+            <input id="delete-comments" type="checkbox" data-label="Delete Comments" />
+            <label for="delete-comments" class="pd__actions-delete--comments">
+              <span class="octicon octicon-comment"></span>
+              Delete Comments
+            </label>
+          </div>
+          
+          <div class="pd__actions-tooltip">
+            <input id="delete-media" type="checkbox" data-label="Delete Media" />
+            <label for="delete-media" class="pd__actions-delete--media">
+              <span class="octicon octicon-media"></span>
+              <span title="This will try to delete any imgur or gfycat images it comes across (as long as you're logged in there too)">
+                Delete Media
+              </span>
+            </label>
+          </div>
+        </label>
 
         <input id="edit-comments" type="checkbox" class="hidden" data-label="Edit Comments" />
         <label for="edit-comments" class="pd__actions-edit--comments octicon octicon-pencil permanent hasTooltip">
           Edit Comments
           <div class="pd__actions-tooltip">
-            <input id="edit-comments--value" placeholder="Enter text to edit comments or self posts to." />
+            <textarea id="edit-comments--value" placeholder="Enter text to edit comments or self posts to."></textarea>
           </div>
         </label>
       </span>
