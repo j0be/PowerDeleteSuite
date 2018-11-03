@@ -248,6 +248,16 @@ body::before {
     width: 400px;
 }
 
+.pd__filter--options .subreddits {
+    max-height: 258px;
+    overflow-y: auto;
+    padding: 1em 0;
+}
+
+.pd__filter--options .subreddits label {
+    padding: .5em 0;
+}
+
 .pd__filter--option input {
     margin-top: 1em;
     max-height: 300px;
