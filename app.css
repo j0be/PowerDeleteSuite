@@ -150,7 +150,7 @@ body::before {
     color: #fff;
 }
 
-.pd__actions input:checked+label:before {
+.pd__actions input:checked+label.octicon:before {
     content: '\f03a';
     font-family: octicons;
     font-size: 1.5em;
@@ -164,10 +164,11 @@ body::before {
     border-color: transparent transparent #fe2847 transparent;
 }
 
-.pd__actions input:checked + label .pd__actions-tooltip {
+.pd__actions input:checked+label .pd__actions-tooltip {
     bottom: 0;
     display: inline-block;
     opacity: 1;
+    text-align: left;
 }
 
 .pd__actions input:checked+label .pd__actions-tooltip:nth-child(2n) {
