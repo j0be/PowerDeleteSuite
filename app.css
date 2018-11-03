@@ -249,6 +249,12 @@ body::before {
     margin-left: 1em;
 }
 
+.toggler + label {
+    margin-right: .2em;
+    padding: .2em .5em;
+    text-decoration-style: dotted;
+}
+
 .toggler + label::before {
     content: attr(data-off);
 }
