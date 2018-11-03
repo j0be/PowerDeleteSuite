@@ -45,7 +45,7 @@ stream = {};
 var app = {
     init: function () {
         if (validation.versions()) {
-            app.setup().then(app.listen);
+            app.setup().then(app.listen).then(app.populateSubreddits);
         }
     },
     setup: function () {
@@ -64,7 +64,7 @@ var app = {
     },
     listen: function () {
         pq('.pd__actions-tooltip').forEach(function (element) {
-            element.addEventListener("click", function (event) { event.stopPropagation();});
+            element.addEventListener("click", function (event) { event.stopPropagation(); });
         });
         pq('.pd__filter--sidebar a[for]').forEach(function (element) {
             element.addEventListener("click", function (event) { event.stopPropagation(); app.filter.sidebar(event); });
@@ -78,6 +78,18 @@ var app = {
             pq('.pd__filter--option').forEach(function (element) { element.classList.remove('active'); });
             pq('#' + event.currentTarget.getAttribute('for'))[0].classList.add('active');
         }
+    },
+    populateSubreddits: function () {
+        var subreddits = pq('#per-sr-karma tbody th').map(function (element) { return element.textContent; }),
+            template = pq('.pd .subreddits .template')[0].outerHTML;
+
+        subreddits.forEach(function (subreddit) {
+            var element = document.createElement('div');
+            element.innerHTML = template;
+            element.childNodes[0].innerHTML += subreddit;
+            element.childNodes[0].childNodes[0].value = subreddit;
+            pq('.pd .subreddits')[0].appendChild(element);
+        });
     }
 };
 

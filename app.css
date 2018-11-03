@@ -274,6 +274,7 @@ body::before {
 }
 
 .toggler + label + input {
+    text-align: center;
     width: 7em;
 }
 
