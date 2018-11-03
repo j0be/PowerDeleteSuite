@@ -274,7 +274,7 @@ body::before {
 }
 
 .toggler + label + input {
-    width: 4em;
+    width: 7em;
 }
 
 .pd__footer {
