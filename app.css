@@ -117,6 +117,7 @@ body::before {
     background: transparent;
     border: none;
     color: #fff;
+    font-size: 12px;
     height: 3em;
     margin: -.5em;
     max-width: 100%;
