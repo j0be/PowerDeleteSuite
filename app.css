@@ -228,7 +228,8 @@ body::before {
     padding-right: 1px;
 }
 
-.pd__filter--sidebar a input {
+.pd__filter--sidebar a input,
+.pd__filter--sidebar label input {
     margin-left: .5em;
 }
 
@@ -244,7 +245,7 @@ body::before {
 .pd__filter--options {
     float: right;
     text-align: left;
-    width: 360px;
+    width: 400px;
 }
 
 .pd__filter--option input {
