@@ -89,6 +89,7 @@ body::before {
     border-radius: 4px;
     box-shadow: rgba(0, 0, 0, .2) 0 5px 10px;
     bottom: 1em;
+    color: #fff;
     left: 50%;
     line-height: 1em;
     min-width: 150px;
