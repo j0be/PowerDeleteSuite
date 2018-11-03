@@ -89,14 +89,15 @@ body::before {
     border-radius: 4px;
     box-shadow: rgba(0, 0, 0, .2) 0 5px 10px;
     bottom: 1em;
-    display: none;
     left: 50%;
     line-height: 1em;
     min-width: 150px;
     opacity: 0;
     padding: .5em;
+    pointer-events: none;
     position: absolute;
     transform: translate(-50%, 130%);
+    text-align: left;
     z-index: 1;
 }
 
@@ -166,8 +167,8 @@ body::before {
 
 .pd__actions input:checked+label .pd__actions-tooltip {
     bottom: 0;
-    display: inline-block;
     opacity: 1;
+    pointer-events: all;
     text-align: left;
 }
 
