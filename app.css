@@ -195,13 +195,20 @@ body::before {
     width: 250px;
 }
 
-.pd__filter--sidebar a {
+.pd__filter--sidebar a,
+.pd__filter--sidebar label {
     border: 1px solid transparent;
     border-right: none;
     clear: right;
     display: block;
     float: right;
     padding: .5em 0 .5em 1em;
+}
+
+.pd__filter--sidebar a + label {
+    border-top: 1px dotted #ccc;
+    margin-top: .5em;
+    width: 100%;
 }
 
 .pd__filter--sidebar a.active {
