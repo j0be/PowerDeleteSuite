@@ -210,6 +210,10 @@ body::before {
     display: none;
 }
 
+.pd__filter--option.show {
+    display: block;
+}
+
 .pd__footer {
     border-top: 1px solid #ccc;
     clear: both;

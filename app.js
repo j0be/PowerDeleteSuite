@@ -45,7 +45,7 @@ stream = {};
 var app = {
     init: function () {
         if (validation.versions()) {
-            app.setup();
+            app.setup().then(app.listen);
         }
     },
     setup: function () {
@@ -61,6 +61,20 @@ var app = {
             .then(dom);
         }
         return css();
+    },
+    listen: function () {
+        pq('.pd__actions-tooltip').forEach(function (element) {
+            element.addEventListener("click", function (event) { event.stopPropagation();});
+        });
+        pq('.pd__filter--sidebar a[for]').forEach(function (element) {
+            element.addEventListener("click", function (event) { event.stopPropagation(); app.filter.sidebar(event); });
+        });
+    },
+    filter: {
+        sidebar: function (event) {
+            pq('.pd__filter--option').forEach(function (element) {element.classList.remove('show');});
+            pq('#' + event.currentTarget.getAttribute('for'))[0].classList.add('show');
+        }
     }
 };
 
