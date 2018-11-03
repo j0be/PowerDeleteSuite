@@ -249,7 +249,8 @@ body::before {
 }
 
 .pd__filter--options .subreddits {
-    max-height: 258px;
+    margin-top: 8px;
+    max-height: 250px;
     overflow-y: auto;
     padding: 1em 0;
 }
