@@ -258,6 +258,7 @@ body::before {
 
 .toggler + label::after {
     content: attr(data-off);
+    text-transform: lowercase;
 }
 .toggler:checked + label::after {
     content: attr(data-on);
