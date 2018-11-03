@@ -81,15 +81,15 @@
 
         <div id="filter-score" class="pd__filter--option">
           <div class="label">Perform actions on items with a score:</div>
-          <input id="filter-score-toggler" class="toggler hidden filter-value" data-on="Greater than" data-off="Less than" type="checkbox"/>
-          <label for="filter-score-toggler"></label>
+          <input id="filter-score-toggler" class="toggler hidden filter-value" type="checkbox"/>
+          <label for="filter-score-toggler" data-on="Greater than" data-off="Less than"></label>
           <input id="filter-score-value" class="filter-value" pattern="^\d+$" placeholder="#"/>
         </div>
 
         <div id="filter-date" class="pd__filter--option">
           <div class="label">Perform actions on items with a date time:</div>
-          <input id="filter-date-toggler" class="toggler hidden filter-value" data-on="Less than" data-off="More than" type="checkbox" />
-          <label for="filter-date-toggler">Posted </label>
+          <input id="filter-date-toggler" class="toggler hidden filter-value" type="checkbox" />
+          <label for="filter-date-toggler" data-on="Less than" data-off="More than">Posted </label>
           <input id="filter-date-value"  class="filter-value" pattern="^\d+$" placeholder="#"/> minutes ago
         </div>
       </div>

@@ -249,6 +249,13 @@ body::before {
     margin-left: 1em;
 }
 
+.toggler + label::before {
+    content: attr(data-off);
+}
+.toggler:checked + label::before {
+    content: attr(data-on);
+}
+
 .pd__footer {
     border-top: 1px solid #ccc;
     clear: both;
