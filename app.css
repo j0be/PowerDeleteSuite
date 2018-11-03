@@ -191,6 +191,7 @@ body::before {
     float: left;
     margin-right: 1em;
     margin-top: -1em;
+    height: 300px;
     padding: 1em 0;
     width: 250px;
 }
@@ -240,6 +241,7 @@ body::before {
 
 .pd__filter--option input {
     margin-top: 1em;
+    max-height: 300px;
     padding: .5em 1em;
 }
 
