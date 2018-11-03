@@ -264,6 +264,10 @@ body::before {
     content: attr(data-on);
 }
 
+.toggler + label + input {
+    width: 4em;
+}
+
 .pd__footer {
     border-top: 1px solid #ccc;
     clear: both;
