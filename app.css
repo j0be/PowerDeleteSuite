@@ -168,10 +168,13 @@ body::before {
 }
 
 .pd__actions input:checked+label .pd__actions-tooltip {
-    bottom: 0;
     opacity: 1;
     pointer-events: all;
     text-align: left;
+}
+
+.pd__actions label .pd__actions-tooltip:nth-child(1n) {
+    bottom: 0;
 }
 
 .pd__actions label .pd__actions-tooltip:nth-child(2n) {
