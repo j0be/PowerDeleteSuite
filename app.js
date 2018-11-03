@@ -80,7 +80,7 @@ var app = {
         }
     },
     populateSubreddits: function () {
-        var subreddits = pq('#per-sr-karma tbody th').map(function (element) { return element.textContent; }),
+        var subreddits = Array.from(pq('#per-sr-karma tbody th')).map(function (element) { return element.textContent; }),
             template = pq('.pd .subreddits .template')[0].outerHTML;
 
         subreddits.forEach(function (subreddit) {
