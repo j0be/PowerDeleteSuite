@@ -42,6 +42,7 @@ body::before {
 }
 
 .pd * {
+    box-sizing: border-box;
     transition: .3s all ease-in-out;
 }
 
@@ -115,11 +116,12 @@ body::before {
     background: transparent;
     border: none;
     color: #fff;
+    height: 3em;
     margin: -.5em;
     max-width: 100vw;
     padding: 0.5em;
     text-align: center;
-    width: 22em;
+    width: 100%;
 }
 
 .pd__actions-tooltip textarea::-webkit-input-placeholder {
