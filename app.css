@@ -102,6 +102,13 @@ body::before {
     z-index: 1;
 }
 
+.pd__actions-tooltip label {
+    display: inline-block;
+    margin: -.5em;
+    padding: .5em;
+    width: calc(100% - 1em);
+}
+
 .pd__actions-tooltip textarea {
     background: transparent;
     border: none;
@@ -309,6 +316,7 @@ body::before {
 
 */
 .octicon:after {
+  pointer-events: none;
   font: normal normal 16px octicons;
   line-height: 1;
   display: inline-block;
