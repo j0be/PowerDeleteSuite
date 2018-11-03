@@ -156,18 +156,19 @@ body::before {
 }
 
 .pd__actions input:checked+label .pd__actions-tooltip {
+    margin-top: 1em;
     opacity: 1;
     pointer-events: all;
     text-align: left;
 }
 
 .pd__actions input:checked+label .pd__actions-tooltip:nth-child(2n) {
-    margin-top: 3.5em;
+    margin-top: 4.5em;
     transition-delay: .3s;
 }
 
 .pd__actions input:checked+label .pd__actions-tooltip:nth-child(3n) {
-    margin-top: 7em;
+    margin-top: 8em;
     transition-delay: .6s;
 }
 
