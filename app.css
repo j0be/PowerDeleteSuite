@@ -167,14 +167,15 @@ body::before {
 .pd__actions input:checked + label .pd__actions-tooltip {
     bottom: 0;
     display: inline-block;
+    opacity: 1;
 }
 
 .pd__actions input:checked+label .pd__actions-tooltip:nth-child(2n) {
-    bottom: -1.5em;
+    bottom: -3.5em;
 }
 
 .pd__actions input:checked+label .pd__actions-tooltip:nth-child(3n) {
-    bottom: -3em;
+    bottom: -7em;
 }
 
 .pd__actions input:checked+label.hasTooltip {
