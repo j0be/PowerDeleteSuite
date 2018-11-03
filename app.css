@@ -197,6 +197,7 @@ body::before {
 
 .pd__filter--sidebar a {
     border: 1px solid transparent;
+    border-right: none;
     clear: right;
     display: block;
     float: right;
@@ -206,8 +207,7 @@ body::before {
 .pd__filter--sidebar a.active {
     background: #fff;
     border-radius: 4px 0 0 4px;
-    border: 1px solid #ccc;
-    border-right: none;
+    border-color: #ccc;
     margin-right: -1px;
     padding-right: 1px;
 }
