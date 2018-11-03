@@ -107,9 +107,9 @@ body::before {
     border: none;
     color: #fff;
     font-size: 10px;
-    height: 3em;
     margin: -.5em;
     max-width: 150px;
+    min-height: 3em;
     min-width: 150px;
     padding: 0.5em;
     text-align: center;
