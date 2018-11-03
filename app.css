@@ -84,8 +84,8 @@ body::before {
 }
 
 .pd__actions-tooltip {
-    background: inherit;
-    border-color: inherit;
+    background: #fe2847;
+    border-color: transparent transparent #fe2847 transparent;
     border-radius: 4px;
     box-shadow: rgba(0, 0, 0, .2) 0 5px 10px;
     bottom: 1em;
