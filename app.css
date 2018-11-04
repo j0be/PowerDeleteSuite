@@ -184,11 +184,11 @@ body::before {
 }
 
 .pd__actions input:checked + label.hasTooltip {
-    margin-bottom: 4em;
+    margin-bottom: 7em;
 }
 
 .pd__actions input:checked + label.octicon-trashcan.hasTooltip {
-    margin-bottom: 10.5em;
+    margin-bottom: 11em;
 }
 
 .pd__filter {
