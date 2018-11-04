@@ -55,7 +55,7 @@ var app = {
         function dom() {
             return xhr(_pd.baseUrl+'app.html?v' + Math.round(Math.random() * 100)).then(function (response) {
                 pq('body>.content[role=\'main\']')[0].innerHTML = response.responseText;
-                pq('.pd')[0].classList.add('animate');
+                setTimeout(function () { pq('.pd')[0].classList.add('animate'); }, 500);
             }).catch(alert.bind(undefined, 'Failed to get PowerDeleteSuite markup'));
         }
         function css() {
