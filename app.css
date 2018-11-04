@@ -33,6 +33,7 @@ body::before {
     box-shadow: rgba(0, 0, 0, 0.2) 0 5px 10px;
     display: inline-block;
     font-family: 'Roboto', sans-serif;
+    font-size: 10px;
     margin: 2em auto 0;
     max-width: 100%;
     padding: 1em;
