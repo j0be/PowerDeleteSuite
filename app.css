@@ -222,8 +222,8 @@ body::before {
 
 .pd__filter--sidebar a.active {
     background: #fff;
-    border-radius: 4px 0 0 4px;
     border-color: #ccc;
+    border-radius: 4px 0 0 4px;
     margin-right: -1px;
     padding-right: 1px;
 }

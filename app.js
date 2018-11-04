@@ -45,7 +45,7 @@ stream = {};
 var app = {
     init: function () {
         if (validation.versions()) {
-            app.setup().then(app.listen).then(app.populateSubreddits);
+            app.setup().then(app.populateSubreddits).then(app.listen);
         }
     },
     setup: function () {
@@ -69,6 +69,9 @@ var app = {
         pq('.pd__filter--sidebar a[for]').forEach(function (element) {
             element.addEventListener("click", function (event) { event.stopPropagation(); app.filter.sidebar(event); });
         });
+        pq('.pd form input, .pd form textarea').forEach(function (element) {
+            element.addEventListener("change", function (event) { app.settings.store(); });
+        });
     },
     filter: {
         sidebar: function (event) {
@@ -88,8 +91,29 @@ var app = {
             element.innerHTML = template;
             element.childNodes[0].innerHTML += subreddit;
             element.childNodes[0].childNodes[0].value = subreddit;
+            element.childNodes[0].childNodes[0].id = 'subreddit-' + subreddit;
             pq('.pd .subreddits')[0].appendChild(element);
         });
+    },
+    settings: {
+        store: function () {
+            var settings = [];
+            pq('.pd form input, .pd form textarea').forEach(function (element) {
+                var value = element.getAttribute('type') === 'checkbox' ? element.checked : element.value;
+                settings.push([element.id, value]);
+            });
+            localStorage.setItem('pd_settings', JSON.stringify(settings));
+        },
+        apply: function () {
+            var settings = localStorage.getItem('pd_settings') ? JSON.parse(localStorage.getItem('pd_settings')) : false;
+            if (settings) {
+                settings.forEach(function(setting) {
+                    var element = pq('#' + setting[0]),
+                        attribute = element.getAttribute('type') === 'checkbox' ? 'checked' : 'value';
+                    element[attribute] = setting.value;
+                });
+            }
+        }
     }
 };
 
