@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 body::before {
-    background: rgba(0, 0, 0, .05);
+    background: rgba(0, 0, 0, 0.05);
     content: "";
     height: 100vh;
     position: fixed;
@@ -30,7 +30,7 @@ body::before {
 .pd {
     background: #fff;
     border-radius: 1em;
-    box-shadow: rgba(0, 0, 0, .2) 0 5px 10px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 5px 10px;
     display: inline-block;
     font-family: 'Roboto', sans-serif;
     margin: 2em auto 0;
@@ -43,7 +43,7 @@ body::before {
 
 .pd * {
     box-sizing: border-box;
-    transition: .3s all ease-in-out;
+    transition: 0.3s all ease-in-out;
 }
 
 .pd label,
@@ -61,23 +61,23 @@ body::before {
 
 .pd__actions label.octicon {
     background: #cacdd3;
-    border-radius: 4px;
     border: none;
     border-color: transparent transparent #cacdd3 transparent;
+    border-radius: 4px;
     color: #54595e;
     display: inline-block;
     height: 100px;
-    margin: .5em;
     line-height: 170px;
+    margin: 0.5em;
     position: relative;
     text-align: center;
     width: 150px;
 }
 
-.pd__actions label.octicon:after {
+.pd__actions label.octicon::after {
     font-size: 4em;
     left: 50%;
-    margin-top: -.2em;
+    margin-top: -0.2em;
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -87,25 +87,25 @@ body::before {
     background: #fe2847;
     border-color: transparent transparent #fe2847 transparent;
     border-radius: 4px;
-    box-shadow: rgba(0, 0, 0, .2) 0 5px 10px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 5px 10px;
     color: #fff;
     left: 50%;
     line-height: 1em;
     min-width: 150px;
     opacity: 0;
-    padding: .5em;
+    padding: 0.5em;
     pointer-events: none;
     position: absolute;
-    transform: translate(-50%, 0);
     text-align: left;
     top: 100%;
+    transform: translate(-50%, 0);
     z-index: 1;
 }
 
 .pd__actions-tooltip label {
     display: inline-block;
-    margin: -.5em;
-    padding: .5em;
+    margin: -0.5em;
+    padding: 0.5em;
     width: calc(100% - 1em);
 }
 
@@ -114,7 +114,7 @@ body::before {
     border: none;
     color: #fff;
     font-size: 10px;
-    margin: -.5em;
+    margin: -0.5em;
     max-width: 150px;
     min-height: 3em;
     min-width: 150px;
@@ -131,9 +131,9 @@ body::before {
 }
 
 .pd__actions-tooltip::after {
-    border: .5em solid transparent;
+    border: 0.5em solid transparent;
     border-color: inherit;
-    border-width: 0 .5em 0.5em .5em;
+    border-width: 0 0.5em 0.5em 0.5em;
     content: "";
     left: 50%;
     position: absolute;
@@ -141,14 +141,14 @@ body::before {
     transform: translate(-50%, -95%);
 }
 
-.pd__actions input:checked+label.octicon {
+.pd__actions input:checked + label.octicon {
     background: #1b8bfe;
     border-color: transparent transparent #0571fe transparent;
-    box-shadow: rgba(0, 0, 0, .2) 0 5px 10px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 5px 10px;
     color: #fff;
 }
 
-.pd__actions input:checked+label.octicon:before {
+.pd__actions input:checked + label.octicon::before {
     content: '\f03a';
     font-family: octicons;
     font-size: 1.5em;
@@ -157,33 +157,33 @@ body::before {
     padding-right: 0.3em;
 }
 
-.pd__actions input:checked+label.permanent {
+.pd__actions input:checked + label.permanent {
     background: #fe2847;
     border-color: transparent transparent #fe2847 transparent;
 }
 
-.pd__actions input:checked+label .pd__actions-tooltip {
+.pd__actions input:checked + label .pd__actions-tooltip {
     margin-top: 1em;
     opacity: 1;
     pointer-events: all;
     text-align: left;
 }
 
-.pd__actions input:checked+label .pd__actions-tooltip:nth-child(2n) {
+.pd__actions input:checked + label .pd__actions-tooltip:nth-child(2n) {
     margin-top: 4.5em;
-    transition-delay: .3s;
+    transition-delay: 0.3s;
 }
 
-.pd__actions input:checked+label .pd__actions-tooltip:nth-child(3n) {
+.pd__actions input:checked + label .pd__actions-tooltip:nth-child(3n) {
     margin-top: 8em;
-    transition-delay: .6s;
+    transition-delay: 0.6s;
 }
 
-.pd__actions input:checked+label.hasTooltip {
+.pd__actions input:checked + label.hasTooltip {
     margin-bottom: 4em;
 }
 
-.pd__actions input:checked+label.octicon-trashcan.hasTooltip {
+.pd__actions input:checked + label.octicon-trashcan.hasTooltip {
     margin-bottom: 10.5em;
 }
 
@@ -196,9 +196,9 @@ body::before {
 .pd__filter--sidebar {
     border-right: 1px solid #ccc;
     float: left;
+    height: 300px;
     margin-right: 1em;
     margin-top: -1em;
-    height: 300px;
     padding: 1em 0;
     width: 250px;
 }
@@ -210,13 +210,13 @@ body::before {
     clear: right;
     display: block;
     float: right;
-    padding: .5em 0 .5em 1em;
+    padding: 0.5em 0 0.5em 1em;
     text-align: right;
 }
 
 .pd__filter--sidebar a + label {
     border-top: 1px dotted #ccc;
-    margin-top: .5em;
+    margin-top: 0.5em;
     width: 100%;
 }
 
@@ -230,7 +230,7 @@ body::before {
 
 .pd__filter--sidebar a input,
 .pd__filter--sidebar label input {
-    margin-left: .5em;
+    margin-left: 0.5em;
 }
 
 .pd__filter--option {
@@ -257,13 +257,13 @@ body::before {
 
 .pd__filter--options .subreddits label {
     display: inline-block;
-    padding: .25em 0;
+    padding: 0.25em 0;
 }
 
 .pd__filter--option input {
     margin-top: 1em;
     max-height: 300px;
-    padding: .5em 1em;
+    padding: 0.5em 1em;
 }
 
 .pd__filter--option input + input {
@@ -273,14 +273,15 @@ body::before {
 .toggler + label {
     border-bottom: 1px dotted #09f;
     color: #09f;
-    margin-right: .5em;
-    padding: .2em .5em;
+    margin-right: 0.5em;
+    padding: 0.2em 0.5em;
 }
 
 .toggler + label::after {
     content: attr(data-off);
     text-transform: lowercase;
 }
+
 .toggler:checked + label::after {
     content: attr(data-on);
 }
@@ -293,14 +294,14 @@ body::before {
 .pd__footer {
     border-top: 1px solid #ccc;
     clear: both;
-    padding-top: .5em;
+    padding-top: 0.5em;
     text-align: right;
 }
 
 .pd__footer button {
     background: #cacdd3;
-    border-radius: 4px;
     border: none;
+    border-radius: 4px;
     color: #fff;
     font-size: 1.3em;
     margin-left: 1em;
@@ -311,253 +312,778 @@ body::before {
 .pd__footer button:hover {
     background: #09f;
 }
+
 /**** fonts *****/
-
 @font-face {
-  font-family: 'octicons';
-  src: url('https://raw.githubusercontent.com/j0be/PowerDeleteSuite/alpha/fonts/octicons.eot?#iefix') format('embedded-opentype'),
-       url('https://raw.githubusercontent.com/j0be/PowerDeleteSuite/alpha/fonts/octicons.woff') format('woff'),
-       url('https://raw.githubusercontent.com/j0be/PowerDeleteSuite/alpha/fonts/octicons.ttf') format('truetype'),
-       url('https://raw.githubusercontent.com/j0be/PowerDeleteSuite/alpha/fonts/octicons.svg#octicons') format('svg');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'octicons';
+    font-style: normal;
+    font-weight: normal;
+    src:
+        url('https://raw.githubusercontent.com/j0be/PowerDeleteSuite/alpha/fonts/octicons.eot?#iefix') format('embedded-opentype'),
+        url('https://raw.githubusercontent.com/j0be/PowerDeleteSuite/alpha/fonts/octicons.woff') format('woff'),
+        url('https://raw.githubusercontent.com/j0be/PowerDeleteSuite/alpha/fonts/octicons.ttf') format('truetype'),
+        url('https://raw.githubusercontent.com/j0be/PowerDeleteSuite/alpha/fonts/octicons.svg#octicons') format('svg');
 }
 
-/*
-
-.octicon is optimized for 16px.
-.mega-octicon is optimized for 32px but can be used larger.
-
-*/
-.octicon:after {
-  pointer-events: none;
-  font: normal normal 16px octicons;
-  line-height: 1;
-  display: inline-block;
-  text-decoration: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  cursor: default;
-}
-.mega-octicon:after {
-  font: normal normal 32px octicons;
-  line-height: 1;
-  display: inline-block;
-  text-decoration: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  cursor: default;
+.octicon::after {
+    display: inline-block;
+    font: normal normal 16px octicons;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1;
+    pointer-events: none;
+    text-decoration: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
-.octicon-alert:after { content: '\f02d'}
-.octicon-alignment-align:after { content: '\f08a'}
-.octicon-alignment-aligned-to:after { content: '\f08e'}
-.octicon-alignment-unalign:after { content: '\f08b'}
-.octicon-arrow-down:after { content: '\f03f'}
-.octicon-arrow-left:after { content: '\f040'}
-.octicon-arrow-right:after { content: '\f03e'}
-.octicon-arrow-small-down:after { content: '\f0a0'}
-.octicon-arrow-small-left:after { content: '\f0a1'}
-.octicon-arrow-small-right:after { content: '\f071'}
-.octicon-arrow-small-up:after { content: '\f09f'}
-.octicon-arrow-up:after { content: '\f03d'}
-.octicon-beer:after { content: '\f069'}
-.octicon-book:after { content: '\f007'}
-.octicon-bookmark:after { content: '\f07b'}
-.octicon-briefcase:after { content: '\f0d3'}
-.octicon-broadcast:after { content: '\f048'}
-.octicon-browser:after { content: '\f0c5'}
-.octicon-bug:after { content: '\f091'}
-.octicon-calendar:after { content: '\f068'}
-.octicon-check:after { content: '\f03a'}
-.octicon-checklist:after { content: '\f076'}
-.octicon-chevron-down:after { content: '\f0a3'}
-.octicon-chevron-left:after { content: '\f0a4'}
-.octicon-chevron-right:after { content: '\f078'}
-.octicon-chevron-up:after { content: '\f0a2'}
-.octicon-circle-slash:after { content: '\f084'}
-.octicon-circuit-board:after { content: '\f0d6'}
-.octicon-clippy:after { content: '\f035'}
-.octicon-clock:after { content: '\f046'}
-.octicon-cloud-download:after { content: '\f00b'}
-.octicon-cloud-upload:after { content: '\f00c'}
-.octicon-code:after { content: '\f05f'}
-.octicon-color-mode:after { content: '\f065'}
-.octicon-comment-add:before,
-.octicon-comment:after { content: '\f02b'}
-.octicon-comment-discussion:after { content: '\f04f'}
-.octicon-credit-card:after { content: '\f045'}
-.octicon-dash:after { content: '\f0ca'}
-.octicon-dashboard:after { content: '\f07d'}
-.octicon-database:after { content: '\f096'}
-.octicon-device-camera:after { content: '\f056'}
-.octicon-device-camera-video:after { content: '\f057'}
-.octicon-device-desktop:after { content: '\f27c'}
-.octicon-device-mobile:after { content: '\f038'}
-.octicon-diff:after { content: '\f04d'}
-.octicon-diff-added:after { content: '\f06b'}
-.octicon-diff-ignored:after { content: '\f099'}
-.octicon-diff-modified:after { content: '\f06d'}
-.octicon-diff-removed:after { content: '\f06c'}
-.octicon-diff-renamed:after { content: '\f06e'}
-.octicon-ellipsis:after { content: '\f09a'}
-.octicon-eye-unwatch:before,
-.octicon-eye-watch:before,
-.octicon-eye:after { content: '\f04e'}
-.octicon-file-binary:after { content: '\f094'}
-.octicon-file-code:after { content: '\f010'}
-.octicon-file-directory:after { content: '\f016'}
-.octicon-file-media:after { content: '\f012'}
-.octicon-file-pdf:after { content: '\f014'}
-.octicon-file-submodule:after { content: '\f017'}
-.octicon-file-symlink-directory:after { content: '\f0b1'}
-.octicon-file-symlink-file:after { content: '\f0b0'}
-.octicon-file-text:after { content: '\f011'}
-.octicon-file-zip:after { content: '\f013'}
-.octicon-flame:after { content: '\f0d2'}
-.octicon-fold:after { content: '\f0cc'}
-.octicon-gear:after { content: '\f02f'}
-.octicon-gift:after { content: '\f042'}
-.octicon-gist:after { content: '\f00e'}
-.octicon-gist-secret:after { content: '\f08c'}
-.octicon-git-branch-create:before,
-.octicon-git-branch-delete:before,
-.octicon-git-branch:after { content: '\f020'}
-.octicon-git-commit:after { content: '\f01f'}
-.octicon-git-compare:after { content: '\f0ac'}
-.octicon-git-merge:after { content: '\f023'}
-.octicon-git-pull-request-abandoned:before,
-.octicon-git-pull-request:after { content: '\f009'}
-.octicon-globe:after { content: '\f0b6'}
-.octicon-graph:after { content: '\f043'}
-.octicon-heart:after { content: '\2665'}
-.octicon-history:after { content: '\f07e'}
-.octicon-home:after { content: '\f08d'}
-.octicon-horizontal-rule:after { content: '\f070'}
-.octicon-hourglass:after { content: '\f09e'}
-.octicon-hubot:after { content: '\f09d'}
-.octicon-inbox:after { content: '\f0cf'}
-.octicon-info:after { content: '\f059'}
-.octicon-issue-closed:after { content: '\f028'}
-.octicon-issue-opened:after { content: '\f026'}
-.octicon-issue-reopened:after { content: '\f027'}
-.octicon-jersey:after { content: '\f019'}
-.octicon-jump-down:after { content: '\f072'}
-.octicon-jump-left:after { content: '\f0a5'}
-.octicon-jump-right:after { content: '\f0a6'}
-.octicon-jump-up:after { content: '\f073'}
-.octicon-key:after { content: '\f049'}
-.octicon-keyboard:after { content: '\f00d'}
-.octicon-law:after { content: '\f0d8'}
-.octicon-light-bulb:after { content: '\f000'}
-.octicon-link:after { content: '\f05c'}
-.octicon-link-external:after { content: '\f07f'}
-.octicon-list-ordered:after { content: '\f062'}
-.octicon-list-unordered:after { content: '\f061'}
-.octicon-location:after { content: '\f060'}
-.octicon-gist-private:before,
-.octicon-mirror-private:before,
-.octicon-git-fork-private:before,
-.octicon-lock:after { content: '\f06a'}
-.octicon-logo-github:after { content: '\f092'}
-.octicon-mail:after { content: '\f03b'}
-.octicon-mail-read:after { content: '\f03c'}
-.octicon-mail-reply:after { content: '\f051'}
-.octicon-mark-github:after { content: '\f00a'}
-.octicon-markdown:after { content: '\f0c9'}
-.octicon-megaphone:after { content: '\f077'}
-.octicon-mention:after { content: '\f0be'}
-.octicon-microscope:after { content: '\f089'}
-.octicon-milestone:after { content: '\f075'}
-.octicon-mirror-public:before,
-.octicon-mirror:after { content: '\f024'}
-.octicon-mortar-board:after { content: '\f0d7'}
-.octicon-move-down:after { content: '\f0a8'}
-.octicon-move-left:after { content: '\f074'}
-.octicon-move-right:after { content: '\f0a9'}
-.octicon-move-up:after { content: '\f0a7'}
-.octicon-mute:after { content: '\f080'}
-.octicon-no-newline:after { content: '\f09c'}
-.octicon-octoface:after { content: '\f008'}
-.octicon-organization:after { content: '\f037'}
-.octicon-package:after { content: '\f0c4'}
-.octicon-paintcan:after { content: '\f0d1'}
-.octicon-pencil:after { content: '\f058'}
-.octicon-person-add:before,
-.octicon-person-follow:before,
-.octicon-person:after { content: '\f018'}
-.octicon-pin:after { content: '\f041'}
-.octicon-playback-fast-forward:after { content: '\f0bd'}
-.octicon-playback-pause:after { content: '\f0bb'}
-.octicon-playback-play:after { content: '\f0bf'}
-.octicon-playback-rewind:after { content: '\f0bc'}
-.octicon-plug:after { content: '\f0d4'}
-.octicon-repo-create:before,
-.octicon-gist-new:before,
-.octicon-file-directory-create:before,
-.octicon-file-add:before,
-.octicon-plus:after { content: '\f05d'}
-.octicon-podium:after { content: '\f0af'}
-.octicon-primitive-dot:after { content: '\f052'}
-.octicon-primitive-square:after { content: '\f053'}
-.octicon-pulse:after { content: '\f085'}
-.octicon-puzzle:after { content: '\f0c0'}
-.octicon-question:after { content: '\f02c'}
-.octicon-quote:after { content: '\f063'}
-.octicon-radio-tower:after { content: '\f030'}
-.octicon-repo-delete:before,
-.octicon-repo:after { content: '\f001'}
-.octicon-repo-clone:after { content: '\f04c'}
-.octicon-repo-force-push:after { content: '\f04a'}
-.octicon-gist-fork:before,
-.octicon-repo-forked:after { content: '\f002'}
-.octicon-repo-pull:after { content: '\f006'}
-.octicon-repo-push:after { content: '\f005'}
-.octicon-rocket:after { content: '\f033'}
-.octicon-rss:after { content: '\f034'}
-.octicon-ruby:after { content: '\f047'}
-.octicon-screen-full:after { content: '\f066'}
-.octicon-screen-normal:after { content: '\f067'}
-.octicon-search-save:before,
-.octicon-search:after { content: '\f02e'}
-.octicon-server:after { content: '\f097'}
-.octicon-settings:after { content: '\f07c'}
-.octicon-log-in:before,
-.octicon-sign-in:after { content: '\f036'}
-.octicon-log-out:before,
-.octicon-sign-out:after { content: '\f032'}
-.octicon-split:after { content: '\f0c6'}
-.octicon-squirrel:after { content: '\f0b2'}
-.octicon-star-add:before,
-.octicon-star-delete:before,
-.octicon-star:after { content: '\f02a'}
-.octicon-steps:after { content: '\f0c7'}
-.octicon-stop:after { content: '\f08f'}
-.octicon-repo-sync:before,
-.octicon-sync:after { content: '\f087'}
-.octicon-tag-remove:before,
-.octicon-tag-add:before,
-.octicon-tag:after { content: '\f015'}
-.octicon-telescope:after { content: '\f088'}
-.octicon-terminal:after { content: '\f0c8'}
-.octicon-three-bars:after { content: '\f05e'}
-.octicon-tools:after { content: '\f031'}
-.octicon-trashcan:after { content: '\f0d0'}
-.octicon-triangle-down:after { content: '\f05b'}
-.octicon-triangle-left:after { content: '\f044'}
-.octicon-triangle-right:after { content: '\f05a'}
-.octicon-triangle-up:after { content: '\f0aa'}
-.octicon-unfold:after { content: '\f039'}
-.octicon-unmute:after { content: '\f0ba'}
-.octicon-versions:after { content: '\f064'}
-.octicon-remove-close:before,
-.octicon-x:after { content: '\f081'}
-.octicon-zap:after { content: '\26A1'}
+.mega-octicon::after {
+    cursor: default;
+    display: inline-block;
+    font: normal normal 32px octicons;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1;
+    text-decoration: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.octicon-alert::after {
+    content: '\f02d';
+}
+
+.octicon-alignment-align::after {
+    content: '\f08a';
+}
+
+.octicon-alignment-aligned-to::after {
+    content: '\f08e';
+}
+
+.octicon-alignment-unalign::after {
+    content: '\f08b';
+}
+
+.octicon-arrow-down::after {
+    content: '\f03f';
+}
+
+.octicon-arrow-left::after {
+    content: '\f040';
+}
+
+.octicon-arrow-right::after {
+    content: '\f03e';
+}
+
+.octicon-arrow-small-down::after {
+    content: '\f0a0';
+}
+
+.octicon-arrow-small-left::after {
+    content: '\f0a1';
+}
+
+.octicon-arrow-small-right::after {
+    content: '\f071';
+}
+
+.octicon-arrow-small-up::after {
+    content: '\f09f';
+}
+
+.octicon-arrow-up::after {
+    content: '\f03d';
+}
+
+.octicon-beer::after {
+    content: '\f069';
+}
+
+.octicon-book::after {
+    content: '\f007';
+}
+
+.octicon-bookmark::after {
+    content: '\f07b';
+}
+
+.octicon-briefcase::after {
+    content: '\f0d3';
+}
+
+.octicon-broadcast::after {
+    content: '\f048';
+}
+
+.octicon-browser::after {
+    content: '\f0c5';
+}
+
+.octicon-bug::after {
+    content: '\f091';
+}
+
+.octicon-calendar::after {
+    content: '\f068';
+}
+
+.octicon-check::after {
+    content: '\f03a';
+}
+
+.octicon-checklist::after {
+    content: '\f076';
+}
+
+.octicon-chevron-down::after {
+    content: '\f0a3';
+}
+
+.octicon-chevron-left::after {
+    content: '\f0a4';
+}
+
+.octicon-chevron-right::after {
+    content: '\f078';
+}
+
+.octicon-chevron-up::after {
+    content: '\f0a2';
+}
+
+.octicon-circle-slash::after {
+    content: '\f084';
+}
+
+.octicon-circuit-board::after {
+    content: '\f0d6';
+}
+
+.octicon-clippy::after {
+    content: '\f035';
+}
+
+.octicon-clock::after {
+    content: '\f046';
+}
+
+.octicon-cloud-download::after {
+    content: '\f00b';
+}
+
+.octicon-cloud-upload::after {
+    content: '\f00c';
+}
+
+.octicon-code::after {
+    content: '\f05f';
+}
+
+.octicon-color-mode::after {
+    content: '\f065';
+}
+
+.octicon-comment-add::after,
+.octicon-comment::after {
+    content: '\f02b';
+}
+
+.octicon-comment-discussion::after {
+    content: '\f04f';
+}
+
+.octicon-credit-card::after {
+    content: '\f045';
+}
+
+.octicon-dash::after {
+    content: '\f0ca';
+}
+
+.octicon-dashboard::after {
+    content: '\f07d';
+}
+
+.octicon-database::after {
+    content: '\f096';
+}
+
+.octicon-device-camera::after {
+    content: '\f056';
+}
+
+.octicon-device-camera-video::after {
+    content: '\f057';
+}
+
+.octicon-device-desktop::after {
+    content: '\f27c';
+}
+
+.octicon-device-mobile::after {
+    content: '\f038';
+}
+
+.octicon-diff::after {
+    content: '\f04d';
+}
+
+.octicon-diff-added::after {
+    content: '\f06b';
+}
+
+.octicon-diff-ignored::after {
+    content: '\f099';
+}
+
+.octicon-diff-modified::after {
+    content: '\f06d';
+}
+
+.octicon-diff-removed::after {
+    content: '\f06c';
+}
+
+.octicon-diff-renamed::after {
+    content: '\f06e';
+}
+
+.octicon-ellipsis::after {
+    content: '\f09a';
+}
+
+.octicon-eye-unwatch::after,
+.octicon-eye-watch::after,
+.octicon-eye::after {
+    content: '\f04e';
+}
+
+.octicon-file-binary::after {
+    content: '\f094';
+}
+
+.octicon-file-code::after {
+    content: '\f010';
+}
+
+.octicon-file-directory::after {
+    content: '\f016';
+}
+
+.octicon-file-media::after {
+    content: '\f012';
+}
+
+.octicon-file-pdf::after {
+    content: '\f014';
+}
+
+.octicon-file-submodule::after {
+    content: '\f017';
+}
+
+.octicon-file-symlink-directory::after {
+    content: '\f0b1';
+}
+
+.octicon-file-symlink-file::after {
+    content: '\f0b0';
+}
+
+.octicon-file-text::after {
+    content: '\f011';
+}
+
+.octicon-file-zip::after {
+    content: '\f013';
+}
+
+.octicon-flame::after {
+    content: '\f0d2';
+}
+
+.octicon-fold::after {
+    content: '\f0cc';
+}
+
+.octicon-gear::after {
+    content: '\f02f';
+}
+
+.octicon-gift::after {
+    content: '\f042';
+}
+
+.octicon-gist::after {
+    content: '\f00e';
+}
+
+.octicon-gist-secret::after {
+    content: '\f08c';
+}
+
+.octicon-git-branch-create::after,
+.octicon-git-branch-delete::after,
+.octicon-git-branch::after {
+    content: '\f020';
+}
+
+.octicon-git-commit::after {
+    content: '\f01f';
+}
+
+.octicon-git-compare::after {
+    content: '\f0ac';
+}
+
+.octicon-git-merge::after {
+    content: '\f023';
+}
+
+.octicon-git-pull-request-abandoned::after,
+.octicon-git-pull-request::after {
+    content: '\f009';
+}
+
+.octicon-globe::after {
+    content: '\f0b6';
+}
+
+.octicon-graph::after {
+    content: '\f043';
+}
+
+.octicon-heart::after {
+    content: '\2665';
+}
+
+.octicon-history::after {
+    content: '\f07e';
+}
+
+.octicon-home::after {
+    content: '\f08d';
+}
+
+.octicon-horizontal-rule::after {
+    content: '\f070';
+}
+
+.octicon-hourglass::after {
+    content: '\f09e';
+}
+
+.octicon-hubot::after {
+    content: '\f09d';
+}
+
+.octicon-inbox::after {
+    content: '\f0cf';
+}
+
+.octicon-info::after {
+    content: '\f059';
+}
+
+.octicon-issue-closed::after {
+    content: '\f028';
+}
+
+.octicon-issue-opened::after {
+    content: '\f026';
+}
+
+.octicon-issue-reopened::after {
+    content: '\f027';
+}
+
+.octicon-jersey::after {
+    content: '\f019';
+}
+
+.octicon-jump-down::after {
+    content: '\f072';
+}
+
+.octicon-jump-left::after {
+    content: '\f0a5';
+}
+
+.octicon-jump-right::after {
+    content: '\f0a6';
+}
+
+.octicon-jump-up::after {
+    content: '\f073';
+}
+
+.octicon-key::after {
+    content: '\f049';
+}
+
+.octicon-keyboard::after {
+    content: '\f00d';
+}
+
+.octicon-law::after {
+    content: '\f0d8';
+}
+
+.octicon-light-bulb::after {
+    content: '\f000';
+}
+
+.octicon-link::after {
+    content: '\f05c';
+}
+
+.octicon-link-external::after {
+    content: '\f07f';
+}
+
+.octicon-list-ordered::after {
+    content: '\f062';
+}
+
+.octicon-list-unordered::after {
+    content: '\f061';
+}
+
+.octicon-location::after {
+    content: '\f060';
+}
+
+.octicon-gist-private::after,
+.octicon-mirror-private::after,
+.octicon-git-fork-private::after,
+.octicon-lock::after {
+    content: '\f06a';
+}
+
+.octicon-logo-github::after {
+    content: '\f092';
+}
+
+.octicon-mail::after {
+    content: '\f03b';
+}
+
+.octicon-mail-read::after {
+    content: '\f03c';
+}
+
+.octicon-mail-reply::after {
+    content: '\f051';
+}
+
+.octicon-mark-github::after {
+    content: '\f00a';
+}
+
+.octicon-markdown::after {
+    content: '\f0c9';
+}
+
+.octicon-megaphone::after {
+    content: '\f077';
+}
+
+.octicon-mention::after {
+    content: '\f0be';
+}
+
+.octicon-microscope::after {
+    content: '\f089';
+}
+
+.octicon-milestone::after {
+    content: '\f075';
+}
+
+.octicon-mirror-public::after,
+.octicon-mirror::after {
+    content: '\f024';
+}
+
+.octicon-mortar-board::after {
+    content: '\f0d7';
+}
+
+.octicon-move-down::after {
+    content: '\f0a8';
+}
+
+.octicon-move-left::after {
+    content: '\f074';
+}
+
+.octicon-move-right::after {
+    content: '\f0a9';
+}
+
+.octicon-move-up::after {
+    content: '\f0a7';
+}
+
+.octicon-mute::after {
+    content: '\f080';
+}
+
+.octicon-no-newline::after {
+    content: '\f09c';
+}
+
+.octicon-octoface::after {
+    content: '\f008';
+}
+
+.octicon-organization::after {
+    content: '\f037';
+}
+
+.octicon-package::after {
+    content: '\f0c4';
+}
+
+.octicon-paintcan::after {
+    content: '\f0d1';
+}
+
+.octicon-pencil::after {
+    content: '\f058';
+}
+
+.octicon-person-add::after,
+.octicon-person-follow::after,
+.octicon-person::after {
+    content: '\f018';
+}
+
+.octicon-pin::after {
+    content: '\f041';
+}
+
+.octicon-playback-fast-forward::after {
+    content: '\f0bd';
+}
+
+.octicon-playback-pause::after {
+    content: '\f0bb';
+}
+
+.octicon-playback-play::after {
+    content: '\f0bf';
+}
+
+.octicon-playback-rewind::after {
+    content: '\f0bc';
+}
+
+.octicon-plug::after {
+    content: '\f0d4';
+}
+
+.octicon-repo-create::after,
+.octicon-gist-new::after,
+.octicon-file-directory-create::after,
+.octicon-file-add::after,
+.octicon-plus::after {
+    content: '\f05d';
+}
+
+.octicon-podium::after {
+    content: '\f0af';
+}
+
+.octicon-primitive-dot::after {
+    content: '\f052';
+}
+
+.octicon-primitive-square::after {
+    content: '\f053';
+}
+
+.octicon-pulse::after {
+    content: '\f085';
+}
+
+.octicon-puzzle::after {
+    content: '\f0c0';
+}
+
+.octicon-question::after {
+    content: '\f02c';
+}
+
+.octicon-quote::after {
+    content: '\f063';
+}
+
+.octicon-radio-tower::after {
+    content: '\f030';
+}
+
+.octicon-repo-delete::after,
+.octicon-repo::after {
+    content: '\f001';
+}
+
+.octicon-repo-clone::after {
+    content: '\f04c';
+}
+
+.octicon-repo-force-push::after {
+    content: '\f04a';
+}
+
+.octicon-gist-fork::after,
+.octicon-repo-forked::after {
+    content: '\f002';
+}
+
+.octicon-repo-pull::after {
+    content: '\f006';
+}
+
+.octicon-repo-push::after {
+    content: '\f005';
+}
+
+.octicon-rocket::after {
+    content: '\f033';
+}
+
+.octicon-rss::after {
+    content: '\f034';
+}
+
+.octicon-ruby::after {
+    content: '\f047';
+}
+
+.octicon-screen-full::after {
+    content: '\f066';
+}
+
+.octicon-screen-normal::after {
+    content: '\f067';
+}
+
+.octicon-search-save::after,
+.octicon-search::after {
+    content: '\f02e';
+}
+
+.octicon-server::after {
+    content: '\f097';
+}
+
+.octicon-settings::after {
+    content: '\f07c';
+}
+
+.octicon-log-in::after,
+.octicon-sign-in::after {
+    content: '\f036';
+}
+
+.octicon-log-out::after,
+.octicon-sign-out::after {
+    content: '\f032';
+}
+
+.octicon-split::after {
+    content: '\f0c6';
+}
+
+.octicon-squirrel::after {
+    content: '\f0b2';
+}
+
+.octicon-star-add::after,
+.octicon-star-delete::after,
+.octicon-star::after {
+    content: '\f02a';
+}
+
+.octicon-steps::after {
+    content: '\f0c7';
+}
+
+.octicon-stop::after {
+    content: '\f08f';
+}
+
+.octicon-repo-sync::after,
+.octicon-sync::after {
+    content: '\f087';
+}
+
+.octicon-tag-remove::after,
+.octicon-tag-add::after,
+.octicon-tag::after {
+    content: '\f015';
+}
+
+.octicon-telescope::after {
+    content: '\f088';
+}
+
+.octicon-terminal::after {
+    content: '\f0c8';
+}
+
+.octicon-three-bars::after {
+    content: '\f05e';
+}
+
+.octicon-tools::after {
+    content: '\f031';
+}
+
+.octicon-trashcan::after {
+    content: '\f0d0';
+}
+
+.octicon-triangle-down::after {
+    content: '\f05b';
+}
+
+.octicon-triangle-left::after {
+    content: '\f044';
+}
+
+.octicon-triangle-right::after {
+    content: '\f05a';
+}
+
+.octicon-triangle-up::after {
+    content: '\f0aa';
+}
+
+.octicon-unfold::after {
+    content: '\f039';
+}
+
+.octicon-unmute::after {
+    content: '\f0ba';
+}
+
+.octicon-versions::after {
+    content: '\f064';
+}
+
+.octicon-remove-close::after,
+.octicon-x::after {
+    content: '\f081';
+}
+
+.octicon-zap::after {
+    content: '\26A1';
+}
