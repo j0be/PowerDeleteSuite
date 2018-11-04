@@ -108,9 +108,9 @@ var app = {
             var settings = localStorage.getItem('pd_settings') ? JSON.parse(localStorage.getItem('pd_settings')) : false;
             if (settings) {
                 settings.forEach(function(setting) {
-                    var element = pq('#' + setting[0]),
-                        attribute = element.getAttribute('type') === 'checkbox' ? 'checked' : 'value';
-                    element[attribute] = setting.value;
+                    var element = setting[0] && pq('#' + setting[0].replace(/[, ]/g, ''))[0],
+                        attribute = element && element.getAttribute('type') === 'checkbox' ? 'checked' : 'value';
+                    element[attribute] = setting[1];
                 });
             }
         }
