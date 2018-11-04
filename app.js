@@ -110,7 +110,9 @@ var app = {
                 settings.forEach(function(setting) {
                     var element = setting[0] && pq('#' + setting[0].replace(/[, ]/g, ''))[0],
                         attribute = element && element.getAttribute('type') === 'checkbox' ? 'checked' : 'value';
-                    element[attribute] = setting[1];
+                    if (element) {
+                        element[attribute] = setting[1];
+                    }
                 });
             }
         }
