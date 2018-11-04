@@ -43,6 +43,9 @@ body::before {
 
 .pd * {
     box-sizing: border-box;
+}
+
+.pd.animate * {
     transition: 0.3s all ease-in-out;
 }
 

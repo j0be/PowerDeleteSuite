@@ -45,13 +45,17 @@ stream = {};
 var app = {
     init: function () {
         if (validation.versions()) {
-            app.setup().then(app.populateSubreddits).then(app.listen);
+            app.setup()
+                .then(app.populateSubreddits)
+                .then(app.listen)
+                .then(app.settings.apply);
         }
     },
     setup: function () {
         function dom() {
             return xhr(_pd.baseUrl+'app.html?v' + Math.round(Math.random() * 100)).then(function (response) {
                 pq('body>.content[role=\'main\']')[0].innerHTML = response.responseText;
+                pq('.pd')[0].classList.add('animate');
             }).catch(alert.bind(undefined, 'Failed to get PowerDeleteSuite markup'));
         }
         function css() {
@@ -70,7 +74,7 @@ var app = {
             element.addEventListener("click", function (event) { event.stopPropagation(); app.filter.sidebar(event); });
         });
         pq('.pd form input, .pd form textarea').forEach(function (element) {
-            element.addEventListener("change", function (event) { app.settings.store(); });
+            element.addEventListener("change", function () { app.settings.store(); });
         });
     },
     filter: {
@@ -103,6 +107,7 @@ var app = {
                 settings.push([element.id, value]);
             });
             localStorage.setItem('pd_settings', JSON.stringify(settings));
+            console.log('store');
         },
         apply: function () {
             var settings = localStorage.getItem('pd_settings') ? JSON.parse(localStorage.getItem('pd_settings')) : false;
@@ -115,6 +120,7 @@ var app = {
                     }
                 });
             }
+            console.log('apply');
         }
     }
 };
