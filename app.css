@@ -37,6 +37,7 @@ body::before {
     margin: 2em auto 0;
     max-width: 100%;
     padding: 1em;
+    padding-left: 0;
     position: relative;
     text-align: left;
     z-index: 100;
@@ -202,6 +203,7 @@ body::before {
 }
 
 .pd__filter--sidebar {
+    background: #e5f1ff;
     border-right: 1px solid #ccc;
     float: left;
     margin-right: 1em;
