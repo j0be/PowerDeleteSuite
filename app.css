@@ -36,8 +36,7 @@ body::before {
     font-size: 10px;
     margin: 2em auto 0;
     max-width: 100%;
-    padding: 1em;
-    padding-left: 0;
+    padding: 1em 0;
     position: relative;
     text-align: left;
     z-index: 100;
