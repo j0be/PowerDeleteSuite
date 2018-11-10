@@ -204,11 +204,14 @@ body::before {
 .pd__filter--sidebar {
     border-right: 1px solid #ccc;
     float: left;
-    height: 300px;
     margin-right: 1em;
     margin-top: -1em;
     padding: 1em 0;
     width: 250px;
+}
+
+.same_user .pd__filter--sidebar {
+    height: 300px;
 }
 
 .pd__filter--sidebar a,
