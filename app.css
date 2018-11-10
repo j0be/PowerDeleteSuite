@@ -129,6 +129,7 @@ body::before {
     min-width: 150px;
     padding: 0.5em;
     text-align: center;
+    transition: none !important;
 }
 
 .pd__actions-tooltip textarea::-webkit-input-placeholder {
