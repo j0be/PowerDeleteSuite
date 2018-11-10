@@ -155,7 +155,14 @@ var validation = {
     },
     page: {
         profile: function () {
-            return !!document.location.href.match(/\/user\//);
+            var isUserPage = !!document.location.href.match(/\/user\//);
+            if(isUserPage) {
+                pd.sameUser = document.location.pathname.split('/')[2] === pd.user;
+                if (pd.sameUser) {
+                    pq('.pd__form')[0].classList.add('same_user');
+                }
+            }
+            return isUserPage;
         },
         comments: function () {
             return !!document.location.href.match(/\/comments\//);
