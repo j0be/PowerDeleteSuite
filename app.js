@@ -58,9 +58,9 @@ var app = {
     determineUsage: function () {
         if (validation.page.profile()) {
             app.setup()
-                .then(app.populateSubreddits())
-                .then(app.listen())
-                .then(app.settings.apply());
+                .then(app.populateSubreddits)
+                .then(app.listen)
+                .then(app.settings.apply);
         } else if (validation.page.comments()) {
             //TODO: prompt for comment removal
             alert('Comment removal stuff to come');
