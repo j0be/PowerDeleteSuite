@@ -101,6 +101,7 @@ var app = {
             element.innerHTML = template;
             element.childNodes[0].innerHTML += subreddit;
             element.childNodes[0].childNodes[0].value = subreddit;
+            element.childNodes[0].childNodes[0].checked = true;
             element.childNodes[0].childNodes[0].id = 'subreddit-' + subreddit;
             pq('.pd .subreddits')[0].appendChild(element);
         });
