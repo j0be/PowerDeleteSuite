@@ -6,6 +6,7 @@ javascript: (function () {
     window._pd = {
         bookmarkver: '1.3',
         domain: document.location.hostname.split('.').slice(-2).join('.'),
+        baseUrl: 'https://raw.githubusercontent.com/j0be/PowerDeleteSuite/' + (alpha ? 'alpha/' : 'master/'),
         scriptUrl: 'https://raw.githubusercontent.com/j0be/PowerDeleteSuite/' + (alpha ? 'alpha/app.js' : 'master/powerdeletesuite.js'),
     };
     window.xhr = function (url, cb, err) {
