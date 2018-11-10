@@ -11,13 +11,13 @@ javascript: (function () {
     };
     window.xhr = function (url, methodType) {
         var promiseObj = new Promise(function (resolve, reject) {
-            var xhr = new XMLHttpRequest();
-            xhr.open(methodType || 'GET', url, true);
-            xhr.send();
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        var resp = xhr.responseText,
+            var caller = new XMLHttpRequest();
+            caller.open(methodType || 'GET', url, true);
+            caller.send();
+            caller.onreadystatechange = function () {
+                if (caller.readyState === 4) {
+                    if (caller.status === 200) {
+                        var resp = caller.responseText,
                             response;
                         try {
                             response = JSON.parse(resp);
@@ -28,7 +28,7 @@ javascript: (function () {
                         }
                         resolve(response);
                     } else {
-                        reject(xhr.status);
+                        reject(caller.status);
                     }
                 }
             };
@@ -37,12 +37,12 @@ javascript: (function () {
     };
 
     if (_pd.domain === 'reddit.com') {
-        xhr(_pd.scriptUrl + '?v' + Math.round(Math.random() * 100), function (response) {
+        xhr(_pd.scriptUrl + '?v' + Math.round(Math.random() * 100)).then(function (response) {
             var pd = document.createElement('script');
             pd.setAttribute('id', 'pd-script');
             pd.innerHTML = response.responseText;
             pq('head')[0].appendChild(pd);
-        }, function (data) {
+        }).catch(function (data) {
             alert('Error retreiving PowerDeleteSuite from github');
         });
     } else {
