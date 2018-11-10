@@ -257,13 +257,16 @@ body::before {
 
 .pd__filter--options {
     float: right;
+    font-size: 12px;
+    max-height: 290px;
+    overflow: hidden;
     text-align: left;
     width: 400px;
 }
 
 .pd__filter--options .subreddits {
     margin-top: 8px;
-    max-height: 250px;
+    max-height: 240px;
     overflow-y: auto;
     padding: 1em 0;
 }
