@@ -45,8 +45,7 @@ stream = {};
 var app = {
     init: function () {
         if (validation.versions()) {
-            app.setup()
-                .then(app.determineUsage);
+            app.determineUsage();
         }
     },
     setup: function () {
@@ -67,9 +66,10 @@ var app = {
     },
     determineUsage: function () {
         if (validation.page.profile()) {
-            app.populateSubreddits();
-            app.listen();
-            app.settings.apply();
+            app.setup()
+                .then(app.populateSubreddits())
+                .then(app.listen())
+                .then(app.settings.apply());
         } else if (validation.page.comments()) {
             //TODO: prompt for comment removal
             alert('Comment removal stuff to come');
@@ -166,12 +166,16 @@ var validation = {
     },
     page: {
         profile: function () {
-            return !!document.location.href.match(/\/user\//);
+            return document.location.domain === 'reddit.com' &&
+                !!document.location.href.match(/\/user\//);
         },
         comments: function () {
-            return !!document.location.href.match(/\/comments\//);
+            return document.location.domain === 'reddit.com' &&
+                !!document.location.href.match(/\/comments\//);
         }
     }
 };
+
+document.location.domain = document.location.host.split('.').slice(-2).join('.');
 
 app.init();
