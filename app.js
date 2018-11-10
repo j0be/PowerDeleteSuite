@@ -1,13 +1,3 @@
-window.pq = function (str) {
-    return document.querySelectorAll(str);
-};
-window.alpha = true;
-window._pd = {
-    bookmarkver: '1.3',
-    domain: document.location.hostname.split('.').slice(-2).join('.'),
-    baseUrl: 'https://raw.githubusercontent.com/j0be/PowerDeleteSuite/' + (alpha ? 'alpha/' : 'master/'),
-};
-
 window.xhr = function (url, methodType) {
     var promiseObj = new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest();
@@ -52,15 +42,16 @@ var app = {
         function dom() {
             return xhr(_pd.baseUrl+'app.html?v' + Math.round(Math.random() * 100)).then(function (response) {
                 pq('body>.content[role=\'main\']')[0].innerHTML = response.responseText;
-                pq('.pd')[0].classList.add('animate');
-                setTimeout(function () {  console.log('add animate'); }, 500);
+                setTimeout(function () {  pq('.pd')[0].classList.add('animate'); }, 500);
             }).catch(alert.bind(undefined, 'Failed to get PowerDeleteSuite markup'));
         }
         function css() {
             return xhr(_pd.baseUrl + 'app.css?v' + Math.round(Math.random() * 100)).then(function (response) {
-                pq('head')[0].innerHTML += '<style>' + response.responseText + '</style>';
-            }).catch(alert.bind(undefined, 'Failed to get PowerDeleteSuite css'))
-            .then(dom);
+                var pd = document.createElement('style');
+                pd.setAttribute('id', 'pd-style');
+                pd.innerHTML = response.responseText;
+                pq('head')[0].appendChild(pd);
+            }).catch(alert.bind(undefined, 'Failed to get PowerDeleteSuite css')).then(dom);
         }
         return css();
     },
@@ -73,7 +64,7 @@ var app = {
         } else if (validation.page.comments()) {
             //TODO: prompt for comment removal
             alert('Comment removal stuff to come');
-        } else if (confirm('Power Delete Suite is designed to be run from either your user page or a comments page. Would you like to navigate to your user profile?')) {
+        } else if (confirm('There\'s no functions to run on this page. Would you like to navigate to your profile?')) {
             document.location.href = '/user/me';
         }
     },
@@ -166,16 +157,12 @@ var validation = {
     },
     page: {
         profile: function () {
-            return document.location.domain === 'reddit.com' &&
-                !!document.location.href.match(/\/user\//);
+            return !!document.location.href.match(/\/user\//);
         },
         comments: function () {
-            return document.location.domain === 'reddit.com' &&
-                !!document.location.href.match(/\/comments\//);
+            return !!document.location.href.match(/\/comments\//);
         }
     }
 };
-
-document.location.domain = document.location.host.split('.').slice(-2).join('.');
 
 app.init();
