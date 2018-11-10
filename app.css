@@ -15,11 +15,11 @@ body::before {
 }
 
 .requires_auth {
-    display: none;
+    display: none !important;
 }
 
 .same_user .requires_auth {
-    display: inline;
+    display: inline !important;
 }
 
 .content {
@@ -61,6 +61,10 @@ body::before {
 
 .pd__actions > span {
     display: inline-block;
+}
+
+.same_user .pd__actions span.requires_auth {
+    display: inline-block !important;
 }
 
 .pd__actions label.octicon {
