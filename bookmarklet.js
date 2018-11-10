@@ -9,21 +9,31 @@ javascript: (function () {
         baseUrl: 'https://raw.githubusercontent.com/j0be/PowerDeleteSuite/' + (alpha ? 'alpha/' : 'master/'),
         scriptUrl: 'https://raw.githubusercontent.com/j0be/PowerDeleteSuite/' + (alpha ? 'alpha/app.js' : 'master/powerdeletesuite.js'),
     };
-    window.xhr = function (url, cb, err) {
-        var this_xhr = new XMLHttpRequest();
-        url += (url.match(/\?/) ? '&' : '?') + (new Date()).getDate();
-        this_xhr.open('GET', url);
-        this_xhr.send(null);
-        this_xhr.onreadystatechange = function () {
-            if (this_xhr.readyState === 4) {
-                if (this_xhr.status === 200) {
-                    cb(this_xhr);
-                } else {
-                    err(this_xhr);
+    window.xhr = xhr = function (url, methodType) {
+        var promiseObj = new Promise(function (resolve, reject) {
+            var xhr = new XMLHttpRequest();
+            xhr.open(methodType || 'GET', url, true);
+            xhr.send();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        var resp = xhr.responseText,
+                            response;
+                        try {
+                            response = JSON.parse(resp);
+                        } catch (e) {
+                            response = {
+                                responseText: resp
+                            };
+                        }
+                        resolve(response);
+                    } else {
+                        reject(xhr.status);
+                    }
                 }
-            }
-        };
-        return this_xhr;
+            };
+        });
+        return promiseObj;
     };
 
     if (_pd.domain === 'reddit.com') {

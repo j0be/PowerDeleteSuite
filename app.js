@@ -1,7 +1,33 @@
+window.xhr = function (url, methodType) {
+    var promiseObj = new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.open(methodType || 'GET', url, true);
+        xhr.send();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    var resp = xhr.responseText,
+                        response;
+                    try {
+                        response = JSON.parse(resp);
+                    } catch(e) {
+                        response = { responseText: resp };
+                    }
+                    resolve(response);
+                } else {
+                    reject(xhr.status);
+                }
+            }
+        };
+    });
+    return promiseObj;
+};
+
+/*****************/
+
 var pd = {
     version: '2.0.0',
     bookmarkver: '1.3',
-    user: pq && pq('.user a').length && pq('.user a')[0].textContent || 'noauth',
     debugging: true
 },
 stream = {};
@@ -82,10 +108,10 @@ var app = {
                 var value = element.getAttribute('type') === 'checkbox' ? element.checked : element.value;
                 settings.push([element.id, value]);
             });
-            localStorage.setItem('pd_settings_' + pd.user, JSON.stringify(settings));
+            localStorage.setItem('pd_settings_' + _pd.user, JSON.stringify(settings));
         },
         apply: function () {
-            var settings = localStorage.getItem('pd_settings_' + pd.user) ? JSON.parse(localStorage.getItem('pd_settings_' + pd.user)) : false;
+            var settings = localStorage.getItem('pd_settings_' + _pd.user) ? JSON.parse(localStorage.getItem('pd_settings_' + _pd.user)) : false;
             if (settings) {
                 settings.forEach(function(setting) {
                     var element = setting[0] && pq('#' + setting[0].replace(/[, ]/g, ''))[0],
