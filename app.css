@@ -260,6 +260,7 @@ body::before {
     font-size: 12px;
     max-height: 290px;
     overflow: hidden;
+    padding-bottom: 2em;
     text-align: left;
     width: 400px;
 }
