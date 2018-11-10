@@ -288,6 +288,7 @@ body::before {
     color: #09f;
     margin-right: 0.5em;
     padding: 0.2em 0.5em;
+    position: relative;
 }
 
 .toggler + label::after {
@@ -297,6 +298,25 @@ body::before {
 
 .toggler:checked + label::after {
     content: attr(data-on);
+}
+
+.toggler + label::before {
+    color: #999;
+    content: "TOGGLE";
+    font-size: 10px;
+    left: 50%;
+    letter-spacing: 0.5em;
+    margin-top: 0.2em;
+    pointer-events: none;
+    position: absolute;
+    text-align: center;
+    top: 100%;
+    transform: translate(-50%, 0);
+    width: 100px;
+}
+
+.toggler + label:hover::before {
+    color: #333;
 }
 
 .toggler + label + input {
