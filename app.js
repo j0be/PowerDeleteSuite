@@ -46,9 +46,7 @@ var app = {
     init: function () {
         if (validation.versions()) {
             app.setup()
-                .then(app.populateSubreddits)
-                .then(app.listen)
-                .then(app.settings.apply);
+                .then(app.determineUsage);
         }
     },
     setup: function () {
@@ -66,6 +64,18 @@ var app = {
             .then(dom);
         }
         return css();
+    },
+    determineUsage: function () {
+        if (validation.page.profile()) {
+            app.populateSubreddits();
+            app.listen();
+            app.settings.apply();
+        } else if (validation.page.comments()) {
+            //TODO: prompt for comment removal
+            alert('Comment removal stuff to come');
+        } else if (confirm('Power Delete Suite is designed to be run from either your user page or a comments page. Would you like to navigate to your user profile?')) {
+            document.location.href = '/user/me';
+        }
     },
     listen: function () {
         pq('.pd__actions-tooltip').forEach(function (element) {
@@ -153,6 +163,14 @@ var validation = {
             return true;
         }
         return pd.debugging || (checkBookmarkletVersion() && checkAppVersion());
+    },
+    page: {
+        profile: function () {
+            return !!document.location.href.match(/\/user\//);
+        },
+        comments: function () {
+            return !!document.location.href.match(/\/comments\//);
+        }
     }
 };
 
