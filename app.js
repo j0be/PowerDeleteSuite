@@ -43,6 +43,9 @@ var app = {
         function dom() {
             return xhr(_pd.baseUrl+'app.html?v' + Math.round(Math.random() * 100)).then(function (response) {
                 pq('body>.content[role=\'main\']')[0].innerHTML = response.responseText;
+                if (pd.sameUser) {
+                    pq('.pd__form').length && pq('.pd__form')[0].classList.add('same_user');
+                }
                 setTimeout(function () {  pq('.pd')[0].classList.add('animate'); }, 500);
             }).catch(alert.bind(undefined, 'Failed to get PowerDeleteSuite markup'));
         }
@@ -159,9 +162,6 @@ var validation = {
             var isUserPage = !!document.location.href.match(/\/user\//);
             if(isUserPage) {
                 pd.sameUser = document.location.pathname.split('/')[2] === pd.user;
-                if (pd.sameUser) {
-                    pq('.pd__form')[0].classList.add('same_user');
-                }
             }
             return isUserPage;
         },
