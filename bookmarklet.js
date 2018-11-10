@@ -9,7 +9,7 @@ javascript: (function () {
         baseUrl: 'https://raw.githubusercontent.com/j0be/PowerDeleteSuite/' + (alpha ? 'alpha/' : 'master/'),
         scriptUrl: 'https://raw.githubusercontent.com/j0be/PowerDeleteSuite/' + (alpha ? 'alpha/app.js' : 'master/powerdeletesuite.js'),
     };
-    window.xhr = xhr = function (url, methodType) {
+    window.xhr = function (url, methodType) {
         var promiseObj = new Promise(function (resolve, reject) {
             var xhr = new XMLHttpRequest();
             xhr.open(methodType || 'GET', url, true);
