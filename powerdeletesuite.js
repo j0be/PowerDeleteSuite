@@ -11,7 +11,7 @@ var pd = {
         pd.setup.applyDom();
       } else {
         if (confirm('This script is designed to be run from your own user profile. Would you like to navigate there?')) {
-          document.location = 'http://reddit.com/u/me/overview';
+          document.location = 'https://old.reddit.com/u/me/overview';
         }
       }
     }
