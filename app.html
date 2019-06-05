@@ -1,113 +1,56 @@
-<div class="pd">
-  <form class="pd__form" onsubmit="javascript:void(0)">
-    <div class="pd__actions">
-      <span class="requires_auth">
-        <input id="delete" type="checkbox" class="hidden" data-label="Delete" />
-        <label for="delete" class="pd__actions-delete octicon octicon-trashcan permanent hasTooltip">
-          Delete
+<link rel="stylesheet" type="text/css" href="app.css" media="all"> <!-- local debugging only -->
 
-          <div class="pd__actions-tooltip">
-            <input id="delete-submissions" type="checkbox" data-label="Delete Submissions" />
-            <label for="delete-submissions" class="pd__actions-delete--submissions">
-              <span class="octicon octicon-link"></span>
-              Delete Submissions
-            </label>
-          </div>
-
-          <div class="pd__actions-tooltip">
-            <input id="delete-comments" type="checkbox" data-label="Delete Comments" />
-            <label for="delete-comments" class="pd__actions-delete--comments">
-              <span class="octicon octicon-comment"></span>
-              Delete Comments
-            </label>
-          </div>
-
-          <div class="pd__actions-tooltip">
-            <input id="delete-media" type="checkbox" data-label="Delete Media" />
-            <label for="delete-media" class="pd__actions-delete--media">
-              <span class="octicon octicon-file-media"></span>
-              <span title="This will try to delete any imgur or gfycat images it comes across (as long as you're logged in there too)">
-                Delete Media
-              </span>
-            </label>
-          </div>
-        </label>
-
-        <input id="edit-comments" type="checkbox" class="hidden" data-label="Edit Comments" />
-        <label for="edit-comments" class="pd__actions-edit--comments octicon octicon-pencil permanent hasTooltip">
-          Edit Comments
-          <div class="pd__actions-tooltip">
-            <textarea id="edit-comments--value" placeholder="Enter text to edit comments or self posts to. (leave it blank to randomize it)"></textarea>
-          </div>
-        </label>
-      </span>
-      <span>
-        <input id="archive" type="checkbox" class="hidden" data-label="Archive" />
-        <label for="archive" class="pd__actions-archive octicon octicon-cloud-download">Archive</label>
-      </span>
-    </div>
-
-    <div class="pd__filter">
-      <div class="pd__filter--sidebar">
-        <a for="filter-text">Filter based on text match <input id="filter-text-feature" class="filters" type="checkbox"></a>
-        <a for="filter-subreddits" class="requires_auth">Filter based on subreddits <input id="filter-subreddits-feature" class="filters" type="checkbox"></a>
-        <a for="filter-score">Filter based on item score <input id="filter-score-feature" class="filters" type="checkbox"></a>
-        <a for="filter-date">Filter based on item date <input id="filter-date-feature" class="filters" type="checkbox"></a>
-        <label>Do not perform actions on gilded <input id="filter-gilded-feature" class="filters" type="checkbox"></label>
-        <label>Do not perform actions on saved <input id="filter-saved-feature" class="filters" type="checkbox"></label>
-        <label>Do not perform actions on mod distinguished <input id="filter-distinguished-feature" class="filters" type="checkbox"></label>
+<div id="powerdeletesuite" class="state_1">
+  <div class="state state_1">
+    <div class="content">
+      <div class="footer">
+        <h1>Power Delete Suite</h1>
+        <h2 id="pds_ver">v2.0.0</h2>
       </div>
 
-      <div class="pd__filter--options">
-        <div id="filter-text" class="pd__filter--option">
-          <div class="label">Only perform actions on items that the title or text body matches:</div>
-          <input id="filter-text-value" class="filter-value" placeholder="Text to match" />
-          <input id="filter-text-regex" class="filter-value" type="checkbox" />
-          <label for="filter-text-regex">Use regex (advanced)</label>
-        </div>
+      <div class="actions">
+        <input class="hidden" type="checkbox" id="action-delete_submissions" />
+        <label class="button" for="action-delete_submissions"></label>
 
-        <div id="filter-subreddits" class="pd__filter--option">
-          <div class="label">Perform actions on any subreddit that is checked:</div>
-          <div class="mass">
-            <a href="javascript:pd.listen.subreddits(true)">Select All</a>
-            <a href="javascript:pd.listen.subreddits(false)">Select None</a>
-          </div>
-          <div class="subreddits">
-            <label class="template"><input class="filter-value" type="checkbox"></label>
-          </div>
-        </div>
+        <input class="hidden" type="checkbox" id="action-delete_comments" />
+        <label class="button" for="action-delete_comments"></label>
 
-        <div id="filter-score" class="pd__filter--option">
-          <div class="label">Perform actions on items with a score:</div>
-          <input id="filter-score-toggler" class="toggler hidden filter-value" type="checkbox"/>
-          <label for="filter-score-toggler" data-on="Greater than" data-off="Less than">Score is </label>
-          <input id="filter-score-value" class="filter-value" pattern="^\d+$" placeholder="#"/>
-        </div>
+        <input class="hidden" type="checkbox" id="action-edit" />
+        <label class="button" for="action-edit"></label>
 
-        <div id="filter-date" class="pd__filter--option">
-          <div class="label">Perform actions on items with a date time:</div>
-          <input id="filter-date-toggler" class="toggler hidden filter-value" type="checkbox" />
-          <label for="filter-date-toggler" data-on="Less than" data-off="More than">Posted </label>
-          <input id="filter-date-value"  class="filter-value" pattern="^\d+$" placeholder="#"/> minutes ago
-        </div>
+        <input class="hidden" type="checkbox" id="action-archive" />
+        <label class="button" for="action-archive"></label>
       </div>
-    </div>
-    <div class="pd__footer">
-      <span class="footnote">Warning: if you are deleting or editing, this process is irreversible!</span>
-      <button class="pull-right" type="submit">Process</button>
-    </div>
-  </form>
 
-  <div class="pd__feed">
-    <div class="pd__feed-header"></div>
-    <div class="pd__feed-entries"></div>
-  </div>
-  <div class="pd__progress">
-    <div class="pd__progress-total">
-      <div class="pd__bar-container">
-        <div class="pd__bar-fill"></div>
-        <div class="pd__bar-text"></div>
+      <div class="filters">
+        <ul>
+          <li>filter</li>
+        </ul>
       </div>
+
+      <div class="filtersettings">
+        <ul>
+          <li>Setting</li>
+          <li>Setting</li>
+          <li>Setting</li>
+          <li>Setting</li>
+          <li>Setting</li>
+          <li>Setting</li>
+          <li>Setting</li>
+          <li>Setting</li>
+          <li>Setting</li>
+          <li>Setting</li>
+          <li>Setting</li>
+          <li>Setting</li>
+          <li>Setting</li>
+        </ul>
+      </div>
+
+      <div class="process"><button disabled>Process</button></div>
     </div>
   </div>
+
+
+  <div class="state state_2"></div>
+  <div class="state state_3"></div>
 </div>
