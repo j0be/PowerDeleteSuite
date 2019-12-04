@@ -21,7 +21,8 @@ var pd = {
       function checkBookmarkletVersion() {
         if (typeof window.bookmarkver === 'undefined' || window.bookmarkver !== pd.bookmarkver) {
           if (confirm('There\'s been an update to the bookmarklet. Would you like to go to the Github repo in order to get the latest version?')) {
-            document.location.href = 'https://github.com/j0be/PowerDeleteSuite';
+            alert('Scroll down to the "Install PowerDeleteSuite" button on the github page. Replace your CURRENT bookmark with the one found there to upgrade.');
+	    document.location.href = 'https://github.com/j0be/PowerDeleteSuite';
             return false;
           }
         }
