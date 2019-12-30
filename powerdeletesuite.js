@@ -1,6 +1,6 @@
 var pd = {
   version: '1.4.8',
-  bookmarkver: '1.3',
+  bookmarkver: '1.4',
   init : function() {
     pd.checks.versions();
     if (window.pd_processing !== true) {
@@ -10,8 +10,8 @@ var pd = {
         pd.setup.basicSettings();
         pd.setup.applyDom();
       } else {
-        if (confirm('This script is designed to be run from your own user profile. Would you like to navigate there?')) {
-          document.location = 'http://old.reddit.com/u/me/overview';
+        if (confirm('This script can only be run from your own user profile on reddit. Would you like to go there now?')) {
+          document.location = 'https://old.reddit.com/u/me/overview';
         }
       }
     }
@@ -21,8 +21,8 @@ var pd = {
       function checkBookmarkletVersion() {
         if (typeof window.bookmarkver === 'undefined' || window.bookmarkver !== pd.bookmarkver) {
           if (confirm('There\'s been an update to the bookmarklet. Would you like to go to the Github repo in order to get the latest version?')) {
-            alert('Scroll down to the "Install PowerDeleteSuite" button on the github page. Replace your CURRENT bookmark with the one found there to upgrade.');
-	    document.location.href = 'https://github.com/j0be/PowerDeleteSuite';
+            alert('Sadly, there]\'s no way to automatically update the bookmark. :/\nScroll down to the "Install PowerDeleteSuite" button on the github page. Replace your CURRENT bookmark with the one found there to install the latest bookmark.');
+            document.location.href = 'https://github.com/j0be/PowerDeleteSuite';
             return false;
           }
         }
@@ -34,9 +34,9 @@ var pd = {
         if (pd.version !== pd.prevRunVersion) {
           if (confirm('You\'ve gotten the latest update! You are now running PowerDeleteSuite v'+pd.version+'. Would you like to open the changelog in a new tab?')) {
             $.ajax({url: '/r/PowerDeleteSuite/new.json'}).then(function(data) {
-              window.open('http://reddit.com'+data.data.children[0].data.permalink);
+              window.open('https://reddit.com'+data.data.children[0].data.permalink);
             }, function() {
-              window.open('http://reddit.com/r/PowerDeleteSuite');
+              window.open('https://reddit.com/r/PowerDeleteSuite');
             });
           }
         }
@@ -336,7 +336,7 @@ var pd = {
           }
           return false;
         }
-          
+
         pd.task.paths.sorts.splice(0,1);
         if (pd.task.paths.sorts.length === 0) {
           pd.setup.resetSorts();
@@ -453,9 +453,9 @@ var pd = {
           str = '';
           str += pd.helpers.csvCell(pd.helpers.csvEscape(item.data.title ? item.data.title : ''));
           str += pd.helpers.csvCell(pd.helpers.csvEscape(item.data.body ? item.data.body : (item.data.selftext ? item.data.selftext : '')));
-          str += pd.helpers.csvCell(item.data.permalink ? 
-              'http://reddit.com'+item.data.permalink :
-              'http://reddit.com/r/'+item.data.subreddit+'/comments/'+(item.data.link_id.replace(/^t\d_/,''))+'/x/'+item.data.id+'?context=3'
+          str += pd.helpers.csvCell(item.data.permalink ?
+              'https://reddit.com'+item.data.permalink :
+              'https://reddit.com/r/'+item.data.subreddit+'/comments/'+(item.data.link_id.replace(/^t\d_/,''))+'/x/'+item.data.id+'?context=3'
             );
           str+= pd.helpers.csvCell(item.data.score);
           str+= pd.helpers.csvCell(item.data.created_utc);
@@ -551,7 +551,7 @@ var pd = {
         }
       }
 
-      $('#progress__item-output').attr('class', 
+      $('#progress__item-output').attr('class',
         pd.task.info.ignored > 0 && (pd.task.info.deleted > 0 || pd.task.info.edited > 0) ?
           'twocol': 'onecol');
 
