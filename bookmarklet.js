@@ -1,53 +1,22 @@
-javascript: (function () {
-    window.pq = function (str) {
-        return document.querySelectorAll(str);
-    };
-    window.alpha = true;
-    window._pd = {
-        bookmarkver: '1.3',
-        domain: document.location.hostname.split('.').slice(-2).join('.'),
-        baseUrl: 'https://raw.githubusercontent.com/j0be/PowerDeleteSuite/' + (alpha ? 'alpha/' : 'master/'),
-        scriptUrl: 'https://raw.githubusercontent.com/j0be/PowerDeleteSuite/' + (alpha ? 'alpha/app.js' : 'master/powerdeletesuite.js'),
-    };
-    window.xhr = function (url, methodType) {
-        var promiseObj = new Promise(function (resolve, reject) {
-            var caller = new XMLHttpRequest();
-            caller.open(methodType || 'GET', url, true);
-            caller.send();
-            caller.onreadystatechange = function () {
-                if (caller.readyState === 4) {
-                    if (caller.status === 200) {
-                        var resp = caller.responseText,
-                            response;
-                        try {
-                            response = JSON.parse(resp);
-                        } catch (e) {
-                            response = {
-                                responseText: resp
-                            };
-                        }
-                        resolve(response);
-                    } else {
-                        reject(caller.status);
-                    }
-                }
-            };
-        });
-        return promiseObj;
-    };
-
-    if (_pd.domain === 'reddit.com') {
-        xhr(_pd.scriptUrl + '?v' + Math.round(Math.random() * 100)).then(function (response) {
-            var pd = document.createElement('script');
-            pd.setAttribute('id', 'pd-script');
-            pd.innerHTML = response.responseText;
-            pq('head')[0].appendChild(pd);
-        }).catch(function (data) {
+javascript: (function() {
+    window.bookmarkver = '1.4';
+    var isReddit = document.location.hostname.split('.').slice(-2).join('.') === 'reddit.com';
+    var isOverview = document.location.href.match(/\/overview\b/);
+    if (isReddit && isOverview) {
+        var cachBustUrl = 'https://raw.githubusercontent.com/j0be/PowerDeleteSuite/master/powerdeletesuite.js?' + (new Date().getDate());
+        fetch(cachBustUrl).then(function(response) {
+            return response.text();
+        }).then(function(data) {
+            var script = document.createElement('script');
+            script.id = 'pd-script';
+            script.innerHTML = data;
+            document.getElementsByTagName('head')[0].appendChild(script);
+        }).catch(function() {
             alert('Error retreiving PowerDeleteSuite from github');
         });
+    } else if (confirm('This script can only be run from your own user profile on reddit. Would you like to go there now?')) {
+        document.location = 'https://old.reddit.com/u/me/overview';
     } else {
-        if (confirm('This script is designed to be run from your user profile on reddit. Would you like to go there now?')) {
-            document.location = 'http://reddit.com/u/me';
-        }
+        alert('Please go to your reddit profile before running this script');
     }
 })();
