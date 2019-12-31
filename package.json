@@ -5,15 +5,16 @@
   "main": "app.js",
   "dependencies": {
     "eslint": "^4.19.1",
-    "jshint": "^2.9.5",
-    "stylelint-order": "^1.0.0",
-    "stylelint": "^9.7.1"
+    "jshint": "^2.10.3",
+    "stylelint": "^9.7.1",
+    "stylelint-order": "^1.0.0"
   },
   "devDependencies": {
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.2.0",
     "gulp-cli": "^2.2.0",
-    "gulp-sass": "^4.0.2"
+    "gulp-sass": "^4.0.2",
+    "local-web-server": "^3.0.7"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
