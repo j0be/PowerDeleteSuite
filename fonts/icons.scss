@@ -1,12 +1,15 @@
+$url: 'http://127.0.0.1:8080';
+// $url: 'https://raw.githubusercontent.com/j0be/PowerDeleteSuite/alpha';
+
 @font-face {
     font-family: 'octicons';
     font-style: normal;
     font-weight: normal;
     src:
-        url('https://raw.githubusercontent.com/j0be/PowerDeleteSuite/alpha/fonts/octicons.eot?#iefix') format('embedded-opentype'),
-        url('https://raw.githubusercontent.com/j0be/PowerDeleteSuite/alpha/fonts/octicons.woff') format('woff'),
-        url('https://raw.githubusercontent.com/j0be/PowerDeleteSuite/alpha/fonts/octicons.ttf') format('truetype'),
-        url('https://raw.githubusercontent.com/j0be/PowerDeleteSuite/alpha/fonts/octicons.svg#octicons') format('svg');
+        url($url + '/fonts/octicons.eot?#iefix') format('embedded-opentype'),
+        url($url + '/fonts/octicons.woff') format('woff'),
+        url($url + '/fonts/octicons.ttf') format('truetype'),
+        url($url + '/fonts/octicons.svg#octicons') format('svg');
 }
 
 .octicon::after {

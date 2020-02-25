@@ -5,6 +5,7 @@
   "main": "app.js",
   "dependencies": {
     "eslint": "^4.19.1",
+    "http-server": "^0.11.1",
     "jshint": "^2.10.3",
     "stylelint": "^9.7.1",
     "stylelint-order": "^1.0.0"

@@ -1,12 +1,19 @@
-var pds = {
+var bootloader = {
     init: function () {
-        var items = ['app.css', 'ui.js', 'stream.js'];
+        var items = ['ui.js', 'stream.js'];
         items.forEach(function(item) {
-            pds.getter(item);
+            pdsUtil.getter(item);
         });
+    }
+};
+
+window.pdsUtil = {
+    versions: {
+        app: '2.0.0',
+        bookmark: '2.0'
     },
-    getter: function (itemName) {
-        var baseUrl = 'http://127.0.0.1:8000/';
+    getter: function(itemName, target, cb) {
+        target = target || document.getElementsByTagName('head')[0];
         fetch(baseUrl + itemName).then(function(response) {
             if (!response.ok) {
                 throw Error(response.statusText);
@@ -16,14 +23,23 @@ var pds = {
             var type = itemName.split('.').slice(-1);
             var mapper = {
                 'js': 'script',
-                'css': 'style'
+                'css': 'style',
+                'html': 'div'
             };
             var item = document.createElement(mapper[type]);
+            item.id = itemName.split('.').join('');
             item.innerHTML = data;
-            document.getElementsByTagName('head')[0].appendChild(item);
+
+            if (document.getElementById(item.id)) {
+                document.getElementById(item.id).remove();
+            }
+
+            target.appendChild(item);
+            cb && cb();
         }).catch(function() {
-            alert('Error retreiving PowerDeleteSuite ' + itemName + ' from github');
+            alert('Error retreiving PowerDeleteSuite ' + itemName + ' from ' + (debugging ? 'local' : 'github'));
         });
     }
 };
-pds.init();
+
+bootloader.init();
