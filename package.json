@@ -1,7 +1,7 @@
 {
   "name": "powerdeletesuite",
   "version": "1.0.0",
-  "description": "Why use the Power Delete Suite instead of the other mass reddit deletion scripts?",
+  "description": "The best mass reddit deletion script",
   "main": "app.js",
   "dependencies": {
     "eslint": "^4.19.1",
@@ -16,9 +16,6 @@
     "gulp-cli": "^2.2.0",
     "gulp-sass": "^4.0.2",
     "local-web-server": "^3.0.7"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
