@@ -242,7 +242,7 @@ var pd = {
         return {valid:false,reason:'Please enter something to edit your comments / self posts to.'};
       } else if (pd.filters.score && $('#pd_score-num').val() === '') {
         return {valid:false,reason:'Please enter a score to filter with.'};
-      } else if (!(pd.task.config.isRemovingPosts || pd.task.config.isEditing || pd.task.config.isEditing || pd.task.config.isExporting)) {
+      } else if (!(pd.task.config.isRemovingPosts || pd.task.config.isEditing || pd.task.config.isRemovingComments || pd.task.config.isExporting)) {
         return {valid:false,reason:'There are no actions chosen, so we\'ve got nothing to do. Please select an action.'};
       }
       return {valid:true,reason:'valid'};
