@@ -4,18 +4,23 @@
   "description": "The best mass reddit deletion script",
   "main": "app.js",
   "dependencies": {
-    "eslint": "^4.19.1",
-    "http-server": "^0.11.1",
-    "jshint": "^2.10.3",
-    "stylelint": "^9.7.1",
-    "stylelint-order": "^1.0.0"
+    "materialize-css": "^1.0.0-rc.2"
   },
   "devDependencies": {
+    "cors": "^2.8.5",
+    "eslint": "^4.19.1",
+    "express": "^4.17.1",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.2.0",
-    "gulp-cli": "^2.2.0",
+    "gulp-cli": "^2.3.0",
     "gulp-sass": "^4.0.2",
-    "local-web-server": "^3.0.7"
+    "http-server": "^0.12.3",
+    "jshint": "^2.10.3",
+    "stylelint": "^13.12.0",
+    "stylelint-order": "^1.0.0"
+  },
+  "scripts": {
+    "server": "node server"
   },
   "repository": {
     "type": "git",

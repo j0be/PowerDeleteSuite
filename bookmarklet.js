@@ -7,9 +7,9 @@ javascript: (function() {
         'http://127.0.0.1:8080/' :
         'https://raw.githubusercontent.com/j0be/PowerDeleteSuite/' + branch;
 
-    var isReddit = document.location.hostname.split('.').slice(-2).join('.') === 'reddit.com';
+    var isReddit = document.location.hostname.split('.').slice(-2).join('.').toLowerCase() === 'reddit.com';
     if (isReddit) {
-        var cachBustUrl = baseUrl + 'app.js?' + (new Date().getDate());
+        var cachBustUrl = baseUrl + 'js/app.js?' + (new Date().getDate());
         fetch(cachBustUrl).then(function(response) {
             if (!response.ok) {
                 throw Error(response.statusText);

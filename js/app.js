@@ -1,6 +1,6 @@
 var bootloader = {
-    init: function () {
-        var items = ['ui.js', 'stream.js'];
+    init: function() {
+        var items = ['js/react.js', 'js/ui.js', 'js/stream.js'];
         items.forEach(function(item) {
             pdsUtil.getter(item);
         });
@@ -8,6 +8,10 @@ var bootloader = {
 };
 
 window.pdsUtil = {
+    config: {
+        name: (r && r.config.logged) ||
+            document.querySelector('#USER_DROPDOWN_ID').innerText.split(/[\r\n]/)[0]
+    },
     versions: {
         app: '2.0.0',
         bookmark: '2.0'
@@ -40,6 +44,10 @@ window.pdsUtil = {
             alert('Error retreiving PowerDeleteSuite ' + itemName + ' from ' + (debugging ? 'local' : 'github'));
         });
     }
+};
+
+window.pdsData = {
+    version: pdsUtil.versions.app
 };
 
 bootloader.init();

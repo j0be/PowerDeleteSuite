@@ -8,17 +8,41 @@ $grey: #ccc;
     display: none !important;
 }
 
-body::before {
-    background: rgba(0, 0, 0, 0.05);
-    content: "";
-    height: 100vh;
-    position: fixed;
-    width: 100vw;
-    z-index: -1;
+body {
+    &::before {
+        background: rgba(0, 0, 0, 0.05);
+        content: "";
+        height: 100vh;
+        position: fixed;
+        width: 100vw;
+        z-index: -1;
 
-    * {
-        box-sizing: border-box;
+        * {
+            box-sizing: border-box;
+        }
     }
+
+    display: flex;
+    flex-wrap: wrap;
+
+    > #header {
+        flex-basis: 100%;
+    }
+    > .footer-parent {
+        flex-basis: 100%;
+        order: 2;
+    }
+    > .side {
+        flex-basis: 300px;
+        order: 1;
+    }
+    > .content {
+        flex-basis: calc(100% - 320px);
+    }
+}
+
+.debuginfo {
+    display: none;
 }
 
 #powerdeletesuite {
