@@ -1,0 +1,13 @@
+#pds {
+    @import '../node_modules/materialize-css/dist/css/materialize.min.css';
+
+    .bold {
+        font-weight: bold;
+    }
+
+}
+
+/* Old Reddit */
+#siteTable #pds {
+    width: calc(100vw - 330px);
+}
