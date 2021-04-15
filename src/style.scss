@@ -1,6 +1,13 @@
+:root {
+    --pds-border-color-light: var(--newCommunityTheme-widgetColors-sidebarWidgetBorderColor, #ddd);
+    --pds-border-color-dark: var(--newCommunityTheme-widgetColors-sidebarWidgetBorderColor, #555);
+    --pds-bodyText-dark: var(--newCommunityTheme-bodyText, #d7dadc);
+}
+
 #pds {
     @import '../node_modules/materialize-css/dist/css/materialize.min.css';
 
+    border: 1px solid var(--pds-border-color-light);
     border-radius: 5px 5px 4px 4px;
     font-family: IBMPlexSans, Arial, sans-serif;
     font-size: 16px;
@@ -11,22 +18,55 @@
     }
 
     &.old {
-        border: 1px solid #ddd;
         margin: 2em;
         width: calc(100vw - 330px - 4em);
 
         &.dark {
-            border-color: #555;
+            background-color: rgb(57, 57, 57);
         }
+    }
+
+    &.dark {
+        color: var(--pds-bodyText-dark);
+    }
+
+    &.dark,
+    &.dark .row.area,
+    &.dark .col.area + .area {
+        border-color: var(--pds-border-color-dark);
     }
 
     &.new {
         background-color: var(--newCommunityTheme-body);
-        border: 1px solid var(--newCommunityTheme-widgetColors-sidebarWidgetBorderColor);
     }
 
-    .row.full {
-        width: 100%;
+    .flex {
+        display: flex;
+
+        > .col {
+            flex-basis: 100%;
+        }
+    }
+
+    .row {
+        margin-bottom: 0;
+
+        &.full {
+            width: 100%;
+        }
+        &.area {
+            border-top: 1px solid var(--pds-border-color-light);
+        }
+    }
+
+    .col {
+        &.area {
+            padding: .75rem;
+
+            + .area {
+                border-left: 1px solid var(--pds-border-color-light);
+            }
+        }
     }
 
     .btn-line-height {
@@ -43,10 +83,6 @@
 
         .footer-copyright {
             min-height: auto;
-        }
-
-        .row {
-            margin-bottom: 0;
         }
     }
 }

@@ -1,3 +1,8 @@
+:root {
+  --pds-border-color-light: var(--newCommunityTheme-widgetColors-sidebarWidgetBorderColor, #ddd);
+  --pds-border-color-dark: var(--newCommunityTheme-widgetColors-sidebarWidgetBorderColor, #555);
+  --pds-bodyText-dark: var(--newCommunityTheme-bodyText, #d7dadc); }
+
 #pds {
   /*!
  * Materialize v1.0.0-rc.2 (http://materializecss.com)
@@ -13,6 +18,7 @@
  * Released under the MIT license
  * https://github.com/fians/Waves/blob/master/LICENSE
  */
+  border: 1px solid var(--pds-border-color-light);
   border-radius: 5px 5px 4px 4px;
   font-family: IBMPlexSans, Arial, sans-serif;
   font-size: 16px;
@@ -5253,16 +5259,32 @@
   #pds .bold {
     font-weight: bold; }
   #pds.old {
-    border: 1px solid #ddd;
     margin: 2em;
     width: calc(100vw - 330px - 4em); }
     #pds.old.dark {
-      border-color: #555; }
+      background-color: #393939; }
+  #pds.dark {
+    color: var(--pds-bodyText-dark); }
+  #pds.dark,
+  #pds.dark .row.area,
+  #pds.dark .col.area + .area {
+    border-color: var(--pds-border-color-dark); }
   #pds.new {
-    background-color: var(--newCommunityTheme-body);
-    border: 1px solid var(--newCommunityTheme-widgetColors-sidebarWidgetBorderColor); }
-  #pds .row.full {
-    width: 100%; }
+    background-color: var(--newCommunityTheme-body); }
+  #pds .flex {
+    display: flex; }
+    #pds .flex > .col {
+      flex-basis: 100%; }
+  #pds .row {
+    margin-bottom: 0; }
+    #pds .row.full {
+      width: 100%; }
+    #pds .row.area {
+      border-top: 1px solid var(--pds-border-color-light); }
+  #pds .col.area {
+    padding: .75rem; }
+    #pds .col.area + .area {
+      border-left: 1px solid var(--pds-border-color-light); }
   #pds .btn-line-height {
     line-height: 36px; }
   #pds .pipeline {
@@ -5272,5 +5294,3 @@
     padding-top: 0; }
     #pds .page-footer .footer-copyright {
       min-height: auto; }
-    #pds .page-footer .row {
-      margin-bottom: 0; }
