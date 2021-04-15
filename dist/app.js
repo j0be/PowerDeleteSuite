@@ -28,6 +28,17 @@ Object.assign(window.pds, {
             entryPoint.innerHTML = data;
             document.querySelector('#appver').innerHTML = pds.version;
             document.querySelector('#bookmarkver').innerHTML = pds.bookmarkversion;
+
+            let themeElement = isNewReddit ?
+                document.querySelector('body>div>div') :
+                document.querySelector('body');
+            let themeColor = getComputedStyle(themeElement)
+                .getPropertyValue('background-color')
+                .match(/[\d, ]+/)[0]
+                .split(/[, ]+/);
+            let isDarkTheme = Math.max(...themeColor) < 128;
+            document.querySelector('#pds').classList.add(isDarkTheme ? 'dark' : 'light');
+            document.querySelector('#pds').classList.add(isNewReddit ? 'new' : 'old');
         }
     }
 });

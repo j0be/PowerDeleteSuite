@@ -1,13 +1,52 @@
 #pds {
     @import '../node_modules/materialize-css/dist/css/materialize.min.css';
 
+    border-radius: 5px 5px 4px 4px;
+    font-family: IBMPlexSans, Arial, sans-serif;
+    font-size: 16px;
+    overflow: hidden;
+
     .bold {
         font-weight: bold;
     }
 
-}
+    &.old {
+        border: 1px solid #ddd;
+        margin: 2em;
+        width: calc(100vw - 330px - 4em);
 
-/* Old Reddit */
-#siteTable #pds {
-    width: calc(100vw - 330px);
+        &.dark {
+            border-color: #555;
+        }
+    }
+
+    &.new {
+        background-color: var(--newCommunityTheme-body);
+        border: 1px solid var(--newCommunityTheme-widgetColors-sidebarWidgetBorderColor);
+    }
+
+    .row.full {
+        width: 100%;
+    }
+
+    .btn-line-height {
+        line-height: 36px;
+    }
+
+    .pipeline {
+        display: inline-block;
+        margin: 0 .5em;
+    }
+
+    .page-footer {
+        padding-top: 0;
+
+        .footer-copyright {
+            min-height: auto;
+        }
+
+        .row {
+            margin-bottom: 0;
+        }
+    }
 }

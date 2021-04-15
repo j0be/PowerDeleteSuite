@@ -12,7 +12,11 @@
  * Copyright 2014 Alfiana E. Sibuea and other contributors
  * Released under the MIT license
  * https://github.com/fians/Waves/blob/master/LICENSE
- */ }
+ */
+  border-radius: 5px 5px 4px 4px;
+  font-family: IBMPlexSans, Arial, sans-serif;
+  font-size: 16px;
+  overflow: hidden; }
   #pds .materialize-red {
     background-color: #e51c23 !important; }
   #pds .materialize-red-text {
@@ -5248,7 +5252,25 @@
       margin-top: 1.2rem; } }
   #pds .bold {
     font-weight: bold; }
-
-/* Old Reddit */
-#siteTable #pds {
-  width: calc(100vw - 330px); }
+  #pds.old {
+    border: 1px solid #ddd;
+    margin: 2em;
+    width: calc(100vw - 330px - 4em); }
+    #pds.old.dark {
+      border-color: #555; }
+  #pds.new {
+    background-color: var(--newCommunityTheme-body);
+    border: 1px solid var(--newCommunityTheme-widgetColors-sidebarWidgetBorderColor); }
+  #pds .row.full {
+    width: 100%; }
+  #pds .btn-line-height {
+    line-height: 36px; }
+  #pds .pipeline {
+    display: inline-block;
+    margin: 0 .5em; }
+  #pds .page-footer {
+    padding-top: 0; }
+    #pds .page-footer .footer-copyright {
+      min-height: auto; }
+    #pds .page-footer .row {
+      margin-bottom: 0; }
