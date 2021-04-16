@@ -5259,38 +5259,76 @@
   #pds .bold {
     font-weight: bold; }
   #pds.old {
-    margin: 2em;
-    width: calc(100vw - 330px - 4em); }
+    margin: 1rem;
+    width: calc(100vw - 330px - 2em); }
     #pds.old.dark {
       background-color: #393939; }
   #pds.dark {
-    color: var(--pds-bodyText-dark); }
-  #pds.dark,
-  #pds.dark .row.area,
-  #pds.dark .col.area + .area {
+    color: var(--pds-bodyText-dark);
     border-color: var(--pds-border-color-dark); }
+    #pds.dark .row.area,
+    #pds.dark .area + .area,
+    #pds.dark .col.area + .area,
+    #pds.dark label:first-child,
+    #pds.dark footer {
+      border-color: var(--pds-border-color-dark); }
   #pds.new {
     background-color: var(--newCommunityTheme-body); }
   #pds .flex {
-    display: flex; }
-    #pds .flex > .col {
+    display: flex;
+    width: 100%; }
+    #pds .flex .auto {
       flex-basis: 100%; }
+    #pds .flex.column {
+      flex-direction: column; }
+  @media (max-width: 1200px) {
+    #pds main > .flex {
+      flex-direction: column; } }
+  #pds label:first-child {
+    font-size: 1.1em;
+    border-bottom: 1px dotted var(--pds-border-color-light); }
   #pds .row {
     margin-bottom: 0; }
     #pds .row.full {
       width: 100%; }
     #pds .row.area {
       border-top: 1px solid var(--pds-border-color-light); }
-  #pds .col.area {
+  #pds .row .area {
     padding: .75rem; }
-    #pds .col.area + .area {
-      border-left: 1px solid var(--pds-border-color-light); }
+  #pds .col.area + .area {
+    border-left: 1px solid var(--pds-border-color-light); }
+  #pds .area + .area {
+    border-top: 1px solid var(--pds-border-color-light); }
   #pds .btn-line-height {
     line-height: 36px; }
+  #pds p {
+    margin: 1em 0; }
   #pds .pipeline {
     display: inline-block;
     margin: 0 .5em; }
+  #pds .versions {
+    color: #f1ecf8 !important; }
   #pds .page-footer {
+    background-color: #160d26 !important;
+    border-top: 1px solid var(--pds-border-color-light);
     padding-top: 0; }
     #pds .page-footer .footer-copyright {
       min-height: auto; }
+  #pds.light .page-footer {
+    background-color: #f1ecf8 !important; }
+  #pds.light .versions {
+    color: #160d26 !important; }
+  #pds #right-col {
+    flex-basis: 50%;
+    position: relative; }
+    #pds #right-col::before {
+      background: linear-gradient(180deg, rgba(244, 81, 30, 0.2) 0%, rgba(244, 81, 30, 0) 75%);
+      bottom: 0;
+      content: "";
+      left: 0;
+      max-height: 200px;
+      pointer-events: none;
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: -1; }

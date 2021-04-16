@@ -18,8 +18,8 @@
     }
 
     &.old {
-        margin: 2em;
-        width: calc(100vw - 330px - 4em);
+        margin: 1rem;
+        width: calc(100vw - 330px - 2em);
 
         &.dark {
             background-color: rgb(57, 57, 57);
@@ -28,12 +28,15 @@
 
     &.dark {
         color: var(--pds-bodyText-dark);
-    }
-
-    &.dark,
-    &.dark .row.area,
-    &.dark .col.area + .area {
         border-color: var(--pds-border-color-dark);
+
+        .row.area,
+        .area + .area,
+        .col.area + .area,
+        label:first-child,
+        footer {
+            border-color: var(--pds-border-color-dark);
+        }
     }
 
     &.new {
@@ -42,9 +45,27 @@
 
     .flex {
         display: flex;
+        width: 100%;
 
-        > .col {
+        .auto {
             flex-basis: 100%;
+        }
+
+        &.column {
+            flex-direction: column;
+        }
+    }
+
+    @media (max-width: 1200px) {
+        main > .flex {
+            flex-direction: column;
+        }
+    }
+
+    label {
+        &:first-child {
+            font-size: 1.1em;
+            border-bottom: 1px dotted var(--pds-border-color-light);
         }
     }
 
@@ -59,18 +80,28 @@
         }
     }
 
+    .row .area {
+        padding: .75rem;
+    }
+
     .col {
         &.area {
-            padding: .75rem;
-
             + .area {
                 border-left: 1px solid var(--pds-border-color-light);
             }
         }
     }
 
+    .area + .area {
+        border-top: 1px solid var(--pds-border-color-light);
+    }
+
     .btn-line-height {
         line-height: 36px;
+    }
+
+    p {
+        margin: 1em 0;
     }
 
     .pipeline {
@@ -78,11 +109,28 @@
         margin: 0 .5em;
     }
 
+    .versions {
+        color: #f1ecf8!important;
+    }
+
     .page-footer {
+        background-color: #160d26!important;
+        border-top: 1px solid var(--pds-border-color-light);
         padding-top: 0;
 
         .footer-copyright {
             min-height: auto;
         }
     }
+
+    &.light {
+        .page-footer {
+            background-color: #f1ecf8!important;
+        }
+        .versions {
+            color: #160d26!important;
+        }
+    }
+
+    @import './examples.scss';
 }

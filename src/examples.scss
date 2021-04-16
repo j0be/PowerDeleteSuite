@@ -1,0 +1,17 @@
+#right-col {
+    flex-basis: 50%;
+    position: relative;
+
+    &::before {
+        background: linear-gradient(180deg, rgba(244, 81, 30, 0.2) 0%, rgba(244, 81, 30, 0) 75%);
+        bottom:0;
+        content: "";
+        left:0;
+        max-height: 200px;
+        pointer-events: none;
+        position: absolute;
+        right:0;
+        top:0;
+        z-index: -1;
+    }
+}

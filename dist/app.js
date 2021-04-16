@@ -39,6 +39,10 @@ Object.assign(window.pds, {
             let isDarkTheme = Math.max(...themeColor) < 128;
             document.querySelector('#pds').classList.add(isDarkTheme ? 'dark' : 'light');
             document.querySelector('#pds').classList.add(isNewReddit ? 'new' : 'old');
+
+            if (isNewReddit) {
+                entryPoint.style.width = '100vw';
+            }
         }
     }
 });

@@ -18,7 +18,7 @@
   },
   "scripts": {
     "css": "node-sass src/style.scss -o dist --importer node_modules/node-sass-import",
-    "css:watch": "npm run css && node-sass src/style.scss -wo dist --importer node_modules/node-sass-import"
+    "css:watch": "npm run css && node-sass src -rwo dist --importer node_modules/node-sass-import"
   },
   "repository": {
     "type": "git",
