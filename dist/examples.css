@@ -1,7 +1,7 @@
-#right-col {
+#pds #right-col {
   flex-basis: 50%;
   position: relative; }
-  #right-col::before {
+  #pds #right-col::before {
     background: linear-gradient(180deg, rgba(244, 81, 30, 0.2) 0%, rgba(244, 81, 30, 0) 75%);
     bottom: 0;
     content: "";

@@ -1,0 +1,46 @@
+#actions {
+    position: relative;
+
+    .card-panel {
+        max-width: 50%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 15rem;
+    }
+
+    .switch {
+        &.delete {
+            label input[type=checkbox]:checked + .lever {
+                background: #f44336;
+                &::after {
+                    background: #ffebee;
+                }
+            }
+        }
+
+        &.edit {
+            label input[type=checkbox]:checked + .lever {
+                background: #2196f3;
+                &::after {
+                    background: #e3f2fd;
+                }
+            }
+        }
+
+        &.backup {
+            label input[type=checkbox]:checked + .lever {
+                background: #4caf50;
+                &::after {
+                    background: #c8e6c9;
+                }
+            }
+        }
+    }
+}
+
+#pds.dark {
+    .switch .lever {
+        background-color: rgba(128, 128, 128, 0.38);
+    }
+}

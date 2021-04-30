@@ -1,0 +1,77 @@
+#pds {
+  border: 1px solid var(--pds-border-color-light);
+  border-radius: 5px 5px 4px 4px;
+  font-family: IBMPlexSans, Arial, sans-serif;
+  font-size: 16px;
+  overflow: hidden; }
+  #pds .bold {
+    font-weight: bold; }
+  #pds.old {
+    margin: 1rem;
+    width: calc(100vw - 330px - 2em); }
+    #pds.old.dark {
+      background-color: #393939; }
+  #pds.dark {
+    color: var(--pds-bodyText-dark);
+    border-color: var(--pds-border-color-dark); }
+    #pds.dark .row.area,
+    #pds.dark .area + .area,
+    #pds.dark .col.area + .area,
+    #pds.dark label.main,
+    #pds.dark footer {
+      border-color: var(--pds-border-color-dark); }
+  #pds.new {
+    background-color: var(--newCommunityTheme-body); }
+  #pds .flex {
+    display: flex;
+    width: 100%; }
+    #pds .flex .auto {
+      flex-basis: 100%; }
+    #pds .flex.column {
+      flex-direction: column; }
+  @media (max-width: 1200px) {
+    #pds main > .flex {
+      flex-direction: column; } }
+  #pds label.main {
+    border-bottom: 1px dotted var(--pds-border-color-light);
+    display: inline-block;
+    font-size: 1.1em;
+    margin: 1rem 0 .5rem; }
+  #pds .row {
+    margin-bottom: 0; }
+    #pds .row.full {
+      width: 100%; }
+    #pds .row.area {
+      border-top: 1px solid var(--pds-border-color-light); }
+  #pds .row .col.area {
+    padding: .75rem; }
+  #pds .row .area {
+    padding-bottom: 1.5rem; }
+  #pds .col.area + .area {
+    border-left: 1px solid var(--pds-border-color-light); }
+  #pds nav + * {
+    clear: both;
+    float: left; }
+  #pds .area + .area {
+    border-top: 1px solid var(--pds-border-color-light); }
+  #pds .btn-line-height {
+    line-height: 36px; }
+  #pds p {
+    margin: 1em 0; }
+  #pds .pipeline {
+    display: inline-block;
+    margin: 0 .5em; }
+  #pds .versions {
+    color: #f1ecf8 !important; }
+  #pds .page-footer {
+    background-color: #160d26 !important;
+    border-top: 1px solid var(--pds-border-color-light);
+    padding-top: 0; }
+    #pds .page-footer .footer-copyright {
+      min-height: auto; }
+  #pds.light .page-footer {
+    background-color: #f1ecf8 !important; }
+  #pds.light .versions {
+    color: #160d26 !important; }
+  #pds .switch label {
+    font-size: 1rem; }

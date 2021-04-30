@@ -17,12 +17,7 @@
  * Copyright 2014 Alfiana E. Sibuea and other contributors
  * Released under the MIT license
  * https://github.com/fians/Waves/blob/master/LICENSE
- */
-  border: 1px solid var(--pds-border-color-light);
-  border-radius: 5px 5px 4px 4px;
-  font-family: IBMPlexSans, Arial, sans-serif;
-  font-size: 16px;
-  overflow: hidden; }
+ */ }
   #pds .materialize-red {
     background-color: #e51c23 !important; }
   #pds .materialize-red-text {
@@ -5256,6 +5251,13 @@
       bottom: auto;
       text-align: center;
       margin-top: 1.2rem; } }
+
+#pds {
+  border: 1px solid var(--pds-border-color-light);
+  border-radius: 5px 5px 4px 4px;
+  font-family: IBMPlexSans, Arial, sans-serif;
+  font-size: 16px;
+  overflow: hidden; }
   #pds .bold {
     font-weight: bold; }
   #pds.old {
@@ -5269,7 +5271,7 @@
     #pds.dark .row.area,
     #pds.dark .area + .area,
     #pds.dark .col.area + .area,
-    #pds.dark label:first-child,
+    #pds.dark label.main,
     #pds.dark footer {
       border-color: var(--pds-border-color-dark); }
   #pds.new {
@@ -5284,19 +5286,26 @@
   @media (max-width: 1200px) {
     #pds main > .flex {
       flex-direction: column; } }
-  #pds label:first-child {
+  #pds label.main {
+    border-bottom: 1px dotted var(--pds-border-color-light);
+    display: inline-block;
     font-size: 1.1em;
-    border-bottom: 1px dotted var(--pds-border-color-light); }
+    margin: 1rem 0 .5rem; }
   #pds .row {
     margin-bottom: 0; }
     #pds .row.full {
       width: 100%; }
     #pds .row.area {
       border-top: 1px solid var(--pds-border-color-light); }
-  #pds .row .area {
+  #pds .row .col.area {
     padding: .75rem; }
+  #pds .row .area {
+    padding-bottom: 1.5rem; }
   #pds .col.area + .area {
     border-left: 1px solid var(--pds-border-color-light); }
+  #pds nav + * {
+    clear: both;
+    float: left; }
   #pds .area + .area {
     border-top: 1px solid var(--pds-border-color-light); }
   #pds .btn-line-height {
@@ -5318,17 +5327,49 @@
     background-color: #f1ecf8 !important; }
   #pds.light .versions {
     color: #160d26 !important; }
-  #pds #right-col {
-    flex-basis: 50%;
-    position: relative; }
-    #pds #right-col::before {
-      background: linear-gradient(180deg, rgba(244, 81, 30, 0.2) 0%, rgba(244, 81, 30, 0) 75%);
-      bottom: 0;
-      content: "";
-      left: 0;
-      max-height: 200px;
-      pointer-events: none;
-      position: absolute;
-      right: 0;
-      top: 0;
-      z-index: -1; }
+  #pds .switch label {
+    font-size: 1rem; }
+
+#actions {
+  position: relative; }
+  #actions .card-panel {
+    max-width: 50%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 15rem; }
+  #actions .switch.delete label input[type=checkbox]:checked + .lever {
+    background: #f44336; }
+    #actions .switch.delete label input[type=checkbox]:checked + .lever::after {
+      background: #ffebee; }
+  #actions .switch.edit label input[type=checkbox]:checked + .lever {
+    background: #2196f3; }
+    #actions .switch.edit label input[type=checkbox]:checked + .lever::after {
+      background: #e3f2fd; }
+  #actions .switch.backup label input[type=checkbox]:checked + .lever {
+    background: #4caf50; }
+    #actions .switch.backup label input[type=checkbox]:checked + .lever::after {
+      background: #c8e6c9; }
+
+#pds.dark .switch .lever {
+  background-color: rgba(128, 128, 128, 0.38); }
+
+#filters > nav {
+  margin: 0 -.75rem;
+  padding: 0 .75rem;
+  width: auto; }
+
+#pds #right-col {
+  flex-basis: 50%;
+  position: relative; }
+  #pds #right-col::before {
+    background: linear-gradient(180deg, rgba(244, 81, 30, 0.2) 0%, rgba(244, 81, 30, 0) 75%);
+    bottom: 0;
+    content: "";
+    left: 0;
+    max-height: 200px;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -1; }

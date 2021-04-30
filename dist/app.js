@@ -4,10 +4,16 @@ Object.assign(window.pds, {
         loadResources: function() {
             return new Promise(function(resolve, reject) {
                 return Promise.all([
-                    pds.fetch(`${baseUrl}dist/style.css?${new Date().getDate()}`).then(pds.resource.bind({}, 'style', 'pdsstyles')),
+                    pds.fetch(`${pds.baseUrl}dist/style.css?${new Date().getDate()}`).then(pds.resource.bind({}, 'style', 'pdsstyles')),
                     pds.fetch(`https://fonts.googleapis.com/icon?family=Material+Icons`).then(pds.resource.bind({}, 'style', 'materialicons')),
-                    pds.fetch(`${baseUrl}dist/app.html?${new Date().getDate()}`).then(pds.app.handleTemplate)
-                ]).then(resolve).catch(function() {
+                    pds.fetch(`${pds.baseUrl}dist/app.html?${new Date().getDate()}`).then(pds.app.handleTemplate)
+                ])
+                .then(Promise.all([
+                    pds.fetch(`${pds.baseUrl}dist/stream.js?${new Date().getDate()}`).then(pds.resource.bind({}, 'script', 'pdsstream')),
+                    pds.fetch(`${pds.baseUrl}dist/filters/main.js?${new Date().getDate()}`).then(pds.resource.bind({}, 'script', 'pdsfilters'))
+                ]))
+                .then(pds.app.listeners.attach)
+                .then(resolve).catch(function() {
                     alert('ERROR');
                     reject();
                 });
@@ -36,12 +42,27 @@ Object.assign(window.pds, {
                 .getPropertyValue('background-color')
                 .match(/[\d, ]+/)[0]
                 .split(/[, ]+/);
-            let isDarkTheme = Math.max(...themeColor) < 128;
+            let isDarkTheme = Math.max(...themeColor) < 100;
             document.querySelector('#pds').classList.add(isDarkTheme ? 'dark' : 'light');
             document.querySelector('#pds').classList.add(isNewReddit ? 'new' : 'old');
+            pds.app.isDarkTheme = isDarkTheme;
 
             if (isNewReddit) {
                 entryPoint.style.width = '100vw';
+            }
+        },
+        listeners: {
+            attach: function() {
+                let el = document.querySelector('#pds');
+                el.addEventListener('click', pds.app.listeners.toggle);
+            },
+            toggle: function(event) {
+                if (event.target.hasAttribute('data-visible')) {
+                    //Label event happens first, so invert
+                    let action = !event.target.querySelector('input').checked ?
+                        'remove' : 'add';
+                    document.querySelector(`#${event.target.getAttribute('data-visible')}`).classList[action]('hide');
+                }
             }
         }
     }

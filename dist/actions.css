@@ -1,0 +1,23 @@
+#actions {
+  position: relative; }
+  #actions .card-panel {
+    max-width: 50%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 15rem; }
+  #actions .switch.delete label input[type=checkbox]:checked + .lever {
+    background: #f44336; }
+    #actions .switch.delete label input[type=checkbox]:checked + .lever::after {
+      background: #ffebee; }
+  #actions .switch.edit label input[type=checkbox]:checked + .lever {
+    background: #2196f3; }
+    #actions .switch.edit label input[type=checkbox]:checked + .lever::after {
+      background: #e3f2fd; }
+  #actions .switch.backup label input[type=checkbox]:checked + .lever {
+    background: #4caf50; }
+    #actions .switch.backup label input[type=checkbox]:checked + .lever::after {
+      background: #c8e6c9; }
+
+#pds.dark .switch .lever {
+  background-color: rgba(128, 128, 128, 0.38); }
