@@ -1,9 +1,10 @@
 javascript: (function() {
-    window.pds = {
+    window.pds = window.pds || {
         bookmarkversion: '2.0',
         baseUrl: 'http://127.0.0.1:8080/',
         /*baseUrl: 'https://raw.githubusercontent.com/j0be/PowerDeleteSuite/alpha',*/
         fetch: function (url, options) {
+            if (url.slice(0,1) === '/') { url = document.location.origin + url; }
             return fetch(url, options).then(function(response) {
                 if (!response.ok) { throw Error(response.statusText); }
                 return response.url.match('.json') ?

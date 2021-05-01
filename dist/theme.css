@@ -49,6 +49,11 @@
     padding-bottom: 1.5rem; }
   #pds .col.area + .area {
     border-left: 1px solid var(--pds-border-color-light); }
+  #pds nav.small {
+    height: 42px !important;
+    line-height: 42px; }
+    #pds nav.small .breadcrumb {
+      font-size: 14px; }
   #pds nav + * {
     clear: both;
     float: left; }

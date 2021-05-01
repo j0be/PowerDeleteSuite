@@ -91,9 +91,20 @@
         }
     }
 
-    nav + * {
-        clear: both;
-        float: left;
+    nav {
+        &.small {
+            height: 42px !important;
+            line-height: 42px;
+
+            .breadcrumb {
+                font-size: 14px;
+            }
+        }
+
+        + * {
+            clear: both;
+            float: left;
+        }
     }
 
     .area+.area {
