@@ -495,35 +495,36 @@ var pd = {
         pd.actions.children.handleSingle();
       }
     },
-    edit: function (item) {
-      if (pd.performActions) {
-        $.ajax({
-          url: '/api/editusertext',
-          method: 'post',
-          data: {
-            thing_id: item.data.name,
-            text: pd.task.config.editText,
-            id: '#form-'+item.data.name,
-            r: item.data.subreddit,
-            uh: pd.config.uh,
-            renderstyle: 'html'
-          }
-        }).then(function() {
-          pd.task.items[0].pdEdited = true;
-          pd.actions.children.handleSingle();
-        }, function () {
-          pd.task.info.errors++;
-          if (! confirm('Error editing '+(item.kind == 't3' ? 'post':'comment')+', would you like to retry?')) {
-            item.pdEdited = true;
-          }
-          pd.actions.children.handleSingle();
-        });
-      } else {
+edit: function (item) {
+  if (pd.performActions) {
+    setTimeout(function() {
+      $.ajax({
+        url: '/api/editusertext',
+        method: 'post',
+        data: {
+          thing_id: item.data.name,
+          text: pd.task.config.editText,
+          id: '#form-'+item.data.name,
+          r: item.data.subreddit,
+          uh: pd.config.uh,
+          renderstyle: 'html'
+        }
+      }).then(function() {
         pd.task.items[0].pdEdited = true;
         pd.actions.children.handleSingle();
-      }
-    },
-  },
+      }, function () {
+        pd.task.info.errors++;
+        if (! confirm('Error editing '+(item.kind == 't3' ? 'post':'comment')+', would you like to retry?')) {
+          item.pdEdited = true;
+        }
+        pd.actions.children.handleSingle();
+      });
+    }, 5100);
+  } else {
+    pd.task.items[0].pdEdited = true;
+    pd.actions.children.handleSingle();
+  }
+},
   ui: {
     updateDisplay: function () {
       $('#pd__central h2').first().html('Power Delete Suite v'+pd.version+' <br/>'+
