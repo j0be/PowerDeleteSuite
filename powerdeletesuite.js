@@ -272,7 +272,7 @@ var pd = {
       return check.subs && check.gold && check.saved && check.mod && check.score && check.date;
     },
     csvEscape: function(str) {
-      return str.replace(/'/g,'`').replace(/"/g,'""');
+      return str.replace(/#/g,'%23').replace(/'/g,'`').replace(/"/g,'""');
     },
     csvCell: function(str) {
       return '"'+str+'",';
