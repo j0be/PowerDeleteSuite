@@ -148,7 +148,7 @@ var pd = {
           $("#pd__central").show();
         },
         function () {
-          alert("Error retreiving CSS from /r/PowerDeleteSuite");
+          alert("Error retrieving CSS from /r/PowerDeleteSuite");
         }
       );
     },
@@ -174,7 +174,7 @@ var pd = {
           pd.helpers.restoreSettings();
         },
         function () {
-          alert("Error retreiving markup from /r/PowerDeleteSuite");
+          alert("Error retrieving markup from /r/PowerDeleteSuite");
         }
       );
     },
