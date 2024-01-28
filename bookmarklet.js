@@ -18,7 +18,7 @@ javascript: (function () {
         document.getElementsByTagName("head")[0].appendChild(script);
       })
       .catch(function () {
-        alert("Error retreiving PowerDeleteSuite from github");
+        alert("Error retrieving PowerDeleteSuite from github");
       });
   } else if (
     confirm(
