@@ -362,9 +362,13 @@ var pd = {
   helpers: {
     validate: function () {
       if (pd.task.config.isEditing && pd.task.config.editText === "") {
+        var confirmEmptyEdit = window.confirm(
+          "You have not entered any text to edit your posts to; junk text will be used instead."
+        );
         return {
-          valid: false,
+          valid: !!confirmEmptyEdit,
           reason:
+            confirmEmptyEdit ? "valid" :
             "Please enter something to edit your comments / self posts to.",
         };
       } else if (pd.filters.score && $("#pd_score-num").val() === "") {
