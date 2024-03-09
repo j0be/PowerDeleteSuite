@@ -145,7 +145,7 @@ var pd = {
       }).then(
         function (data) {
           console.log(data);
-          $(this)[0].innerHTML = data.data.stylesheet;
+          $(this)[0].innerHTML = JSON.parse(data.data.stylesheet);
           $("#pd__central").show();
         },
         function () {
