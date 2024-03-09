@@ -139,9 +139,8 @@ var pd = {
       pd.setup.applyCentral();
     },
     applyStyles: function () {
-      // BUG: replace url
       $.ajax({
-        url: "/r/PowerDeleteSuite/about/stylesheet/.json",
+        url: "https://raw.githubusercontent.com/mykola2312/PowerDeleteSuite/master/stylesheet.json",
         context: $("#pd__style"),
       }).then(
         function (data) {
