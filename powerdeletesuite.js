@@ -144,6 +144,7 @@ var pd = {
         context: $("#pd__style"),
       }).then(
         function (data) {
+          console.log(data);
           $(this)[0].innerHTML = data.data.stylesheet;
           $("#pd__central").show();
         },
