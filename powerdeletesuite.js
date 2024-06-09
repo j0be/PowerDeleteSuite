@@ -1,5 +1,5 @@
 var pd = {
-  version: "1.4.9",
+  version: "1.4.10",
   bookmarkver: "1.4",
   editStrings: [
     "I love ice cream.",
@@ -363,9 +363,13 @@ var pd = {
   helpers: {
     validate: function () {
       if (pd.task.config.isEditing && pd.task.config.editText === "") {
+        var confirmEmptyEdit = window.confirm(
+          "You have not entered any text to edit your posts to; junk text will be used instead."
+        );
         return {
-          valid: false,
+          valid: !!confirmEmptyEdit,
           reason:
+            confirmEmptyEdit ? "valid" :
             "Please enter something to edit your comments / self posts to.",
         };
       } else if (pd.filters.score && $("#pd_score-num").val() === "") {
@@ -722,14 +726,14 @@ var pd = {
     edit: function (item) {
       setTimeout(() => {
         if (pd.performActions) {
-          var randomEditString =
+          var editString = pd.task.config.editText ||
             pd.editStrings[Math.floor(Math.random() * pd.editStrings.length)];
           $.ajax({
             url: "/api/editusertext",
             method: "post",
             data: {
               thing_id: item.data.name,
-              text: randomEditString,
+              text: editString,
               id: "#form-" + item.data.name,
               r: item.data.subreddit,
               uh: pd.config.uh,
