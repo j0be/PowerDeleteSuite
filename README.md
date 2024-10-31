@@ -43,7 +43,7 @@ javascript:(function() { window.bookmarkver = '1.4'; var isReddit = document.loc
 
 - Click on the bookmark you made while focused on the account overview tab. 
 
-- Adjust settings to your prefrences. 
+- Adjust settings to your preferences. 
  
 ## Bugs / Issues?
  
