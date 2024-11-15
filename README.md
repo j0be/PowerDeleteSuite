@@ -25,17 +25,57 @@ Why use the Power Delete Suite instead of the other mass reddit deletion scripts
  
 ## Installation
 
-***Firefox***: Open the Hamburger menu> Bookmarks --> Manage Bookmarks --> Right Click on empty space --> Add Bookmark --> Paste the code below into the URL section --> Save --> Done!
+Click on the name of your browser below to expand the instructions.
+When you get to the step that refers to pasting code, this is the code to copy and paste:
 
-***Chromium/Chrome***: Go to `chrome://bookmarks/` --> Right click on empty space --> Add new bookmark --> Paste the code below into the URL section --> Save --> Done!
+  ```
+  javascript:(function() { window.bookmarkver = '1.4'; var isReddit = document.location.hostname.split('.').slice(-2).join('.') === 'reddit.com'; var isOverview = !! document.location.href.match(/\/overview\b/i); if (isReddit && isOverview) { var cachBustUrl = 'https://raw.githubusercontent.com/j0be/PowerDeleteSuite/master/powerdeletesuite.js?' + (new Date().getDate()); fetch(cachBustUrl).then(function(response) { return response.text(); }).then(function(data) { var script = document.createElement('script'); script.id = 'pd-script'; script.innerHTML = data; document.getElementsByTagName('head')[0].appendChild(script); }).catch(function() { alert('Error retrieving PowerDeleteSuite from GitHub'); }); } else if (confirm('This script can only be run from your own user profile on Reddit. Would you like to go there now?')) { document.location = 'https://old.reddit.com/user/me/overview'; } else { alert('Please go to your Reddit profile before running this script'); } })();
+  ```
 
-***Edge***: Press the three dots --> Favorites --> Star with a plus icon --> Right click the new favorite --> Edit --> Paste the code below into the URL section --> Save --> Done!
+<details>
+<summary>Firefox</summary>
 
-***Brave***: Go to `chrome://bookmarks` --> Right click on empty space -->  Add new bookmark --> Paste the code below into the URL section --> Save --> Done!
+1. Open the Hamburger menu
+1. Click "Bookmarks"
+1. Click "Manage Bookmarks"
+1. Right click on empty space
+1. Click "Add Bookmark"
+1. Paste the above code into the URL section
+1. Click "Save"
 
-```
-javascript:(function() { window.bookmarkver = '1.4'; var isReddit = document.location.hostname.split('.').slice(-2).join('.') === 'reddit.com'; var isOverview = !! document.location.href.match(/\/overview\b/i); if (isReddit && isOverview) { var cachBustUrl = 'https://raw.githubusercontent.com/j0be/PowerDeleteSuite/master/powerdeletesuite.js?' + (new Date().getDate()); fetch(cachBustUrl).then(function(response) { return response.text(); }).then(function(data) { var script = document.createElement('script'); script.id = 'pd-script'; script.innerHTML = data; document.getElementsByTagName('head')[0].appendChild(script); }).catch(function() { alert('Error retrieving PowerDeleteSuite from GitHub'); }); } else if (confirm('This script can only be run from your own user profile on Reddit. Would you like to go there now?')) { document.location = 'https://old.reddit.com/user/me/overview'; } else { alert('Please go to your Reddit profile before running this script'); } })();
-```
+</details>
+<details>
+<summary>Chromium/Chrome</summary>
+
+1. Go to `chrome://bookmarks/`
+1. Right click on empty space
+1. Click "Add new bookmark"
+1. Paste the above code into the URL section
+1. Click "Save"
+
+</details>
+<details>
+<summary>Edge</summary>
+
+1. Press the three dots
+1. Click "Favorites"
+1. Click on the star with a plus icon
+1. Right click the new favorite
+1. Click "Edit"
+1. Paste the above code into the URL section
+1. Click "Save"
+
+</details>
+<details>
+<summary>Brave</summary>
+
+1. Go to `chrome://bookmarks`
+1. Right click on empty space
+1. Click "Add new bookmark"
+1. Paste the above code into the URL section
+1. Click "Save"
+
+</details>
 
 ## Usage
 
