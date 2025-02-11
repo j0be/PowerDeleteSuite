@@ -601,6 +601,7 @@ var pd = {
               parseFloat(item.data.created_utc) > pd.filters.date.num) ||
               (pd.filters.date.gt === false &&
                 parseFloat(item.data.created_utc) < pd.filters.date.num))),
+        editable: !('editable' in item.data && !item.data.editable),
       };
       for (var key in check) {
         if (!check[key]) {
@@ -614,7 +615,8 @@ var pd = {
         check.saved &&
         check.mod &&
         check.score &&
-        check.date
+        check.date &&
+        check.editable
       );
     },
     csvEscape: function (str) {
