@@ -86,4 +86,8 @@ javascript:(function() { window.bookmarkver = '1.4'; var isReddit = document.loc
 ## Bugs / Issues?
  
 Feel free to subscribe to [/r/PowerDeleteSuite/](https://www.reddit.com/r/PowerDeleteSuite/) where I will make a post every time that I make an update to the script!
- 
+
+## License
+
+j0be/PowerDeleteSuite is licensed under the GNU General Public License v2.0 (GPL-2.0).
+See the [LICENSE](/.github/LICENSE) file for more details.
