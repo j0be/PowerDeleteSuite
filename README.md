@@ -77,6 +77,20 @@ javascript:(function() { window.bookmarkver = '1.4'; var isReddit = document.loc
 
 </details>
 
+<details>
+<summary>Safari</summary>
+
+1. Go to menu bar `Safari > Settings`
+1. Navigate to "Advanced" 
+1. Click checkbox "Show features for web developers"
+1. Follow [Usage](#usage) to go to reddit
+1. Go to menu bar `Develop > Show Javascript Console`
+1. Copy and run script
+1. Alternatively make a shortcut on macOS [Run Javascript in Webpage](https://support.apple.com/lv-lv/guide/shortcuts-mac/apdb71a01d93/mac)
+
+</details>
+
+
 ## Usage
 
 1. Go to your [account overview](https://old.reddit.com/u/me/overview).
