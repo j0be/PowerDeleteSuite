@@ -271,8 +271,10 @@ var pd = {
               "submissions",
               "overview",
             ] /* Search is actually more efficient than submissions if we're not handling submissions (`self:1`) */ : ["comments", "submissions", "search", "overview"],
-          sorts: ["new", "hot", "top", "controversial"],
-          timeframes: ["all", "hour", "day", "week", "month", "year"],
+          // sorts: ["new", "hot", "top", "controversial"],
+          sorts: ["new"],
+          // timeframes: ["all", "hour", "day", "week", "month", "year"],
+          timeframes: ["all"],
         },
       };
       pd.filters = {
@@ -302,17 +304,12 @@ var pd = {
       };
     },
     resetSorts: function() {
-      pd.task.paths.sorts = ["new", "hot", "top", "controversial"];
+      // pd.task.paths.sorts = ["new", "hot", "top", "controversial"];
+      pd.task.paths.sorts = ["new"];
     },
     resetTimes: function() {
-      pd.task.paths.timeframes = [
-        "all",
-        "hour",
-        "day",
-        "week",
-        "month",
-        "year",
-      ];
+      // pd.task.paths.timeframes = ["all", "hour", "day", "week", "month", "year", ];
+      pd.task.paths.timeframes = ["all", ];
     },
     bindUI: function() {
       $("#pd__form").submit(function(e) {
