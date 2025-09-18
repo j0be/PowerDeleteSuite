@@ -1,5 +1,5 @@
 var pd = {
-  version: "1.4.11",
+  version: "1.5.1",
   bookmarkver: "1.4",
   editStrings: [
     "I love ice cream.",
@@ -22,8 +22,8 @@ var pd = {
     "I find peace in long walks.",
     "I enjoy the sound of rain.",
     "I love the smell of fresh bread.",
-    "random string 1",
-    "random string 2",
+    "Random String 1",
+    "Random String 2",
     "I like watching movies.",
     "I enjoy learning new languages.",
     "I love painting.",
@@ -45,171 +45,171 @@ var pd = {
     "My favorite season is autumn.",
     "I like playing board games.",
     "I enjoy star gazing.",
-"I love watching documentaries.",
-"I like making crafts.",
-"I enjoy attending concerts.",
-"My favorite food is sushi.",
-"I like trying new restaurants.",
-"I enjoy going to the beach.",
-"I love practicing mindfulness.",
-"I like learning about history.",
-"I enjoy playing the piano.",
-"My favorite drink is tea.",
-"I like volunteering in my community.",
-"I enjoy visiting museums.",
-"I love taking road trips.",
-"I like working on DIY projects.",
-"I enjoy playing with my pets.",
-"My favorite dessert is cheesecake.",
-"I like listening to audiobooks.",
-"I enjoy doing crossword puzzles.",
-"I love spending time in nature.",
-"I like visiting art galleries.",
-"I enjoy attending theater plays.",
-"My favorite flower is the sunflower.",
-"I like practicing meditation.",
-"I enjoy cooking new recipes.",
-"I love exploring national parks.",
-"I like collecting stamps.",
-"I enjoy attending festivals.",
-"My favorite tree is the oak.",
-"I like gardening in my backyard.",
-"I enjoy learning new skills.",
-"I love making pottery.",
-"I like watching wildlife.",
-"I enjoy going to farmers markets.",
-"My favorite animal is the dolphin.",
-"I like playing tennis.",
-"I enjoy going on picnics.",
-"I love watching the stars.",
-"I like bird watching.",
-"I enjoy making jewelry.",
-"My favorite place is the mountains.",
-"I like trying new hobbies.",
-"I enjoy going on adventures.",
+    "I love watching documentaries.",
+    "I like making crafts.",
+    "I enjoy attending concerts.",
+    "My favorite food is sushi.",
+    "I like trying new restaurants.",
+    "I enjoy going to the beach.",
+    "I love practicing mindfulness.",
+    "I like learning about history.",
+    "I enjoy playing the piano.",
+    "My favorite drink is tea.",
+    "I like volunteering in my community.",
+    "I enjoy visiting museums.",
+    "I love taking road trips.",
+    "I like working on DIY projects.",
+    "I enjoy playing with my pets.",
+    "My favorite dessert is cheesecake.",
+    "I like listening to audiobooks.",
+    "I enjoy doing crossword puzzles.",
+    "I love spending time in nature.",
+    "I like visiting art galleries.",
+    "I enjoy attending theater plays.",
+    "My favorite flower is the sunflower.",
+    "I like practicing meditation.",
+    "I enjoy cooking new recipes.",
+    "I love exploring national parks.",
+    "I like collecting stamps.",
+    "I enjoy attending festivals.",
+    "My favorite tree is the oak.",
+    "I like gardening in my backyard.",
+    "I enjoy learning new skills.",
+    "I love making pottery.",
+    "I like watching wildlife.",
+    "I enjoy going to farmers markets.",
+    "My favorite animal is the dolphin.",
+    "I like playing tennis.",
+    "I enjoy going on picnics.",
+    "I love watching the stars.",
+    "I like bird watching.",
+    "I enjoy making jewelry.",
+    "My favorite place is the mountains.",
+    "I like trying new hobbies.",
+    "I enjoy going on adventures.",
     "I love sailing on the lake.",
-"I like attending sports events.",
-"I enjoy taking dance classes.",
-"My favorite book is Pride and Prejudice.",
-"I like doing photography walks.",
-"I enjoy visiting historical sites.",
-"I love learning about astronomy.",
-"I like playing with children.",
-"I enjoy taking bubble baths.",
-"My favorite band is The Beatles.",
-"I like creating digital art.",
-"I enjoy practicing archery.",
-"I love watching animated movies.",
-"I like doing science experiments.",
-"I enjoy learning about marine life.",
-"My favorite snack is popcorn.",
-"I like building model airplanes.",
-"I enjoy doing tai chi.",
-"I love attending wine tastings.",
-"I like knitting scarves.",
-"I enjoy going to amusement parks.",
-"My favorite TV show is Friends.",
-"I like making homemade gifts.",
-"I enjoy exploring caves.",
-"I love listening to classical music.",
-"I like making soap.",
-"I enjoy trying new cuisines.",
-"My favorite superhero is Spider-Man.",
-"I like going to book clubs.",
-"I enjoy doing escape rooms.",
-"I love learning about different cultures.",
-"I like practicing calligraphy.",
-"I enjoy attending art workshops.",
-"My favorite fruit is mango.",
-"I like making candles.",
-"I enjoy playing frisbee.",
-"I love visiting botanical gardens.",
-"I like going to the zoo.",
-"I enjoy watching ballet.",
-"My favorite author is J.K. Rowling.",
-"I like practicing magic tricks.",
-"I enjoy rock climbing.",
-"I love learning about physics.",
-"I like doing community service.",
-"I enjoy making flower arrangements.",
-"My favorite comedian is Robin Williams.",
-"I like doing woodwork.",
-"I enjoy going on nature hikes.",
-"I love listening to jazz.",
-"I like playing with Legos.",
-"I enjoy attending live shows.",
-"My favorite instrument is the violin.",
-"I like learning new software.",
-"I enjoy doing pottery classes.",
-"I love participating in trivia nights.",
-"I like going to the planetarium.",
-"I enjoy learning about geology.",
-"My favorite holiday is Christmas.",
-"I like watching foreign films.",
-"I enjoy writing poetry.",
-"I love exploring abandoned places.",
+    "I like attending sports events.",
+    "I enjoy taking dance classes.",
+    "My favorite book is Pride and Prejudice.",
+    "I like doing photography walks.",
+    "I enjoy visiting historical sites.",
+    "I love learning about astronomy.",
+    "I like playing with children.",
+    "I enjoy taking bubble baths.",
+    "My favorite band is The Beatles.",
+    "I like creating digital art.",
+    "I enjoy practicing archery.",
+    "I love watching animated movies.",
+    "I like doing science experiments.",
+    "I enjoy learning about marine life.",
+    "My favorite snack is popcorn.",
+    "I like building model airplanes.",
+    "I enjoy doing tai chi.",
+    "I love attending wine tastings.",
+    "I like knitting scarves.",
+    "I enjoy going to amusement parks.",
+    "My favorite TV show is Friends.",
+    "I like making homemade gifts.",
+    "I enjoy exploring caves.",
+    "I love listening to classical music.",
+    "I like making soap.",
+    "I enjoy trying new cuisines.",
+    "My favorite superhero is Spider-Man.",
+    "I like going to book clubs.",
+    "I enjoy doing escape rooms.",
+    "I love learning about different cultures.",
+    "I like practicing calligraphy.",
+    "I enjoy attending art workshops.",
+    "My favorite fruit is mango.",
+    "I like making candles.",
+    "I enjoy playing frisbee.",
+    "I love visiting botanical gardens.",
+    "I like going to the zoo.",
+    "I enjoy watching ballet.",
+    "My favorite author is J.K. Rowling.",
+    "I like practicing magic tricks.",
+    "I enjoy rock climbing.",
+    "I love learning about physics.",
+    "I like doing community service.",
+    "I enjoy making flower arrangements.",
+    "My favorite comedian is Robin Williams.",
+    "I like doing woodwork.",
+    "I enjoy going on nature hikes.",
+    "I love listening to jazz.",
+    "I like playing with Legos.",
+    "I enjoy attending live shows.",
+    "My favorite instrument is the violin.",
+    "I like learning new software.",
+    "I enjoy doing pottery classes.",
+    "I love participating in trivia nights.",
+    "I like going to the planetarium.",
+    "I enjoy learning about geology.",
+    "My favorite holiday is Christmas.",
+    "I like watching foreign films.",
+    "I enjoy writing poetry.",
+    "I love exploring abandoned places.",
     "I like practicing martial arts.",
-"I enjoy doing mindfulness exercises.",
-"I love learning about space exploration.",
-"I like going to flea markets.",
-"I enjoy collecting vintage items.",
-"My favorite painter is Van Gogh.",
-"I like making origami.",
-"I enjoy going to car shows.",
-"I love learning about ancient civilizations.",
-"I like watching magic shows.",
-"I enjoy doing jigsaw puzzles.",
-"My favorite vegetable is broccoli.",
-"I like attending science fairs.",
-"I enjoy playing card games.",
-"I love visiting aquariums.",
-"I like practicing playing drums.",
-"I enjoy making scrapbooks.",
-"My favorite poet is Robert Frost.",
-"I like visiting bookstores.",
-"I enjoy doing improv comedy.",
-"I love learning about psychology.",
-"I like attending lectures.",
-"I enjoy going on scenic drives.",
-"My favorite cuisine is Italian.",
-"I like creating comic strips.",
-"I enjoy going to the opera.",
-"I love watching musicals.",
-"I like practicing parkour.",
-"I enjoy learning about architecture.",
-"My favorite drink is hot chocolate.",
-"I like attending workshops.",
-"I enjoy playing darts.",
-"I love exploring forests.",
-"I like learning about meteorology.",
-"I enjoy going to the circus.",
-"My favorite gemstone is sapphire.",
-"I like practicing public speaking.",
-"I enjoy doing charity work.",
-"I love watching wildlife documentaries.",
-"I like learning about mythology.",
-"I enjoy doing metalworking.",
-"My favorite planet is Saturn.",
-"I like creating graphic designs.",
-"I enjoy going to comedy clubs.",
-"I love learning about economics.",
-"I like making quilts.",
-"I enjoy going to music festivals.",
-"My favorite sculpture is The Thinker.",
-"I like practicing yoga.",
-"I enjoy attending cultural festivals.",
-"I love learning about world history.",
-"I like visiting libraries.",
-"I enjoy doing voice acting.",
-"My favorite dance is the tango.",
-"I like making paper crafts.",
-"I enjoy going to food tastings.",
-"I love learning about anthropology.",
-"I like attending art exhibitions.",
-"I enjoy going to street fairs.",
-"My favorite insect is the butterfly.",
-"I like creating video content.",
-"I enjoy participating in hackathons."
+    "I enjoy doing mindfulness exercises.",
+    "I love learning about space exploration.",
+    "I like going to flea markets.",
+    "I enjoy collecting vintage items.",
+    "My favorite painter is Van Gogh.",
+    "I like making origami.",
+    "I enjoy going to car shows.",
+    "I love learning about ancient civilizations.",
+    "I like watching magic shows.",
+    "I enjoy doing jigsaw puzzles.",
+    "My favorite vegetable is broccoli.",
+    "I like attending science fairs.",
+    "I enjoy playing card games.",
+    "I love visiting aquariums.",
+    "I like practicing playing drums.",
+    "I enjoy making scrapbooks.",
+    "My favorite poet is Robert Frost.",
+    "I like visiting bookstores.",
+    "I enjoy doing improv comedy.",
+    "I love learning about psychology.",
+    "I like attending lectures.",
+    "I enjoy going on scenic drives.",
+    "My favorite cuisine is Italian.",
+    "I like creating comic strips.",
+    "I enjoy going to the opera.",
+    "I love watching musicals.",
+    "I like practicing parkour.",
+    "I enjoy learning about architecture.",
+    "My favorite drink is hot chocolate.",
+    "I like attending workshops.",
+    "I enjoy playing darts.",
+    "I love exploring forests.",
+    "I like learning about meteorology.",
+    "I enjoy going to the circus.",
+    "My favorite gemstone is sapphire.",
+    "I like practicing public speaking.",
+    "I enjoy doing charity work.",
+    "I love watching wildlife documentaries.",
+    "I like learning about mythology.",
+    "I enjoy doing metalworking.",
+    "My favorite planet is Saturn.",
+    "I like creating graphic designs.",
+    "I enjoy going to comedy clubs.",
+    "I love learning about economics.",
+    "I like making quilts.",
+    "I enjoy going to music festivals.",
+    "My favorite sculpture is The Thinker.",
+    "I like practicing yoga.",
+    "I enjoy attending cultural festivals.",
+    "I love learning about world history.",
+    "I like visiting libraries.",
+    "I enjoy doing voice acting.",
+    "My favorite dance is the tango.",
+    "I like making paper crafts.",
+    "I enjoy going to food tastings.",
+    "I love learning about anthropology.",
+    "I like attending art exhibitions.",
+    "I enjoy going to street fairs.",
+    "My favorite insect is the butterfly.",
+    "I like creating video content.",
+    "I enjoy participating in hackathons."
   ],
   init: function () {
     pd.checks.versions();
@@ -359,6 +359,7 @@ var pd = {
             .first()
             .text("Power Delete Suite v" + pd.version);
           pd.setup.applySubList();
+          pd.setup.addSkipInteractionsUI();
           pd.setup.bindUI();
           pd.helpers.restoreSettings();
         },
@@ -407,6 +408,38 @@ var pd = {
         ).prepend("<b class='m'>[M]</b>");
       });
     },
+    addSkipInteractionsUI: function () {
+      // Add the retry and skip interactions options in a separate section above the process button
+      var processButton = $("#pd__form input[type='submit'], #pd__form button[type='submit']");
+      if (processButton.length === 0) {
+        // Fallback: look for the form itself and append before it ends
+        processButton = $("#pd__form").children().last();
+      }
+
+      if (processButton.length > 0) {
+        // Use the same section class other parts of the UI use so it inherits sizing/padding
+        // Collapsible pattern: hidden checkbox (.xt) + label + following .xtr-section
+        var settingsSection =
+          '<input class="xt xtr" type="checkbox" id="pd__adv-toggle" checked />' +
+          '<label class="xtr" for="pd__adv-toggle">Advanced Settings</label>' +
+          '<div class="xtr-section" id="pd__advanced">' +
+          '  <div class="pd__adv-row" style="margin-bottom: .6em;">' +
+          '    <input type="checkbox" name="pd__enable-retries" id="pd__enable-retries" checked class="ind" />' +
+          '    <label for="pd__enable-retries">Enable automatic retries on failure</label>' +
+          '    <span style="margin-left: 1em;">' +
+          '      <label for="pd__retry-count">Retry attempts:</label>' +
+          '      <input type="number" name="pd__retry-count" id="pd__retry-count" value="2" min="1" max="10" style="width: 4.2em; margin-left: .6em; padding-left: .25em; width: 35px;" />' +
+          '    </span>' +
+          '  </div>' +
+          '  <div>' +
+          '    <input type="checkbox" name="pd__skip-interactions" id="pd__skip-interactions" class="ind" />' +
+          '    <label for="pd__skip-interactions">Skip all user interaction prompts (auto-continue after retries or immediately if retries disabled)</label>' +
+          '  </div>' +
+          '</div>';
+
+        processButton.before(settingsSection);
+      }
+    },
     createProcessStream: function () {
       window.pd_processing = true;
       pd.exportItems = [];
@@ -445,6 +478,9 @@ var pd = {
           isRemovingComments: $("#pd__comments").is(":checked"),
           isEditing: $("#pd__comments-edit").is(":checked"),
           editText: $("#pd__comments-edit-text").val(),
+          skipUserInteractions: $("#pd__skip-interactions").is(":checked"),
+          enableRetries: $("#pd__enable-retries").is(":checked"),
+          retryCount: parseInt($("#pd__retry-count").val()) || 2,
         },
         paths: {
           sections:
@@ -644,6 +680,15 @@ var pd = {
         }
         $(".gt-toggle").not(":checked").change();
       }
+      // Ensure the retry-count field displays the default value so user knows the default
+      try {
+        var $retry = $("#pd__retry-count");
+        if ($retry.length && ($retry.val() === "" || typeof $retry.val() === "undefined")) {
+          $retry.val("2");
+        }
+      } catch (e) {
+        /* ignore if element not present */
+      }
     },
     saveSettings: function () {
       if ($("#pd__remember").is(":checked")) {
@@ -732,6 +777,7 @@ var pd = {
             } else {
               pd.task.info.errors++;
               if (
+                pd.task.config.skipUserInteractions ||
                 confirm(
                   "Reddit seems to be under heavy load. Would you like to continue processing?"
                 )
@@ -746,6 +792,7 @@ var pd = {
           function () {
             pd.task.info.errors++;
             if (
+              pd.task.config.skipUserInteractions ||
               confirm(
                 "Error getting " +
                   pd.task.paths.sections[0] +
@@ -872,6 +919,11 @@ var pd = {
       },
     },
     delete: function (item) {
+      // Initialize retry counter if not present
+      if (!item.pdDeleteRetries) {
+        item.pdDeleteRetries = 0;
+      }
+      
       setTimeout(() => {
         if (pd.performActions) {
           $.ajax({
@@ -885,22 +937,55 @@ var pd = {
             },
           }).then(
             function () {
+              // clear retry status for this item on success
+              if (pd.task && pd.task.info) {
+                pd.task.info.retrying = null;
+              }
               pd.task.items[0].pdDeleted = true;
               pd.actions.children.handleSingle();
             },
             function () {
               pd.task.info.errors++;
-              if (
-                confirm(
-                  "Error deleting " +
-                    (item.kind == "t3" ? "post" : "comment") +
-                    ", would you like to retry?"
-                )
-              ) {
-                pd.actions.children.handleSingle();
-              } else {
+              item.pdDeleteRetries++;
+              
+              // Check if retries are enabled and we haven't exceeded the limit
+              if (pd.task.config.enableRetries && item.pdDeleteRetries < pd.task.config.retryCount) {
+                // update retrying status so UI can show attempts/remaining
+                if (pd.task && pd.task.info) {
+                  pd.task.info.retrying = {
+                    kind: "delete",
+                    id: item.data.id,
+                    attempted: item.pdDeleteRetries,
+                    remaining: pd.task.config.retryCount - item.pdDeleteRetries,
+                  };
+                }
+                pd.ui.updateDisplay();
+                pd.actions.delete(item);
+                return;
+              }
+              
+              // After max retries (or if retries disabled), check skip interactions setting
+              if (pd.task.config.skipUserInteractions) {
+                // Skip user interaction, continue with next item
+                if (pd.task && pd.task.info) pd.task.info.retrying = null;
                 pd.actions.children.finishItem();
                 pd.actions.children.handleGroup();
+              } else {
+                // Show confirmation dialog
+                var message = "Error deleting " + (item.kind == "t3" ? "post" : "comment");
+                if (pd.task.config.enableRetries) {
+                  message += " after " + pd.task.config.retryCount + " attempts";
+                }
+                message += ", would you like to continue with the next item?";
+                
+                if (confirm(message)) {
+                  if (pd.task && pd.task.info) pd.task.info.retrying = null;
+                  pd.actions.children.finishItem();
+                  pd.actions.children.handleGroup();
+                } else {
+                  // User chose to stop processing
+                  pd.ui.done();
+                }
               }
             }
           );
@@ -912,6 +997,11 @@ var pd = {
       }, 5000);
     },
     edit: function (item) {
+      // Initialize retry counter if not present
+      if (!item.pdEditRetries) {
+        item.pdEditRetries = 0;
+      }
+      
       setTimeout(() => {
         if (pd.performActions) {
           var editString = pd.task.config.editText ||
@@ -929,21 +1019,53 @@ var pd = {
             },
           }).then(
             function () {
+              // clear retry status for this item on success
+              if (pd.task && pd.task.info) {
+                pd.task.info.retrying = null;
+              }
               pd.task.items[0].pdEdited = true;
               pd.actions.children.handleSingle();
             },
             function () {
               pd.task.info.errors++;
-              if (
-                !confirm(
-                  "Error editing " +
-                    (item.kind == "t3" ? "post" : "comment") +
-                    ", would you like to retry?"
-                )
-              ) {
-                item.pdEdited = true;
+              item.pdEditRetries++;
+              
+              // Check if retries are enabled and we haven't exceeded the limit
+              if (pd.task.config.enableRetries && item.pdEditRetries < pd.task.config.retryCount) {
+                // update retrying status so UI can show attempts/remaining
+                if (pd.task && pd.task.info) {
+                  pd.task.info.retrying = {
+                    kind: "edit",
+                    id: item.data.id,
+                    attempted: item.pdEditRetries,
+                    remaining: pd.task.config.retryCount - item.pdEditRetries,
+                  };
+                }
+                pd.ui.updateDisplay();
+                pd.actions.edit(item);
+                return;
               }
-              pd.actions.children.handleSingle();
+              
+              // After max retries (or if retries disabled), check skip interactions setting
+              if (pd.task.config.skipUserInteractions) {
+                // Skip user interaction, mark as edited and continue
+                if (pd.task && pd.task.info) pd.task.info.retrying = null;
+                item.pdEdited = true;
+                pd.actions.children.handleSingle();
+              } else {
+                // Show confirmation dialog
+                var message = "Error editing " + (item.kind == "t3" ? "post" : "comment");
+                if (pd.task.config.enableRetries) {
+                  message += " after " + pd.task.config.retryCount + " attempts";
+                }
+                message += ", would you like to continue with the next item?";
+                
+                if (!confirm(message)) {
+                  item.pdEdited = true;
+                }
+                if (pd.task && pd.task.info) pd.task.info.retrying = null;
+                pd.actions.children.handleSingle();
+              }
             }
           );
         } else {
@@ -969,6 +1091,25 @@ var pd = {
             pd.task.paths.timeframes[0] +
             "</small>"
         );
+      // Retry status: show attempted and remaining retries for current item when present
+      try {
+        if (pd.task && pd.task.info && pd.task.info.retrying) {
+          var r = pd.task.info.retrying;
+          var txt = (r.kind === "delete" ? "Deleting" : "Editing") +
+            " item " + (r.id || "") +
+            ": attempt " + r.attempted +
+            " (" + r.remaining + " left)";
+          if (document.getElementById("pd__retry-status")) {
+            $("#pd__retry-status").text(txt).show();
+          } else {
+            $("#pd__central .processing").first().before('<div id="pd__retry-status" style="margin: .6em 0; color: #b00; font-weight: bold;">' + txt + '</div>');
+          }
+        } else {
+          $("#pd__retry-status").hide();
+        }
+      } catch (e) {
+        // ignore DOM errors
+      }
       pd.task.info.numPages =
         pd.task.info.donePages +
         (pd.task.paths.sections.length - 1) * 4 +
