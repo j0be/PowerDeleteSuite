@@ -1,7 +1,7 @@
 var pd = {
   // GitHub URLs - Update these for new versions
   GITHUB_REPO_URL: "https://github.com/willsheppard/PowerDeleteSuite",
-  STYLESHEET_URL: "https://raw.githubusercontent.com/willsheppard/PowerDeleteSuite/keyword-filter/stylesheet.json",
+  STYLESHEET_URL: "https://raw.githubusercontent.com/mykola2312/PowerDeleteSuite/master/stylesheet.json",
 
   version: "1.4.11",
   bookmarkver: "1.4",
@@ -328,7 +328,6 @@ var pd = {
         $("head").first().append("<style id='pd__style' />");
       }
       pd.setup.applyStyles();
-      pd.setupd.STYLESHEET_URL
     },
     applyStyles: function () {
       $.ajax({
