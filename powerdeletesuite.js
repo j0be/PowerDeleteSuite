@@ -367,6 +367,12 @@ var pd = {
                 '<div><label for="pd__keyword-replace">Replacement:</label>' +
                 '<input type="text" id="pd__keyword-replace" placeholder="Text to replace the keyword with (edit only)"></div>' +
                 '<p class="pd__help">Use the keyword field to limit actions to matching comments. Delete actions only apply to comments that contain the keyword.</p>' +
+              '</div>' +
+              '<div class="pd__field advanced-options">' +
+                '<h3>Advanced Options</h3>' +
+                '<div><input type="checkbox" id="pd__dry-run"><label for="pd__dry-run">Dry Run (simulate actions without making changes)</label></div>' +
+                '<div><label for="pd__limit">Limit number of actions:</label>' +
+                '<input type="number" id="pd__limit" min="0" placeholder="0 for unlimited"></div>' +
               '</div>'
             );
           }
@@ -460,6 +466,8 @@ var pd = {
           editText: $("#pd__comments-edit-text").val(),
           keyword: $("#pd__keyword").val() || "",
           keywordReplace: $("#pd__keyword-replace").val() || "",
+          isDryRun: $("#pd__dry-run").is(":checked"),
+          limitNumber: parseInt($("#pd__limit").val()) || 0,
         },
         paths: {
           sections:
@@ -575,6 +583,8 @@ var pd = {
             confirmEmptyEdit ? "valid" :
             "Please enter something to edit your comments / self posts to.",
         };
+      } else if (pd.task.config.limitNumber < 0) {
+        return { valid: false, reason: "Limit number must be 0 or greater." };
       } else if (pd.filters.score && $("#pd_score-num").val() === "") {
         return { valid: false, reason: "Please enter a score to filter with." };
       } else if (
@@ -811,7 +821,11 @@ var pd = {
           pd.task.items[0].pdIgnored = true;
           pd.actions.children.finishItem();
           pd.actions.page.shift();
-          pd.actions.page.next();
+          pd.apd.task.config.limitNumber > 0 && (pd.task.info.edited + pd.task.info.deleted) >= pd.task.config.limitNumber) {
+            pd.task.items[0].pdIgnored = true;
+            pd.actions.children.finishItem();
+            pd.actions.children.handleGroup();
+          } else if (ctions.page.next();
         } else if (shouldBeActedOn) {
           if (
             !item.pdEdited &&
@@ -899,7 +913,7 @@ var pd = {
     },
     delete: function (item) {
       setTimeout(() => {
-        if (pd.performActions) {
+        if (pd.performActions && !pd.task.config.isDryRun) {
           $.ajax({
             url: "/api/del",
             method: "post",
@@ -936,6 +950,7 @@ var pd = {
           pd.actions.children.handleSingle();
         }
       }, 5000);
+      }, 5000); && !pd.task.config.isDryRun
     },
     edit: function (item) {
       setTimeout(() => {
@@ -989,7 +1004,6 @@ var pd = {
           pd.task.items[0].pdEdited = true;
           pd.actions.children.handleSingle();
         }
-      }, 5000);
     },
   },
   ui: {
