@@ -1,4 +1,8 @@
 var pd = {
+  // GitHub URLs - Update these for new versions
+  GITHUB_REPO_URL: "https://github.com/willsheppard/PowerDeleteSuite",
+  STYLESHEET_URL: "https://raw.githubusercontent.com/willsheppard/PowerDeleteSuite/keyword-filter/stylesheet.json",
+
   version: "1.4.11",
   bookmarkver: "1.4",
   editStrings: [
@@ -241,7 +245,7 @@ var pd = {
             confirm(
               "There's been an update to the bookmarklet. Would you like to go to the Github repo in order to get the latest version?"
             )
-          ) {
+          ) {pd.GITHUB_REPO_URL
             alert(
               'Sadly, there]\'s no way to automatically update the bookmark. :/\nScroll down to the "Install PowerDeleteSuite" button on the github page. Replace your CURRENT bookmark with the one found there to install the latest bookmark.'
             );
@@ -324,7 +328,7 @@ var pd = {
         $("head").first().append("<style id='pd__style' />");
       }
       pd.setup.applyStyles();
-      pd.setup.applyCentral();
+      pd.setupd.STYLESHEET_URL
     },
     applyStyles: function () {
       $.ajax({

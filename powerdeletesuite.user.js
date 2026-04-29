@@ -8,10 +8,13 @@
 // @grant        none
 // ==/UserScript==
 
+// GitHub URLs - Update these for new versions
+var PDS_BOOKMARKLET_URL = "https://raw.githubusercontent.com/willsheppard/PowerDeleteSuite/keyword-filter/bookmarklet.js";
+
 (function() {
     'use strict';
 
-    fetch("https://raw.githubusercontent.com/willsheppard/PowerDeleteSuite/keyword-filter/bookmarklet.js").then(response => response.text()).then(response => {
+    fetch(PDS_BOOKMARKLET_URL).then(response => response.text()).then(response => {
         var scr = response;
         document.querySelector("#header-bottom-right > ul.flat-list").outerHTML += document.querySelector("#header-bottom-right > ul.flat-list").nextSibling.outerHTML; // dupe the separator
         document.querySelector("#header-bottom-right > ul.flat-list").nextSibling.outerHTML += '<a id="pd-delete" href="' + scr + '">PDS</a>' // yoink a button between the separators
