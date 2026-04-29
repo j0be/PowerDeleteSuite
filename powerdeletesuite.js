@@ -358,6 +358,18 @@ var pd = {
             .find("h2")
             .first()
             .text("Power Delete Suite v" + pd.version);
+          if ($("#pd__keyword").length === 0) {
+            $("#pd__form").append(
+              '<div class="pd__field keyword-filter">' +
+                '<h3>Keyword Comment Matching</h3>' +
+                '<div><label for="pd__keyword">Keyword:</label>' +
+                '<input type="text" id="pd__keyword" placeholder="Only comments containing this keyword will be edited or deleted"></div>' +
+                '<div><label for="pd__keyword-replace">Replacement:</label>' +
+                '<input type="text" id="pd__keyword-replace" placeholder="Text to replace the keyword with (edit only)"></div>' +
+                '<p class="pd__help">Use the keyword field to limit actions to matching comments. Delete actions only apply to comments that contain the keyword.</p>' +
+              '</div>'
+            );
+          }
           pd.setup.applySubList();
           pd.setup.bindUI();
           pd.helpers.restoreSettings();
@@ -437,6 +449,7 @@ var pd = {
             mod: 0,
             score: 0,
             date: 0,
+            keyword: 0,
           },
         },
         config: {
@@ -445,6 +458,8 @@ var pd = {
           isRemovingComments: $("#pd__comments").is(":checked"),
           isEditing: $("#pd__comments-edit").is(":checked"),
           editText: $("#pd__comments-edit-text").val(),
+          keyword: $("#pd__keyword").val() || "",
+          keywordReplace: $("#pd__keyword-replace").val() || "",
         },
         paths: {
           sections:
@@ -601,6 +616,13 @@ var pd = {
               parseFloat(item.data.created_utc) > pd.filters.date.num) ||
               (pd.filters.date.gt === false &&
                 parseFloat(item.data.created_utc) < pd.filters.date.num))),
+        keyword:
+          !pd.task.config.keyword ||
+          item.kind != "t1" ||
+          (item.data.body &&
+            item.data.body
+              .toLowerCase()
+              .indexOf(pd.task.config.keyword.toLowerCase()) >= 0),
       };
       for (var key in check) {
         if (!check[key]) {
@@ -614,11 +636,15 @@ var pd = {
         check.saved &&
         check.mod &&
         check.score &&
-        check.date
+        check.date &&
+        check.keyword
       );
     },
     csvEscape: function (str) {
       return str.replace(/#/g, "%23").replace(/'/g, "`").replace(/"/g, '""');
+    },
+    escapeRegExp: function (str) {
+      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     },
     csvCell: function (str) {
       return '"' + str + '",';
@@ -914,8 +940,21 @@ var pd = {
     edit: function (item) {
       setTimeout(() => {
         if (pd.performActions) {
-          var editString = pd.task.config.editText ||
-            pd.editStrings[Math.floor(Math.random() * pd.editStrings.length)];
+          var editString;
+          if (pd.task.config.keyword && item.kind == "t1") {
+            var originalBody = item.data.body || "";
+            var keywordRegex = new RegExp(
+              pd.helpers.escapeRegExp(pd.task.config.keyword),
+              "gi"
+            );
+            editString = originalBody.replace(
+              keywordRegex,
+              pd.task.config.keywordReplace || ""
+            );
+          } else {
+            editString = pd.task.config.editText ||
+              pd.editStrings[Math.floor(Math.random() * pd.editStrings.length)];
+          }
           $.ajax({
             url: "/api/editusertext",
             method: "post",
