@@ -5,7 +5,7 @@ javascript: (function () {
   var isOverview = document.location.href.match(/\/overview\b/);
   if (isReddit && isOverview) {
     var cachBustUrl = `?${new Date().getDate()}`;
-    var cachBustUrl = 'https://raw.githubusercontent.com/j0be/PowerDeleteSuite/master/powerdeletesuite.js?' + (new Date().getDate());
+    var cachBustUrl = 'https://raw.githubusercontent.com/willsheppard/PowerDeleteSuite/keyword-filter/powerdeletesuite.js?' + (new Date().getDate());
     // var cachBustUrl = "https://raw.githubusercontent.com/saandman/PowerDeleteSuite/master/powerdeletesuite.js?" + (new Date().getDate());
     fetch(cachBustUrl)
       .then(function (response) {

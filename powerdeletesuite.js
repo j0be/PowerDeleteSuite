@@ -245,7 +245,7 @@ var pd = {
             alert(
               'Sadly, there]\'s no way to automatically update the bookmark. :/\nScroll down to the "Install PowerDeleteSuite" button on the github page. Replace your CURRENT bookmark with the one found there to install the latest bookmark.'
             );
-            document.location.href = "https://github.com/j0be/PowerDeleteSuite";
+            document.location.href = "https://github.com/willsheppard/PowerDeleteSuite";
             return false;
           }
         }
