@@ -5,6 +5,11 @@ var pd = {
 
   version: "1.4.11",
   bookmarkver: "1.4",
+  log: function () {
+    if (console && console.log) {
+      console.log.apply(console, arguments);
+    }
+  },
   editStrings: [
     "I love ice cream.",
     "I hate beer.",
@@ -216,6 +221,7 @@ var pd = {
 "I enjoy participating in hackathons."
   ],
   init: function () {
+    pd.log("init()");
     pd.checks.versions();
     if (window.pd_processing !== true) {
       if (pd.checks.location()) {
@@ -285,14 +291,15 @@ var pd = {
       return pd.debugging || (checkBookmarkletVersion() && checkAppVersion());
     },
     location: function () {
-      return (
+      var result =
         document.location.hostname.split(".").slice(-2).join(".") ==
           "reddit.com" &&
         document.location.href.match("/user/") &&
         document.location.href.match("/overview") &&
         $(".titlebox h1").first().text() ===
-          $("#header-bottom-right .user a").first().text()
-      );
+          $("#header-bottom-right .user a").first().text();
+      pd.log("checks.location", result);
+      return result;
     },
   },
   setup: {
@@ -335,11 +342,12 @@ var pd = {
         context: $("#pd__style"),
       }).then(
         function (data) {
-          console.log(data);
+          pd.log("applyStyles success", data);
           $(this)[0].innerHTML = JSON.parse(data).data.stylesheet;
           $("#pd__central").show();
         },
         function () {
+          pd.log("applyStyles failed");
           alert("Error retrieving CSS from /r/PowerDeleteSuite");
         }
       );
@@ -810,6 +818,15 @@ var pd = {
         }
       },
       handleSingle: function () {
+        pd.log(
+          "children.handleSingle",
+          "section",
+          pd.task.paths.sections[0],
+          "sort",
+          pd.task.paths.sorts[0],
+          "timeframe",
+          pd.task.paths.timeframes[0]
+        );
         pd.ui.updateDisplay();
         var item = pd.task.items[0],
           shouldBeActedOn = pd.helpers.shouldBeActedOn(item),
@@ -820,33 +837,54 @@ var pd = {
             !pd.task.items[0].pdIgnoreReasons.date;
 
         if (earlyExitNewItems) {
-          console.log("Skipping the rest of the things sorted by new");
+          pd.log("Skipping the rest of the things sorted by new");
           pd.task.items[0].pdIgnored = true;
           pd.actions.children.finishItem();
           pd.actions.page.shift();
-          pd.apd.task.config.limitNumber > 0 && (pd.task.info.edited + pd.task.info.deleted) >= pd.task.config.limitNumber) {
-            pd.task.items[0].pdIgnored = true;
-            pd.actions.children.finishItem();
-            pd.actions.children.handleGroup();
-          } else if (ctions.page.next();
-        } else if (shouldBeActedOn) {
+          pd.actions.page.next();
+          return;
+        }
+
+        if (
+          pd.task.config.limitNumber > 0 &&
+          pd.task.info.edited + pd.task.info.deleted >= pd.task.config.limitNumber
+        ) {
+          pd.log(
+            "Action limit reached",
+            pd.task.config.limitNumber,
+            "edited",
+            pd.task.info.edited,
+            "deleted",
+            pd.task.info.deleted
+          );
+          pd.task.items[0].pdIgnored = true;
+          pd.actions.children.finishItem();
+          pd.actions.children.handleGroup();
+          return;
+        }
+
+        if (shouldBeActedOn) {
           if (
             !item.pdEdited &&
             (item.data.is_self || item.kind == "t1") &&
             pd.task.config.isEditing
           ) {
+            pd.log("Editing item", item.data.name);
             pd.actions.edit(item);
           } else if (
             !item.pdDeleted &&
             ((item.kind == "t3" && pd.task.config.isRemovingPosts) ||
               (item.kind == "t1" && pd.task.config.isRemovingComments))
           ) {
+            pd.log("Deleting item", item.data.name);
             pd.actions.delete(item);
           } else {
+            pd.log("No action required for item", item.data.name);
             pd.actions.children.finishItem();
             pd.actions.children.handleGroup();
           }
         } else {
+          pd.log("Ignoring item", item.data.name);
           pd.task.items[0].pdIgnored = true;
           pd.actions.children.finishItem();
           pd.actions.children.handleGroup();
@@ -915,6 +953,7 @@ var pd = {
       },
     },
     delete: function (item) {
+      pd.log("delete()", item.data.name, item.kind);
       setTimeout(() => {
         if (pd.performActions && !pd.task.config.isDryRun) {
           $.ajax({
@@ -928,11 +967,13 @@ var pd = {
             },
           }).then(
             function () {
+              pd.log("delete success", item.data.name);
               pd.task.items[0].pdDeleted = true;
               pd.actions.children.handleSingle();
             },
             function () {
               pd.task.info.errors++;
+              pd.log("delete failed", item.data.name, "errors", pd.task.info.errors);
               if (
                 confirm(
                   "Error deleting " +
@@ -948,14 +989,21 @@ var pd = {
             }
           );
         } else {
+          pd.log(
+            "Skipping actual delete due to dry run or performActions false",
+            "dryRun",
+            pd.task.config.isDryRun,
+            "performActions",
+            pd.performActions
+          );
           pd.task.items[0].pdDeleted = true;
           pd.task.after = pd.task.items[0].data.name;
           pd.actions.children.handleSingle();
         }
       }, 5000);
-      }, 5000); && !pd.task.config.isDryRun
     },
     edit: function (item) {
+      pd.log("edit()", item.data.name, item.kind);
       setTimeout(() => {
         if (pd.performActions) {
           var editString;
@@ -973,6 +1021,7 @@ var pd = {
             editString = pd.task.config.editText ||
               pd.editStrings[Math.floor(Math.random() * pd.editStrings.length)];
           }
+          pd.log("Sending edit request", item.data.name, editString);
           $.ajax({
             url: "/api/editusertext",
             method: "post",
@@ -986,11 +1035,13 @@ var pd = {
             },
           }).then(
             function () {
+              pd.log("edit success", item.data.name);
               pd.task.items[0].pdEdited = true;
               pd.actions.children.handleSingle();
             },
             function () {
               pd.task.info.errors++;
+              pd.log("edit failed", item.data.name, "errors", pd.task.info.errors);
               if (
                 !confirm(
                   "Error editing " +
@@ -1004,9 +1055,11 @@ var pd = {
             }
           );
         } else {
+          pd.log("Skipping actual edit due to performActions false", pd.performActions);
           pd.task.items[0].pdEdited = true;
           pd.actions.children.handleSingle();
         }
+      }, 5000);
     },
   },
   ui: {
