@@ -251,7 +251,7 @@ var pd = {
             confirm(
               "There's been an update to the bookmarklet. Would you like to go to the Github repo in order to get the latest version?"
             )
-          ) {pd.GITHUB_REPO_URL
+          ) {
             alert(
               'Sadly, there]\'s no way to automatically update the bookmark. :/\nScroll down to the "Install PowerDeleteSuite" button on the github page. Replace your CURRENT bookmark with the one found there to install the latest bookmark.'
             );
@@ -335,6 +335,7 @@ var pd = {
         $("head").first().append("<style id='pd__style' />");
       }
       pd.setup.applyStyles();
+      pd.setup.applyCentral();
     },
     applyStyles: function () {
       $.ajax({
@@ -1005,7 +1006,7 @@ var pd = {
     edit: function (item) {
       pd.log("edit()", item.data.name, item.kind);
       setTimeout(() => {
-        if (pd.performActions) {
+        if (pd.performActions && !pd.task.config.isDryRun) {
           var editString;
           if (pd.task.config.keyword && item.kind == "t1") {
             var originalBody = item.data.body || "";
