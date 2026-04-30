@@ -858,9 +858,9 @@ var pd = {
             "deleted",
             pd.task.info.deleted
           );
-          pd.task.items[0].pdIgnored = true;
-          pd.actions.children.finishItem();
-          pd.actions.children.handleGroup();
+          pd.task.items = [];
+          pd.task.paths.sections = [];
+          pd.actions.page.next();
           return;
         }
 
