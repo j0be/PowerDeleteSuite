@@ -3,7 +3,7 @@ var pd = {
   GITHUB_REPO_URL: "https://github.com/willsheppard/PowerDeleteSuite",
   STYLESHEET_URL: "https://raw.githubusercontent.com/mykola2312/PowerDeleteSuite/master/stylesheet.json",
 
-  version: "1.5.08",
+  version: "5.0.10",
   bookmarkver: "1.4",
   log: function () {
     if (console && console.log) {
@@ -858,9 +858,8 @@ var pd = {
             "deleted",
             pd.task.info.deleted
           );
-          pd.task.items = [];
-          pd.task.paths.sections = [];
-          pd.actions.page.next();
+          window.pd_processing = false;
+          pd.ui.done();
           return;
         }
 
