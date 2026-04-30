@@ -3,7 +3,7 @@ var pd = {
   GITHUB_REPO_URL: "https://github.com/willsheppard/PowerDeleteSuite",
   STYLESHEET_URL: "https://raw.githubusercontent.com/mykola2312/PowerDeleteSuite/master/stylesheet.json",
 
-  version: "1.4.11",
+  version: "1.5.08",
   bookmarkver: "1.4",
   log: function () {
     if (console && console.log) {
