@@ -507,12 +507,12 @@ var pd = {
         },
         score: {
           enabled: $("#pd__score").is(":checked"),
-          gt: $("#pd__score-dirtoggle").is(":checked"),
+          gt: $("#pd__score-dirtoggle").hasClass("greater"),
           num: parseFloat($("#pd__score-num").val()),
         },
         date: {
           enabled: $("#pd__date").is(":checked"),
-          gt: $("#pd__date-dirtoggle").is(":checked"),
+          gt: $("#pd__date-dirtoggle").hasClass("greater"),
           num:
             Math.floor(new Date().getTime() / 1000) -
             parseFloat($("#pd__date-num").val()) * 60,
