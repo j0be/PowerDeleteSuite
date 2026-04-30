@@ -726,6 +726,9 @@ var pd = {
             "pages processed",
             pd.task.info.donePages
           );
+          while (pd.task.items.length > 0) {
+            pd.actions.children.finishItem();
+          }
           window.pd_processing = false;
           pd.ui.done();
           return;
@@ -875,6 +878,9 @@ var pd = {
             "deleted",
             pd.task.info.deleted
           );
+          while (pd.task.items.length > 0) {
+            pd.actions.children.finishItem();
+          }
           window.pd_processing = false;
           pd.ui.done();
           return;
