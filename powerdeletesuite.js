@@ -385,6 +385,8 @@ var pd = {
                 '<div><input type="checkbox" id="pd__dry-run"><label for="pd__dry-run">Dry Run (simulate actions without making changes)</label></div>' +
                 '<div><label for="pd__limit">Limit number of actions:</label>' +
                 '<input type="number" id="pd__limit" min="0" placeholder="0 for unlimited"></div>' +
+                '<div><label for="pd__limit-pages">Limit number of pages:</label>' +
+                '<input type="number" id="pd__limit-pages" min="0" placeholder="0 for unlimited"></div>' +
               '</div>'
             );
           }
@@ -480,6 +482,7 @@ var pd = {
           keywordReplace: $("#pd__keyword-replace").val() || "",
           isDryRun: $("#pd__dry-run").is(":checked"),
           limitNumber: parseInt($("#pd__limit").val()) || 0,
+          limitPages: parseInt($("#pd__limit-pages").val()) || 0,
         },
         paths: {
           sections:
@@ -712,6 +715,20 @@ var pd = {
       next: function () {
         if (pd.debugging && pd.task.info.donePages % 5 == 3) {
           pd.actions.page.shift();
+        }
+        if (
+          pd.task.config.limitPages > 0 &&
+          pd.task.info.donePages >= pd.task.config.limitPages
+        ) {
+          pd.log(
+            "Page limit reached",
+            pd.task.config.limitPages,
+            "pages processed",
+            pd.task.info.donePages
+          );
+          window.pd_processing = false;
+          pd.ui.done();
+          return;
         }
         if (pd.task.paths.sections.length > 0) {
           pd.ui.updateDisplay();
