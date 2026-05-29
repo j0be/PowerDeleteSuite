@@ -408,6 +408,7 @@ var pd = {
       });
     },
     createProcessStream: function () {
+      pd.backoff.reset();
       window.pd_processing = true;
       pd.exportItems = [];
       pd.exportIds = [];
@@ -546,6 +547,22 @@ var pd = {
       $(".pd__insert").click(function () {
         $($(this).attr("data-target")).val($(this).attr("data-value")).change();
       });
+    },
+  },
+  backoff: {
+    delay: 1000,
+    maxDelay: 1024000,
+    schedule: function (fn) {
+      console.log(
+        "[PowerDeleteSuite] Rate limited (429). Backing off for " +
+          pd.backoff.delay / 1000 +
+          "s before retrying..."
+      );
+      setTimeout(fn, pd.backoff.delay);
+      pd.backoff.delay = Math.min(pd.backoff.delay * 2, pd.backoff.maxDelay);
+    },
+    reset: function () {
+      pd.backoff.delay = 1000;
     },
   },
   helpers: {
@@ -885,22 +902,18 @@ var pd = {
             },
           }).then(
             function () {
+              pd.backoff.reset();
               pd.task.items[0].pdDeleted = true;
               pd.actions.children.handleSingle();
             },
-            function () {
+            function (jqXHR) {
               pd.task.info.errors++;
-              if (
-                confirm(
-                  "Error deleting " +
-                    (item.kind == "t3" ? "post" : "comment") +
-                    ", would you like to retry?"
-                )
-              ) {
-                pd.actions.children.handleSingle();
+              if (jqXHR.status === 429) {
+                pd.backoff.schedule(function () {
+                  pd.actions.children.handleSingle();
+                });
               } else {
-                pd.actions.children.finishItem();
-                pd.actions.children.handleGroup();
+                pd.actions.children.handleSingle();
               }
             }
           );
@@ -929,21 +942,19 @@ var pd = {
             },
           }).then(
             function () {
+              pd.backoff.reset();
               pd.task.items[0].pdEdited = true;
               pd.actions.children.handleSingle();
             },
-            function () {
+            function (jqXHR) {
               pd.task.info.errors++;
-              if (
-                !confirm(
-                  "Error editing " +
-                    (item.kind == "t3" ? "post" : "comment") +
-                    ", would you like to retry?"
-                )
-              ) {
-                item.pdEdited = true;
+              if (jqXHR.status === 429) {
+                pd.backoff.schedule(function () {
+                  pd.actions.children.handleSingle();
+                });
+              } else {
+                pd.actions.children.handleSingle();
               }
-              pd.actions.children.handleSingle();
             }
           );
         } else {
