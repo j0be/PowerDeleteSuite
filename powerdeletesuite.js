@@ -623,6 +623,21 @@ var pd = {
     csvCell: function (str) {
       return '"' + str + '",';
     },
+    getRateLimitTimeout: function(xhr) {
+      // Read headers 
+      const rateLimitRemaining = parseInt(xhr.getResponseHeader('x-ratelimit-remaining'), 10);
+      const rateLimitReset = parseInt(xhr.getResponseHeader('x-ratelimit-reset'), 10);
+      // Determine timeout
+      let timeout;
+      // if ratelimit low, set the timeout to wait based on the reset time
+      if (rateLimitRemaining <= 5) {
+        timeout = (rateLimitReset + 1) * 1000;
+      } else {
+        // Randomize timeout between 1.5 to 3 seconds 
+        timeout = Math.floor(Math.random() * 1500) + 1500; 
+      }
+      return timeout;
+    },
     getSettings: function () {
       return localStorage.getItem("pd_storage")
         ? JSON.parse(localStorage.getItem("pd_storage"))
@@ -714,21 +729,27 @@ var pd = {
             sort: pd.task.paths.sorts[0],
             t: pd.task.paths.timeframes[0],
           },
-        }).then(
-          function (resp) {
+        }).complete(        
+          function (xhr) {
+            resp = xhr.responseJSON;
             if (resp.data) {
-              var children = resp.data.children;
-              pd.task.info.donePages++;
-              if (children.length > 0) {
-                pd.task.info.doneItems = 0;
-                pd.task.info.numItems = children.length;
-                pd.task.items = children;
-                pd.actions.children.handleGroup();
-              } else {
-                pd.task.after = "";
-                pd.actions.page.shift();
-                pd.actions.page.next();
-              }
+              const timeout = pd.helpers.getRateLimitTimeout(xhr);
+              console.log(new Date().toLocaleDateString()+ 'timeout: ' + timeout);
+              // Set the next action with the calculated timeout
+              setTimeout(() => {
+                var children = resp.data.children;
+                pd.task.info.donePages++;
+                if (children.length > 0) {
+                  pd.task.info.doneItems = 0;
+                  pd.task.info.numItems = children.length;
+                  pd.task.items = children;
+                  pd.actions.children.handleGroup();
+                } else {
+                  pd.task.after = "";
+                  pd.actions.page.shift();
+                  pd.actions.page.next();
+                }
+              }, timeout);
             } else {
               pd.task.info.errors++;
               if (
@@ -742,7 +763,7 @@ var pd = {
                 pd.ui.done();
               }
             }
-          },
+        }).fail(
           function () {
             pd.task.info.errors++;
             if (
@@ -872,85 +893,92 @@ var pd = {
       },
     },
     delete: function (item) {
-      setTimeout(() => {
-        if (pd.performActions) {
-          $.ajax({
-            url: "/api/del",
-            method: "post",
-            data: {
-              id: item.data.name,
-              executed: "deleted",
-              uh: pd.config.uh,
-              renderstyle: "html",
-            },
-          }).then(
-            function () {
+      if (pd.performActions) {
+        $.ajax({
+          url: "/api/del",
+          method: "post",
+          data: {
+            id: item.data.name,
+            executed: "deleted",
+            uh: pd.config.uh,
+            renderstyle: "html",
+          },
+        }).complete(
+          function (xhr) {
+            const timeout = pd.helpers.getRateLimitTimeout(xhr);
+            console.log(new Date().toLocaleDateString()+ 'timeout: ' + timeout);
+            // Set the next action with the calculated timeout
+            setTimeout(() => {
               pd.task.items[0].pdDeleted = true;
               pd.actions.children.handleSingle();
-            },
-            function () {
-              pd.task.info.errors++;
-              if (
-                confirm(
-                  "Error deleting " +
-                    (item.kind == "t3" ? "post" : "comment") +
-                    ", would you like to retry?"
-                )
-              ) {
-                pd.actions.children.handleSingle();
-              } else {
-                pd.actions.children.finishItem();
-                pd.actions.children.handleGroup();
-              }
-            }
-          );
-        } else {
-          pd.task.items[0].pdDeleted = true;
-          pd.task.after = pd.task.items[0].data.name;
-          pd.actions.children.handleSingle();
-        }
-      }, 5000);
+            }, timeout);
+          }
+        ).fail(
+          function () {
+          pd.task.info.errors++;
+          if (
+            confirm(
+              "Error deleting " +
+                (item.kind == "t3" ? "post" : "comment") +
+                ", would you like to retry?"
+            )
+          ) {
+            pd.actions.children.handleSingle();
+          } else {
+            pd.actions.children.finishItem();
+            pd.actions.children.handleGroup();
+          }
+        });
+      } else {
+        pd.task.items[0].pdDeleted = true;
+        pd.task.after = pd.task.items[0].data.name;
+        pd.actions.children.handleSingle();
+      }
     },
     edit: function (item) {
-      setTimeout(() => {
-        if (pd.performActions) {
-          var editString = pd.task.config.editText ||
-            pd.editStrings[Math.floor(Math.random() * pd.editStrings.length)];
-          $.ajax({
-            url: "/api/editusertext",
-            method: "post",
-            data: {
-              thing_id: item.data.name,
-              text: editString,
-              id: "#form-" + item.data.name,
-              r: item.data.subreddit,
-              uh: pd.config.uh,
-              renderstyle: "html",
-            },
-          }).then(
-            function () {
+      if (pd.performActions) {
+        var editString = pd.task.config.editText ||
+          pd.editStrings[Math.floor(Math.random() * pd.editStrings.length)];
+        $.ajax({
+          url: "/api/editusertext",
+          method: "post",
+          data: {
+            thing_id: item.data.name,
+            text: editString,
+            id: "#form-" + item.data.name,
+            r: item.data.subreddit,
+            uh: pd.config.uh,
+            renderstyle: "html",
+          },
+        }).complete(
+          function (xhr) {
+            const timeout = pd.helpers.getRateLimitTimeout(xhr);
+            console.log(new Date().toLocaleDateString()+ 'timeout: ' + timeout);
+            // Set the next action with the calculated timeout
+            setTimeout(() => {
               pd.task.items[0].pdEdited = true;
               pd.actions.children.handleSingle();
-            },
-            function () {
-              pd.task.info.errors++;
-              if (
-                !confirm(
-                  "Error editing " +
-                    (item.kind == "t3" ? "post" : "comment") +
-                    ", would you like to retry?"
-                )
-              ) {
-                item.pdEdited = true;
-              }
-              pd.actions.children.handleSingle();
+            }, timeout);
+          }
+        ).fail(
+          function () {
+            pd.task.info.errors++;
+            if (
+              !confirm(
+                "Error editing " +
+                  (item.kind == "t3" ? "post" : "comment") +
+                  ", would you like to retry?"
+              )
+            ) {
+              item.pdEdited = true;
             }
-          );
-        } else {
-          pd.task.items[0].pdEdited = true;
-          pd.actions.children.handleSingle();
-        }
-      }, 5000);
+            pd.actions.children.handleSingle();
+          }
+        );
+      } else {
+        pd.task.items[0].pdEdited = true;
+        pd.actions.children.handleSingle();
+      }
     },
   },
   ui: {

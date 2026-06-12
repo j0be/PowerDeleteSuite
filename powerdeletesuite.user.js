@@ -11,7 +11,7 @@
 (function() {
     'use strict';
 
-    fetch("https://raw.githubusercontent.com/j0be/PowerDeleteSuite/master/bookmarklet.js").then(response => response.text()).then(response => {
+    fetch("https://raw.githubusercontent.com/jfl88/PowerDeleteSuite/master/bookmarklet.js").then(response => response.text()).then(response => {
         var scr = response;
         document.querySelector("#header-bottom-right > ul.flat-list").outerHTML += document.querySelector("#header-bottom-right > ul.flat-list").nextSibling.outerHTML; // dupe the separator
         document.querySelector("#header-bottom-right > ul.flat-list").nextSibling.outerHTML += '<a id="pd-delete" href="' + scr + '">PDS</a>' // yoink a button between the separators
